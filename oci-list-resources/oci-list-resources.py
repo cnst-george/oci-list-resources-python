@@ -14,6 +14,7 @@ identity_client = oci.identity.IdentityClient(config)
 virtual_network_client = oci.core.VirtualNetworkClient(config)
 compute_client = oci.core.ComputeClient(config)
 block_storage_client = oci.core.BlockstorageClient(config)
+file_storage_client = oci.file_storage.FileStorageClient(config)
 object_storage_client = oci.object_storage.ObjectStorageClient(config)
 database_client = oci.database.DatabaseClient(config)
 load_balancer_client = oci.load_balancer.LoadBalancerClient(config)
@@ -72,7 +73,7 @@ try:
                     instance_findings.append(f"Instance '{instance.display_name}' is using a basic shape.")
             findings[compartment.name].extend(instance_findings)
 
-            # Discover Block Volumes ################
+            # Discover Block Volumes
             volume_response = oci.pagination.list_call_get_all_results(
                 block_storage_client.list_volumes,
                 compartment_id=compartment.id
@@ -83,7 +84,7 @@ try:
                     "name": volume.display_name,
                     "id": volume.id
                 })
-                # Check if the volume is attached to any instance ###############
+                # Check if the volume is attached to any instance 
                 attachments = oci.pagination.list_call_get_all_results(
                     compute_client.list_volume_attachments,
                     compartment_id=compartment.id,
