@@ -7,7 +7,7 @@ This repository contains a collection of Python scripts for automating various t
 ```
 ├── oci-list-buckets                     # List buckets
 ├── oci-list-policies                    # List policies
-├── oci-list-resources                   # List resources
+├── oci-list-resources                   # List all resources
 ├── oci-list-unused                      # List unused resources
 ├── oci-list-volumes                     # List block volumes
 ├── requirements.txt                     # Dependencies for running scripts
@@ -50,13 +50,13 @@ pip install --upgrade pip
 ## 📌 Usage
 Each script is designed for a specific task in OCI. Below are examples of how to execute them.
 
-### Listing OCI Buckets
+### Listing Buckets
 ```bash
 cd oci-list-buckets
 python oci-list-buckets.py
 ```
 
-### Listing OCI Policies
+### Listing Policies
 ```bash
 cd oci-list-policies
 python oci-list-policies.py
