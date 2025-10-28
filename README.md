@@ -9,7 +9,7 @@ This repository contains a collection of Python scripts for automating various t
 ├── oci-list-policies                    # List policies
 ├── oci-list-resources                   # List all resources
 ├── oci-list-unused                      # List unused resources
-├── oci-list-volumes                     # List block volumes
+├── oci-list-storage                     # List block volumes, File Systems
 ├── requirements.txt                     # Dependencies for running scripts
 └── README.md                            # Documentation for the repository
 ```
@@ -74,10 +74,10 @@ cd oci-list-unused
 python oci-list-unused.py
 ```
 
-### Listing Volumes (Attached/ Detached)
+### Listing Storage Volumes (Attached/ Detached) and File Systems
 ```bash
-cd oci-list-volumes
-python oci-list-volumes.py
+cd oci-list-storage
+python oci-list-storage.py
 ```
 
 
