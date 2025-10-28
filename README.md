@@ -70,7 +70,7 @@ python oci-list-resources.py
 
 ### Listing Unused Resources
 ```bash
-cd ci-list-unused 
+cd oci-list-unused 
 python oci-list-unused.py
 ```
 

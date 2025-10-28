@@ -1,4 +1,5 @@
-﻿import json
+﻿import oci
+import json
 import pandas as pd
 import subprocess
 from datetime import datetime
@@ -7,12 +8,7 @@ from datetime import datetime
 config = oci.config.from_file("~/.oci/config")
 
 def fetch_policies():
-    try:
-        # Hardcoded tenancy OCID
-        # hardcoded_tenancy_ocid = "ocid1.tenancy.oc1..aaaaaaaafvbrqwizb2l62d7o46h622ibhfp2at56cfjxak7x3jqgh42ligrq"
-        # Use the hardcoded tenancy OCID
-        # tenancy_ocid = hardcoded_tenancy_ocid
-        
+    try:       
         # Get tenancy ID
         tenancy_ocid = config["tenancy"]
         print(f"Using Tenancy OCID: {tenancy_ocid}")
