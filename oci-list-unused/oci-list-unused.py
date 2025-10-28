@@ -1,8 +1,10 @@
 ﻿import oci
 import openpyxl
 from openpyxl.styles import Font
+from datetime import datetime
 
 def collect_unused_resources():
+
     # Load OCI configuration
     config = oci.config.from_file()
 
@@ -15,14 +17,16 @@ def collect_unused_resources():
     file_storage_client = oci.file_storage.FileStorageClient(config)
     compute_management_client = oci.core.ComputeManagementClient(config)
     load_balancer_client = oci.load_balancer.LoadBalancerClient(config)
+    
     # Get tenancy ID
-    tenancy_id = config["tenancy"]
+    tenancy_ocid = config["tenancy"]
+
     print("Fetching compartments...")
     compartments = identity_client.list_compartments(
-        tenancy_id, compartment_id_in_subtree=True
+        tenancy_ocid, compartment_id_in_subtree=True
     ).data
     
-    availability_domains = identity_client.list_availability_domains(tenancy_id).data
+    availability_domains = identity_client.list_availability_domains(tenancy_ocid).data
     
     # Create an Excel workbook
     workbook = openpyxl.Workbook()
@@ -31,11 +35,12 @@ def collect_unused_resources():
     sheets = {
         "Unattached Volumes": ["Compartment", "Volume Name", "Volume OCID", "Size (GB)", "State", "Created Time", "Last Backup Time", "Remarks"],
         "Orphaned Instances": ["Compartment", "Instance Name", "Instance OCID", "State", "Shape", "Created Time", "Remarks"],
-        "Unused Storage": ["Compartment", "Bucket Name / File System", "Type", "Size (GB)", "State", "Created Time", "Remarks"],
-        "Unattached VNICs": ["Compartment", "VNIC Name", "VNIC OCID", "State", "Created Time", "Remarks"],
-        "Orphaned Load Balancers": ["Compartment", "Load Balancer Name", "Load Balancer OCID", "State", "Created Time", "Remarks"],
-        "Unused Public IPs": ["Compartment", "Public IP", "Assigned To", "State", "Created Time", "Remarks"],
-        "Inactive DRGs & VPNs": ["Compartment", "Resource Name", "Type", "State", "Created Time", "Remarks"]
+        "Unused FileSystems": ["Compartment", "File System", "Type", "Size (GB)", "State", "Created Time", "Remarks"],
+        # "Unused Buckets": ["Compartment", "Bucket Name", "Type", "Size (GB)", "State", "Created Time", "Remarks"],
+        # "Unattached VNICs": ["Compartment", "VNIC Name", "VNIC OCID", "State", "Created Time", "Remarks"],
+        # "Orphaned Load Balancers": ["Compartment", "Load Balancer Name", "Load Balancer OCID", "State", "Created Time", "Remarks"],
+        # "Unused Public IPs": ["Compartment", "Public IP", "Assigned To", "State", "Created Time", "Remarks"],
+        # "Inactive DRGs & VPNs": ["Compartment", "Resource Name", "Type", "State", "Created Time", "Remarks"]
     }
 
     sheet_objects = {}
@@ -81,20 +86,21 @@ def collect_unused_resources():
         #     bucket_details = object_storage_client.get_bucket(namespace, bucket.name).data
         #     bucket_size = bucket_details.approximate_size if bucket_details.approximate_size is not None else 0
         #     remarks = "Unused" if bucket_details.approximate_count == 0 else "Active"
-        #     sheet_objects["Unused Storage"].append([
+        #     sheet_objects["Unused Buckets"].append([
         #         compartment.name, bucket.name, "Object Storage", 
         #         bucket_size / (1024 * 1024 * 1024), "Available",
         #         bucket.time_created.strftime('%Y-%m-%d %H:%M:%S'), remarks
         #     ])
         
-        # for ad in availability_domains:
-        #     file_systems = file_storage_client.list_file_systems(compartment_id=compartment.id, availability_domain=ad.name).data
-        #     for fs in file_systems:
-        #         remarks = "Unused" if fs.lifecycle_state == "AVAILABLE" else "In Use"
-        #         sheet_objects["Unused Storage"].append([
-        #             compartment.name, fs.display_name, "File Storage", "N/A", 
-        #             fs.lifecycle_state, fs.time_created.strftime('%Y-%m-%d %H:%M:%S'), remarks
-        #         ])
+        # Unused FileSystem
+        for ad in availability_domains:
+            file_systems = file_storage_client.list_file_systems(compartment_id=compartment.id, availability_domain=ad.name).data
+            for fs in file_systems:
+                remarks = "Unused" if fs.lifecycle_state == "AVAILABLE" else "In Use"
+                sheet_objects["Unused FileSystems"].append([
+                    compartment.name, fs.display_name, "File Storage", "N/A", 
+                    fs.lifecycle_state, fs.time_created.strftime('%Y-%m-%d %H:%M:%S'), remarks
+                ])
         
         # Unattached VNICs
         # vnic_attachments = compute_client.list_vnic_attachments(compartment_id=compartment.id).data
@@ -132,9 +138,16 @@ def collect_unused_resources():
         #             drg.time_created.strftime('%Y-%m-%d %H:%M:%S'), "Inactive"
         #         ])
 
+    # Get current date for the file name
+    current_date = datetime.now().strftime("%Y-%m-%d")
+    tenancy_name = tenancy_ocid.split(".")[1] if tenancy_ocid else "unknown"
+
+    # Generate file names with dynamic titles
+    excel_file = f"oci_UNUSED_resources_{tenancy_name}_{current_date}.xlsx"
+
     # Save the Excel file
-    workbook.save("unused_resources_report.xlsx")
-    print("Unused resources report saved to unused_resources_report.xlsx")
+    workbook.save(excel_file)
+    print(f"Excel file saved: {excel_file}")
 
 if __name__ == "__main__":
     collect_unused_resources()

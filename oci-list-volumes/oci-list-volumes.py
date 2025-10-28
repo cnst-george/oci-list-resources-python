@@ -1,140 +1,268 @@
 ﻿import oci
-import openpyxl
-from openpyxl.styles import Font
+import json
+import pandas as pd
+from datetime import datetime
+from openpyxl import Workbook
+from openpyxl.styles import PatternFill, Font
+from openpyxl.chart import PieChart, BarChart, Reference
 
-def collect_unused_resources():
-    # Load OCI configuration
-    config = oci.config.from_file()
+# Load OCI configuration
+config = oci.config.from_file("~/.oci/config")
 
-    # Initialize OCI clients
-    identity_client = oci.identity.IdentityClient(config)
-    blockstorage_client = oci.core.BlockstorageClient(config)
-    compute_client = oci.core.ComputeClient(config)
-    network_client = oci.core.VirtualNetworkClient(config)
-    object_storage_client = oci.object_storage.ObjectStorageClient(config)
-    file_storage_client = oci.file_storage.FileStorageClient(config)
-    compute_management_client = oci.core.ComputeManagementClient(config)
-    load_balancer_client = oci.load_balancer.LoadBalancerClient(config)
-    # Get tenancy ID
-    tenancy_id = config["tenancy"]
-    print("Fetching compartments...")
-    compartments = identity_client.list_compartments(
-        tenancy_id, compartment_id_in_subtree=True
+# Initialize OCI clients
+identity_client = oci.identity.IdentityClient(config)
+virtual_network_client = oci.core.VirtualNetworkClient(config)
+compute_client = oci.core.ComputeClient(config)
+block_storage_client = oci.core.BlockstorageClient(config)
+object_storage_client = oci.object_storage.ObjectStorageClient(config)
+database_client = oci.database.DatabaseClient(config)
+load_balancer_client = oci.load_balancer.LoadBalancerClient(config)
+namespace = object_storage_client.get_namespace().data
+
+# Get tenancy ID
+tenancy_ocid = config["tenancy"]
+
+# Initialize result storage
+resources = {}
+findings = {}
+
+try:
+    # Fetch all compartments
+    compartments = oci.pagination.list_call_get_all_results(
+        identity_client.list_compartments,
+        tenancy_ocid,
+        compartment_id_in_subtree=True,
+        access_level="ANY"
     ).data
-    
-    availability_domains = identity_client.list_availability_domains(tenancy_id).data
-    
-    # Create an Excel workbook
-    workbook = openpyxl.Workbook()
-    
-    # Define sheet names
-    sheets = {
-        "Unattached Volumes": ["Compartment", "Volume Name", "Volume OCID", "Size (GB)", "State", "Created Time", "Last Backup Time", "Remarks"],
-        "Orphaned Instances": ["Compartment", "Instance Name", "Instance OCID", "State", "Shape", "Created Time", "Remarks"],
-        "Unused Storage": ["Compartment", "Bucket Name / File System", "Type", "Size (GB)", "State", "Created Time", "Remarks"],
-        "Unattached VNICs": ["Compartment", "VNIC Name", "VNIC OCID", "State", "Created Time", "Remarks"],
-        "Orphaned Load Balancers": ["Compartment", "Load Balancer Name", "Load Balancer OCID", "State", "Created Time", "Remarks"],
-        "Unused Public IPs": ["Compartment", "Public IP", "Assigned To", "State", "Created Time", "Remarks"],
-        "Inactive DRGs & VPNs": ["Compartment", "Resource Name", "Type", "State", "Created Time", "Remarks"]
-    }
+    compartments.append(oci.identity.models.Compartment(id=tenancy_ocid, name="Tenancy Root"))
 
-    sheet_objects = {}
-    for sheet_name, headers in sheets.items():
-        sheet = workbook.create_sheet(title=sheet_name)
-        sheet.append(headers)
-        # Apply bold font to headers
-        for cell in sheet[1]:
-            cell.font = Font(bold=True)
-        sheet_objects[sheet_name] = sheet
-    
-    # Remove default sheet
-    workbook.remove(workbook["Sheet"])
-
+    # Discover resources in each compartment
     for compartment in compartments:
-        print(f"Checking compartment: {compartment.name}")
-        
-        # Unattached Volumes
-        volumes = blockstorage_client.list_volumes(compartment_id=compartment.id).data
-        for volume in volumes:
-            if volume.lifecycle_state != "AVAILABLE":
-                continue
-            sheet_objects["Unattached Volumes"].append([
-                compartment.name, volume.display_name, volume.id,
-                volume.size_in_gbs, volume.lifecycle_state,
-                volume.time_created.strftime('%Y-%m-%d %H:%M:%S'), "N/A", "Unattached"
-            ])
-        
-        # Orphaned Compute Instances
-        # instances = compute_client.list_instances(compartment_id=compartment.id).data
-        # for instance in instances:
-        #     if instance.lifecycle_state in ["TERMINATED", "STOPPED"]:
-        #         sheet_objects["Orphaned Instances"].append([
-        #             compartment.name, instance.display_name, instance.id,
-        #             instance.lifecycle_state, instance.shape,
-        #             instance.time_created.strftime('%Y-%m-%d %H:%M:%S'), "Orphaned"
-        #         ])
+        if compartment.lifecycle_state == "ACTIVE":
+            print(f"Discovering resources in compartment: {compartment.name}")
+            resources[compartment.name] = {}
+            findings[compartment.name] = []
 
-        # Unused Object Storage Buckets & File Storage
-        # namespace = object_storage_client.get_namespace().data
-        # buckets = object_storage_client.list_buckets(namespace, compartment_id=compartment.id).data
-        # for bucket in buckets:
-        #     bucket_details = object_storage_client.get_bucket(namespace, bucket.name).data
-        #     bucket_size = bucket_details.approximate_size if bucket_details.approximate_size is not None else 0
-        #     remarks = "Unused" if bucket_details.approximate_count == 0 else "Active"
-        #     sheet_objects["Unused Storage"].append([
-        #         compartment.name, bucket.name, "Object Storage", 
-        #         bucket_size / (1024 * 1024 * 1024), "Available",
-        #         bucket.time_created.strftime('%Y-%m-%d %H:%M:%S'), remarks
-        #     ])
-        
-        # for ad in availability_domains:
-        #     file_systems = file_storage_client.list_file_systems(compartment_id=compartment.id, availability_domain=ad.name).data
-        #     for fs in file_systems:
-        #         remarks = "Unused" if fs.lifecycle_state == "AVAILABLE" else "In Use"
-        #         sheet_objects["Unused Storage"].append([
-        #             compartment.name, fs.display_name, "File Storage", "N/A", 
-        #             fs.lifecycle_state, fs.time_created.strftime('%Y-%m-%d %H:%M:%S'), remarks
-        #         ])
-        
-        # Unattached VNICs
-        # vnic_attachments = compute_client.list_vnic_attachments(compartment_id=compartment.id).data
-        # for vnic in vnic_attachments:
-        #     if vnic.lifecycle_state != "ATTACHED":
-        #         sheet_objects["Unattached VNICs"].append([
-        #             compartment.name, vnic.display_name, vnic.id,
-        #             vnic.lifecycle_state, vnic.time_created.strftime('%Y-%m-%d %H:%M:%S'), "Unattached"
-        #         ])
-        
-        # Orphaned Load Balancers
-        # load_balancers = load_balancer_client.list_load_balancers(compartment_id=compartment.id).data
-        # for lb in load_balancers:
-        #     if lb.lifecycle_state in ["TERMINATED", "FAILED"]:
-        #         sheet_objects["Orphaned Load Balancers"].append([
-        #             compartment.name, lb.display_name, lb.id,
-        #             lb.lifecycle_state, lb.time_created.strftime('%Y-%m-%d %H:%M:%S'), "Orphaned"
-        #         ])
-        
-        # Unused Public IPs
-        # public_ips = network_client.list_public_ips(scope="REGION", compartment_id=compartment.id).data
-        # for ip in public_ips:
-        #     assigned_to = ip.assigned_entity_id if ip.assigned_entity_id else "Unassigned"
-        #     sheet_objects["Unused Public IPs"].append([
-        #         compartment.name, ip.ip_address, assigned_to,
-        #         ip.lifecycle_state, ip.time_created.strftime('%Y-%m-%d %H:%M:%S'), "Unused"
-        #     ])
-        
-        # Inactive DRGs & VPNs
-        # drgs = network_client.list_drgs(compartment_id=compartment.id).data
-        # for drg in drgs:
-        #     if drg.lifecycle_state != "AVAILABLE":
-        #         sheet_objects["Inactive DRGs & VPNs"].append([
-        #             compartment.name, drg.display_name, "DRG", drg.lifecycle_state,
-        #             drg.time_created.strftime('%Y-%m-%d %H:%M:%S'), "Inactive"
-        #         ])
+            # Discover VCNs
+            vcn_response = oci.pagination.list_call_get_all_results(
+                virtual_network_client.list_vcns,
+                compartment_id=compartment.id
+            ).data
+            vcn_findings = []
+            for vcn in vcn_response:
+                resources[compartment.name].setdefault("VCNs", []).append({"name": vcn.display_name, "id": vcn.id})
+                # Best practice: Check for wide CIDR ranges
+                if vcn.cidr_block == "0.0.0.0/0":
+                    vcn_findings.append(f"VCN '{vcn.display_name}' has an open CIDR block.")
+            findings[compartment.name].extend(vcn_findings)
 
-    # Save the Excel file
-    workbook.save("unused_resources_report.xlsx")
-    print("Unused resources report saved to unused_resources_report.xlsx")
+            # Discover Compute Instances
+            instance_response = oci.pagination.list_call_get_all_results(
+                compute_client.list_instances,
+                compartment_id=compartment.id
+            ).data
+            instance_findings = []
+            for instance in instance_response:
+                resources[compartment.name].setdefault("Compute Instances", []).append({
+                    "name": instance.display_name,
+                    "id": instance.id
+                })
+                # Best practice: Check if instance metadata is restricted
+                if instance.shape.startswith("VM.Standard"):
+                    instance_findings.append(f"Instance '{instance.display_name}' is using a basic shape.")
+            findings[compartment.name].extend(instance_findings)
 
-if __name__ == "__main__":
-    collect_unused_resources()
+            # Discover Block Volumes ################
+            volume_response = oci.pagination.list_call_get_all_results(
+                block_storage_client.list_volumes,
+                compartment_id=compartment.id
+            ).data
+            volume_findings = []
+            for volume in volume_response:
+                resources[compartment.name].setdefault("Block Volumes", []).append({
+                    "name": volume.display_name,
+                    "id": volume.id
+                })
+                # Check if the volume is attached to any instance ###############
+                attachments = oci.pagination.list_call_get_all_results(
+                    compute_client.list_volume_attachments,
+                    compartment_id=compartment.id,
+                    volume_id=volume.id
+                ).data
+                if not attachments:  # No attachments found
+                    volume_findings.append(f"Volume '{volume.display_name}' is not attached to any instance.")
+                # Best practice: Ensure backup policy is set
+                if not volume.is_auto_tune_enabled:
+                    volume_findings.append(f"Volume '{volume.display_name}' does not have auto-tune enabled.")
+            findings[compartment.name].extend(volume_findings)
+
+            # Discover Object Storage Buckets
+            # bucket_response = oci.pagination.list_call_get_all_results(
+            #     object_storage_client.list_buckets,
+            #     namespace_name=namespace,
+            #     compartment_id=compartment.id
+            # ).data
+            # bucket_findings = []
+            # for bucket in bucket_response:
+            #     resources[compartment.name].setdefault("Buckets", []).append({"name": bucket.name})
+            #     # Fetch detailed bucket info to check for public access
+            #     bucket_details = object_storage_client.get_bucket(
+            #         namespace_name=namespace,
+            #         bucket_name=bucket.name
+            #     ).data
+            #     # Best practice: Check for public access
+            #     if bucket_details.public_access_type != "NoPublicAccess":
+            #         bucket_findings.append(f"Bucket '{bucket.name}' allows public access.")
+            #     # Discover Objects in Buckets
+            #     object_response = oci.pagination.list_call_get_all_results(
+            #         object_storage_client.list_objects,
+            #         namespace_name=namespace,
+            #         bucket_name=bucket.name
+            #     ).data
+            #     resources[compartment.name].setdefault("Bucket Objects", []).extend([
+            #         {"bucket_name": bucket.name, "object_name": obj.name} for obj in object_response.objects
+            #     ])
+            # findings[compartment.name].extend(bucket_findings)
+
+            # Discover Autonomous Databases
+            adb_response = oci.pagination.list_call_get_all_results(
+                database_client.list_autonomous_databases,
+                compartment_id=compartment.id
+            ).data
+            adb_findings = []
+            for adb in adb_response:
+                resources[compartment.name].setdefault("Autonomous Databases", []).append({
+                    "name": adb.display_name,
+                    "id": adb.id
+                })
+                # Best practice: Check for appropriate workload type
+                if adb.db_workload != "OLTP":
+                    adb_findings.append(f"ADB '{adb.display_name}' is not optimized for OLTP workloads.")
+            findings[compartment.name].extend(adb_findings)
+
+            # Discover Load Balancers
+            lb_response = oci.pagination.list_call_get_all_results(
+                load_balancer_client.list_load_balancers,
+                compartment_id=compartment.id
+            ).data
+            lb_findings = []
+            for lb in lb_response:
+                resources[compartment.name].setdefault("Load Balancers", []).append({
+                    "name": lb.display_name,
+                    "id": lb.id
+                })
+                # Best practice: Ensure SSL termination is configured
+                if not lb.shape_name.startswith("flexible"):
+                    lb_findings.append(f"Load Balancer '{lb.display_name}' is not using a flexible shape.")
+            findings[compartment.name].extend(lb_findings)
+
+    # Get current date for the file name
+    current_date = datetime.now().strftime("%Y-%m-%d")
+    tenancy_name = tenancy_ocid.split(".")[1] if tenancy_ocid else "unknown"
+    
+    # Generate file name with dynamic titles
+    file_name = f"oci_resources_{tenancy_name}_{current_date}.json"
+    
+    # Export data to JSON
+    with open(file_name, "w") as file:
+        json.dump({"resources": resources, "findings": findings}, file, indent=4)
+
+    print(f"Resource discovery and validation completed. Results saved to: {file_name}")
+    
+    # Export data to Excel
+    workbook = Workbook()
+    summary_sheet = workbook.active
+    summary_sheet.title = "Findings Summary"
+
+    # Add findings summary
+    summary_sheet.append(["Compartment", "Issue", "Recommendation"])
+    for compartment, issues in findings.items():
+        for issue in issues:
+            summary_sheet.append([compartment, issue, "Refer to OCI best practices."])
+
+    # Style misconfigurations
+    for row in summary_sheet.iter_rows(min_row=2, max_row=summary_sheet.max_row, min_col=2, max_col=2):
+        for cell in row:
+            cell.fill = PatternFill(start_color="FFCCCC", end_color="FFCCCC", fill_type="solid")
+            cell.font = Font(bold=True)
+
+    # Count findings by resource type for visualization
+    resource_issues_summary = {}
+    for compartment, issues in findings.items():
+        for issue in issues:
+            resource_type = issue.split(" ")[0]  # Extract resource type from the issue string
+            resource_issues_summary[resource_type] = resource_issues_summary.get(resource_type, 0) + 1
+
+    # Add a summary table for findings by resource type
+    summary_start_row = summary_sheet.max_row + 2
+    summary_sheet.append(["Resource Type", "Number of Issues"])
+    for resource_type, count in resource_issues_summary.items():
+        summary_sheet.append([resource_type, count])
+
+    # Create a bar chart for findings summary
+    bar_chart = BarChart()
+    data = Reference(summary_sheet, min_col=2, min_row=summary_start_row + 1, max_row=summary_sheet.max_row)
+    categories = Reference(summary_sheet, min_col=1, min_row=summary_start_row + 1, max_row=summary_sheet.max_row)
+    bar_chart.add_data(data, titles_from_data=False)
+    bar_chart.set_categories(categories)
+    bar_chart.title = "Findings by Resource Type"
+    bar_chart.x_axis.title = "Resource Type"
+    bar_chart.y_axis.title = "Number of Issues"
+    summary_sheet.add_chart(bar_chart, f"E{summary_start_row}")
+
+    # Add data sheets for each resource type
+    for resource_type in ["VCNs", 
+                        "Compute Instances", 
+                        "Block Volumes", 
+                        "Buckets", 
+                        "Bucket Objects", 
+                        "Autonomous Databases", 
+                        "Load Balancers"]:
+        sheet = workbook.create_sheet(title=resource_type)
+        sheet.append(["Compartment", "Name", "ID"])
+        for compartment, resource_data in resources.items():
+            for item in resource_data.get(resource_type, []):
+                sheet.append([compartment, item.get("name"), item.get("id", "N/A")])
+
+    # Add visualization sheet
+    visualization_sheet = workbook.create_sheet(title="Visualizations")
+    visualization_sheet.append(["Resource Type", "Count"])
+
+    # Prepare summary data for visualization
+    summary_data = {}
+    for compartment, resource_types in resources.items():
+        for resource_type, resource_list in resource_types.items():
+            summary_data[resource_type] = summary_data.get(resource_type, 0) + len(resource_list)
+
+    for resource_type, count in summary_data.items():
+        visualization_sheet.append([resource_type, count])
+
+    # Create Pie Chart
+    pie_chart = PieChart()
+    data = Reference(visualization_sheet, min_col=2, min_row=2, max_row=len(summary_data) + 1)
+    labels = Reference(visualization_sheet, min_col=1, min_row=2, max_row=len(summary_data) + 1)
+    pie_chart.add_data(data, titles_from_data=False)
+    pie_chart.set_categories(labels)
+    pie_chart.title = "Resource Distribution"
+    visualization_sheet.add_chart(pie_chart, "D2")
+
+    # Create Bar Chart
+    bar_chart = BarChart()
+    bar_chart.add_data(data, titles_from_data=False)
+    bar_chart.set_categories(labels)
+    bar_chart.title = "Resource Counts"
+    bar_chart.x_axis.title = "Resource Type"
+    bar_chart.y_axis.title = "Count"
+    visualization_sheet.add_chart(bar_chart, "D20")
+
+    # Generate file name with dynamic titles
+    file_name = f"oci_resources_{tenancy_name}_{current_date}.xlsx"
+    
+    # Save the Excel workbook
+    workbook.save(file_name)
+    print(f"Detailed findings and visualizations saved to: {file_name}")
+
+except oci.exceptions.ServiceError as e:
+    print(f"Service Error: {e}")
+except Exception as e:
+    print(f"Unexpected Error: {e}")
