@@ -1,5 +1,7 @@
 ﻿import oci
 import json
+import pandas as pd
+from datetime import datetime
 from openpyxl import Workbook
 from openpyxl.styles import PatternFill, Font
 from openpyxl.chart import PieChart, BarChart, Reference
@@ -18,7 +20,7 @@ load_balancer_client = oci.load_balancer.LoadBalancerClient(config)
 namespace = object_storage_client.get_namespace().data
 
 # Get tenancy ID
-tenancy_id = config["tenancy"]
+tenancy_ocid = config["tenancy"]
 
 # Initialize result storage
 resources = {}
@@ -28,11 +30,11 @@ try:
     # Fetch all compartments
     compartments = oci.pagination.list_call_get_all_results(
         identity_client.list_compartments,
-        tenancy_id,
+        tenancy_ocid,
         compartment_id_in_subtree=True,
         access_level="ANY"
     ).data
-    compartments.append(oci.identity.models.Compartment(id=tenancy_id, name="Tenancy Root"))
+    compartments.append(oci.identity.models.Compartment(id=tenancy_ocid, name="Tenancy Root"))
 
     # Discover resources in each compartment
     for compartment in compartments:
@@ -154,12 +156,19 @@ try:
                     lb_findings.append(f"Load Balancer '{lb.display_name}' is not using a flexible shape.")
             findings[compartment.name].extend(lb_findings)
 
+    # Get current date for the file name
+    current_date = datetime.now().strftime("%Y-%m-%d")
+    tenancy_name = tenancy_ocid.split(".")[1] if tenancy_ocid else "unknown"
+    
+    # Generate file name with dynamic titles
+    file_name = f"oci_resources_{tenancy_name}_{current_date}.json"
+    
     # Export data to JSON
-    with open("oci_resources.json", "w") as file:
+    with open(file_name, "w") as file:
         json.dump({"resources": resources, "findings": findings}, file, indent=4)
 
-    print("Resource discovery and validation completed. Results saved to 'oci_resources.json'.")
-
+    print(f"Resource discovery and validation completed. Results saved to: {file_name}")
+    
     # Export data to Excel
     workbook = Workbook()
     summary_sheet = workbook.active
@@ -246,9 +255,12 @@ try:
     bar_chart.y_axis.title = "Count"
     visualization_sheet.add_chart(bar_chart, "D20")
 
+    # Generate file name with dynamic titles
+    file_name = f"oci_resources_{tenancy_name}_{current_date}.xlsx"
+    
     # Save the Excel workbook
-    workbook.save("oci_resources.xlsx")
-    print("Detailed findings and visualizations saved to 'oci_resources.xlsx'.")
+    workbook.save(file_name)
+    print(f"Detailed findings and visualizations saved to: {file_name}")
 
 except oci.exceptions.ServiceError as e:
     print(f"Service Error: {e}")

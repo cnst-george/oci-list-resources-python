@@ -62,8 +62,8 @@ def save_files(df, tenancy_ocid):
         tenancy_name = tenancy_ocid.split(".")[1] if tenancy_ocid else "unknown"
 
         # Generate file names with dynamic titles
-        csv_file = f"tenancy_policies_{tenancy_name}_{current_date}.csv"
-        excel_file = f"tenancy_policies_{tenancy_name}_{current_date}.xlsx"
+        csv_file = f"oci_policies_{tenancy_name}_{current_date}.csv"
+        excel_file = f"oci_policies_{tenancy_name}_{current_date}.xlsx"
 
         # Save as CSV
         df.to_csv(csv_file, index=False)
