@@ -2,6 +2,7 @@
 .DS_Store
 
 *.xlsx
+*.csv
 *.json
 *.log
 
