@@ -1,0 +1,3391 @@
+{
+    "resources": {
+        "acceptance": {},
+        "acotest": {
+            "VCNs": [
+                {
+                    "name": "HUB-VCN",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7ia6ftx3ubgsivxxtqkvemmtnuqg7nbc6u5aejb3lalnbfa"
+                },
+                {
+                    "name": "VCN_ACOTEST_FRA",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7ia5x6upvbb7lg4ktfygq3ho77dlrnovgavlkimjx27tpma"
+                }
+            ],
+            "Compute Instances": [
+                {
+                    "name": "control",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7iczinsn4qu7njhriojmww6bns7mqfgogmemhaadzdrbkea"
+                },
+                {
+                    "name": "email_intance",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icawk3jfvb3ebx3hbyabomrgvxbhizcw4vhzmctifbxska"
+                },
+                {
+                    "name": "instance1-Centos",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icymi55yinyksyqzxm3bulnit42n2rzuwqjk624ddmfibq"
+                },
+                {
+                    "name": "instance2-OL8",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ickgvzaofzn4gdk63alna3mo2psyxejy6qtz6z6taksarq"
+                }
+            ],
+            "Block Volumes": [
+                {
+                    "name": "acotest_blockvolume_test",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljrayfpe226hgtirg2ylgohv5dluwlbpv5nrqxsvm4dr5xif66laxnq"
+                }
+            ]
+        },
+        "Adequasys": {},
+        "adequasys-hub-v2": {},
+        "ai": {
+            "VCNs": [
+                {
+                    "name": "GENAILABS-VCN",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iaullm6kaqvwdv2dudj3s5yldbcurqa5fv7oqihrawz5za"
+                }
+            ],
+            "Compute Instances": [
+                {
+                    "name": "GENAI-LAB",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ic5atnrlu67th4eudylghxvt24ywhmwwdffseyht3xblwa"
+                },
+                {
+                    "name": "workscheduler",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icdd54i7j65v3w2gzidur25cfzr5wzdstlnjwjd3jctb4q"
+                }
+            ]
+        },
+        "ai-sandbox": {
+            "VCNs": [
+                {
+                    "name": "aivs-net-2025-06-02-144529",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iamib23m4u2sy4nyeg75meipinyliux7c6tsh4rvb7rqpq"
+                }
+            ]
+        },
+        "alex.cofaru": {},
+        "alexandru.irimia": {},
+        "andrei.teodoroiu": {
+            "VCNs": [
+                {
+                    "name": "PROD VCN",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iasm2fny6zqc527yujpijqsggtzwb5qxeyrhefwpmuxfoa"
+                }
+            ]
+        },
+        "ansible_demo": {
+            "VCNs": [
+                {
+                    "name": "ansible_demo_vcn",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7ia57zhd534bbpwzqcpthh2iud7dlvjutv4kipsk5o5pzsq"
+                }
+            ],
+            "Compute Instances": [
+                {
+                    "name": "ansible-demo-e5",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icyzqtgeyy34blj46gg2lijkehfmjuh4xpbcr6peimiveq"
+                }
+            ]
+        },
+        "Aplis": {},
+        "app": {},
+        "apps": {
+            "VCNs": [
+                {
+                    "name": "vcn-hub",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iau23lzeoyzzqo5uuv6sneq4t4ixvt2cbeq7yobf6yalya"
+                }
+            ],
+            "Compute Instances": [
+                {
+                    "name": "gec-linux8-box-cloud-dev",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icvyg3ymro5nvi2klq5dfwa76meiufxkbfsgbykqcbphsq"
+                },
+                {
+                    "name": "webserver",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ic5uy6jbqiqc7bfm6ieuqr4ewhzjsvj2oxh2fc2ltor6mq"
+                }
+            ]
+        },
+        "Architecture": {
+            "VCNs": [
+                {
+                    "name": "vcn-cust",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iazhaws56yaxivw2edphfav6kjw36745qlz5h57mzkmpra"
+                },
+                {
+                    "name": "exam-vcn",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7ia6au4c7uqmlhoirznxkoq27xqazqb7yvrrt3psk4prrbq"
+                }
+            ],
+            "Compute Instances": [
+                {
+                    "name": "vm-01-vcn-cust-bastion",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icywmb4b3cn22fhirq7doa2tr5jeptze2qxyqe76isu6oq"
+                },
+                {
+                    "name": "vm-03-vcn-cust-app2",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icbkez2g2xeasvrdw72qzy2bzu2sgfau3ezb4yya77w7nq"
+                },
+                {
+                    "name": "vm-04-vcn-cust-db",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icwexnpmhjkxmytal64djgwlxoou2fy6skv5ojueb7gsiq"
+                }
+            ],
+            "Autonomous Databases": [
+                {
+                    "name": "ATP_Prod",
+                    "id": "ocid1.autonomousdatabase.oc1.eu-frankfurt-1.antheljro7vto7iaybvipiqyisermbv6vgpqke5ufihmmtfrhtnu4b4pq7ta"
+                },
+                {
+                    "name": "ATP_Std",
+                    "id": "ocid1.autonomousdatabase.oc1.eu-frankfurt-1.antheljto7vto7iayrjhwf6dwwcr2ny7ouemxxlamdiv24vob6eifcnbu6za"
+                }
+            ],
+            "Load Balancers": [
+                {
+                    "name": "lb-01-vcn-cust-pub",
+                    "id": "ocid1.loadbalancer.oc1.eu-frankfurt-1.aaaaaaaasmflqtv7f2r64pnfx43qz53qkwpuef4cgtdy4cfqatyqqzks6slq"
+                }
+            ]
+        },
+        "ATS_TEST": {
+            "VCNs": [
+                {
+                    "name": "vcn-20230623-1153",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iafah76cpqd43pzf7c76vta7dq64xo5smp2c5lb6u25quq"
+                }
+            ]
+        },
+        "automation": {
+            "VCNs": [
+                {
+                    "name": "vcn-demo-app",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iapbi4chi6wpwl7fwjrslcxtbqjtnqhivhpl63h7oenvuq"
+                }
+            ],
+            "Block Volumes": [
+                {
+                    "name": "csi-ead8b5da-b1d7-4e13-962a-538c63adcb38",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljrjngokt4ecfl54c7q5y6vtbxqkbanscqz2yjs4l4tfecfjjl5o6pa"
+                }
+            ],
+            "Load Balancers": [
+                {
+                    "name": "e7c3ced3-f995-41ad-8227-70a8f6f46855",
+                    "id": "ocid1.loadbalancer.oc1.eu-frankfurt-1.aaaaaaaaddiecoidgnta7fv67pymizgaskv5kha6pxb5giawk4x6thky3gya"
+                }
+            ]
+        },
+        "avaloc": {},
+        "Avaloq": {},
+        "avaloq": {
+            "Block Volumes": [
+                {
+                    "name": "block1",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljrczxowufxnj42w37w5myhjydxjgtisl7kwewccaptosyizqdc4ogq"
+                }
+            ]
+        },
+        "board-intelligence": {
+            "VCNs": [
+                {
+                    "name": "vcn-mgmt",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iavxgufl3ditwvnqd2puxsbugojzfqqu32wig5phazvrwa"
+                },
+                {
+                    "name": "vcn-bintell",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iabiofbllwjt62hzjdd32xtee4mmaar6ezwrosidh2vxsa"
+                }
+            ],
+            "Compute Instances": [
+                {
+                    "name": "bastion",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icx2ysu5yfbw52vuinuwof2bqlqolw63xczbram5vqb7nq"
+                }
+            ],
+            "Block Volumes": [
+                {
+                    "name": "test_oke",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljricaavdma4m6bswqyzyjskwc3m5vdp2v7vx3oj2tmx4c6dojvxzsa"
+                }
+            ]
+        },
+        "bogdan_darie": {},
+        "CaaS-ATH-Compartment": {
+            "VCNs": [
+                {
+                    "name": "caas_ath_vcn",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iar4tfa2pgnknuk5aipvmulwqjwlybegtb4gmwynvp4y5q"
+                }
+            ],
+            "Compute Instances": [
+                {
+                    "name": "instance-20250506-1501",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icaqjomxjnnetxu5ua757tiyhtbc3eo6fkbzru6depebbq"
+                }
+            ],
+            "Block Volumes": [
+                {
+                    "name": "ath-original-_DataDisk_1",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljr54bou66xw2a2a4ptq5t2xeuofwzrakvzefwdtvjowanjwpkimqmq"
+                },
+                {
+                    "name": "TEMP_VMNAMEATH-a-23_DataDisk_",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljr3enqoxzrsb5fslnacl2mu6mhnkkw5vjsisgttjsuzp3ynr2ukmqq"
+                }
+            ]
+        },
+        "CaaS-MET-Compartment": {
+            "VCNs": [
+                {
+                    "name": "vcn-20250404-1217",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iayb7hehtzmnucxsfjacb76cfz4lzrs4majv5sumhnnxgq"
+                }
+            ]
+        },
+        "catalin.nedelcu": {
+            "VCNs": [
+                {
+                    "name": "lpg-vcn",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iaauxlia5tzihx6enbg6o472qgxdsz5c3luw54lx4wetfq"
+                },
+                {
+                    "name": "HUB-VCN",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iakggtvp4givcfpmpntkdny7l5tz3ywponkyfxszhmkmkq"
+                }
+            ],
+            "Compute Instances": [
+                {
+                    "name": "OKV",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icbv7eo5yolq46pk3hpauzvk5cvc4cabzr7oemptxi2wta"
+                },
+                {
+                    "name": "customer01",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icg6z3bdzs6by2qm4nn4xe3lytezpo6bposqfxhttoy65a"
+                },
+                {
+                    "name": "customer01-vm2",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icbtzjgz4iyjqeqyif3vfmbvvb2t6hzllxouc7pnh35xta"
+                },
+                {
+                    "name": "customer02",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icptltwnynu6ajhb7u6fo4uccrvtrqh2kdtrv6sr7uwwdq"
+                },
+                {
+                    "name": "webserver",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icbp66goeul6ddff4fo5yjc6besbadlywk67tajdtmblda"
+                }
+            ],
+            "Load Balancers": [
+                {
+                    "name": "lb_2024-0201-1556",
+                    "id": "ocid1.loadbalancer.oc1.eu-frankfurt-1.aaaaaaaald2h5qvhsxazgidaotr6hsyrs5n7ijrxpoiiyjl4rkauu75qj2ga"
+                },
+                {
+                    "name": "private-LB",
+                    "id": "ocid1.loadbalancer.oc1.eu-frankfurt-1.aaaaaaaahpyyl33n57besg6xe2x7org4xtgno4jkww2we3c2aqrtuvazwioa"
+                }
+            ]
+        },
+        "Cegid": {},
+        "cegid": {
+            "VCNs": [
+                {
+                    "name": "VCN_FCRS_DEMO",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7ian5b3svfyp4on7pyaypxjsqiyegxukcvdnrsl4i23zeca"
+                }
+            ],
+            "Compute Instances": [
+                {
+                    "name": "e5vm",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icibxoxh7rklclft4sjeqatm2u4j4g3wpr3gqgqc7fylaa"
+                },
+                {
+                    "name": "fcrs-vm01",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icc5tb3bxxmyaapuzj3eaujdapvj5wvplxi6gqslo5pyba"
+                },
+                {
+                    "name": "instance-20250325-1556",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ic6bj5ynkkwhtxk5bikgngwnsrmoynricfeyktd72v2mcq"
+                },
+                {
+                    "name": "jump01-inst",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icgcvkffqwxbosxt64fwfhiqwsphtfeaqt3vrycrdiphrq"
+                },
+                {
+                    "name": "letsencrypt-oci-dns",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ic7rwoptkbijls4bab2nwsmbkusgkxgkqcqvvn6o6q53mq"
+                }
+            ],
+            "Autonomous Databases": [
+                {
+                    "name": "YSOAP429XCLAVBF3",
+                    "id": "ocid1.autonomousdatabase.oc1.eu-frankfurt-1.antheljro7vto7iaxlxzk5zjhvqk6jwoxwi4katkxtw5u5jnbfgcl5xw7aiq"
+                }
+            ],
+            "Load Balancers": [
+                {
+                    "name": "639a8adc-516e-4d9b-a5bb-7fa7ff234cec",
+                    "id": "ocid1.loadbalancer.oc1.eu-frankfurt-1.aaaaaaaaccnl6eq5odow3ggts5nycboloalcogue4uhehn7nptfyoglr3saa"
+                },
+                {
+                    "name": "fcrs-lb",
+                    "id": "ocid1.loadbalancer.oc1.eu-frankfurt-1.aaaaaaaahps4r2z6uvaek3ydjytayupgmllqcvragtlw3gbadz6rynqynyra"
+                }
+            ]
+        },
+        "cegid-bkpolicy": {},
+        "cegid-test": {
+            "VCNs": [
+                {
+                    "name": "cegid-vcn",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iacy6ddlao7nilam7xwvrsswkviczijx3cjvpbhlu36zka"
+                },
+                {
+                    "name": "test-vcn",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7ia6ey4lx6s3ayo55zh5ctuogh75cldezxsfifvpmmkhyha"
+                }
+            ],
+            "Compute Instances": [
+                {
+                    "name": "cegid-test-instance",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ickc5zn3r3nrrifcanc2fz6px4w2eolkdrhixhon67wj4a"
+                }
+            ]
+        },
+        "Cegid-XRP": {},
+        "cegid_fcrs": {},
+        "cegid_pdb_clone": {},
+        "cegid_xrp_dataguard": {},
+        "cegid_xrp_dataguard_fix": {},
+        "cegid_xrp_debug": {},
+        "cegid_xrp_v2": {},
+        "cegid_xrp_v3": {},
+        "cegidtagns": {},
+        "Centric": {},
+        "cicd": {
+            "VCNs": [
+                {
+                    "name": "OKE HellDevOps VCN - 13Gd",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iaynrv5jb5zesjkz2fet5zujgib3kacpjnwye34jemlaya"
+                }
+            ],
+            "Compute Instances": [
+                {
+                    "name": "oke-cq6pj55kmmq-nf7bc53bgfa-sdifrqkq6aa-0",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icv75y7rioju5upph2bs5ghhjdiejs7xpwjgvau5rqxyba"
+                }
+            ]
+        },
+        "Citrix2": {
+            "VCNs": [
+                {
+                    "name": "Citrix",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iae23mmsjfbo52eff2ktskpxc2y3pt2ommmv6ekw6eyqra"
+                }
+            ],
+            "Compute Instances": [
+                {
+                    "name": "Auntonomous-Linux-8",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icj4g5lmyfgdybsclp4de43wzpe7iqlz3eyfurox5snicq"
+                },
+                {
+                    "name": "Citrix-OEL-Emulated",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icnuhc6lwawmqalhrgpyrt4scuy6nnjkmby6j5qkeczbja"
+                },
+                {
+                    "name": "Citrix-OEL-PV",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icxwcxsyo32673vkkgqvd77aw42e7ppvrwy55qyuowws5q"
+                },
+                {
+                    "name": "Citrix-windows",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ic5zy4opmlbucd7cwqxz6j5nlhub2mx5b64eosli5zdovq"
+                },
+                {
+                    "name": "Dynatrace-test",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icktejyobkulvbfr6f6oxa6fajhqomoy4lglzpqwl7kpva"
+                },
+                {
+                    "name": "dynatrace-for-presentation",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7iccabd23tw6rjodqimin65f2pvt2j5zezbe4fxxdtfkw3q"
+                },
+                {
+                    "name": "dynatrace-new",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icboohqqxiwryy25lntpcfdre3uqiexizovml4s3wcdu6a"
+                },
+                {
+                    "name": "stack-monitoring-test",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icbt4pg6rqavux2bvp5jldelpaztji2jndou2znqhpulaq"
+                }
+            ],
+            "Autonomous Databases": [
+                {
+                    "name": "CUD4OUUBZ5EVLVL1",
+                    "id": "ocid1.autonomousdatabase.oc1.eu-frankfurt-1.antheljso7vto7iap6slnjapucxkjelyzsln7npep4a3d67urvqyoypnvluq"
+                }
+            ],
+            "Load Balancers": [
+                {
+                    "name": "test",
+                    "id": "ocid1.loadbalancer.oc1.eu-frankfurt-1.aaaaaaaayqggmdtgtgwxiyxy5eqkors6a5i7voassqz4unv3yhh5pcqyi7za"
+                }
+            ]
+        },
+        "client_code": {},
+        "cloudbank": {},
+        "cmp-ape-nprd": {},
+        "cmp-ape-prd": {},
+        "cmp-aplis-mgt": {},
+        "cmp-app": {
+            "VCNs": [
+                {
+                    "name": "vcn-client-app",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7ia5ovmr6criljic5rhywr7gml3lic66436rw4l2whhenda"
+                }
+            ],
+            "Compute Instances": [
+                {
+                    "name": "bastion",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ic2ebjmpgnijbj7v7gujtehtpxloqir24jxnt6wznlb7oq"
+                },
+                {
+                    "name": "gitlab",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ici53keqpbxobz44xg2iage466hn5or5wsslqe57isblka"
+                },
+                {
+                    "name": "jenkis",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icltmwvql5odk4loa4lbc65lvb3pci6v57lx74ylxx6hoa"
+                },
+                {
+                    "name": "oke-c626ar55gfa-nxo2f6igsla-s323r5z2xlq-2",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icbuucdwpzovpq3e2fjfqewsbgumqwgb3f2gyo2ak2vsoq"
+                },
+                {
+                    "name": "oke-cod6ero6nxa-nq2dpriub2a-s323r5z2xlq-4",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icikdhytxml35tgycdbscrfatgkylrrhfgcnii5ajfsaxa"
+                },
+                {
+                    "name": "oke-c626ar55gfa-nxo2f6igsla-s323r5z2xlq-0",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljto7vto7icawf6hjcpgg3r3cnoknmsoopo6fhlnyqvp3xozhszom2q"
+                },
+                {
+                    "name": "oke-cod6ero6nxa-nq2dpriub2a-s323r5z2xlq-5",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljto7vto7icfc6sfhgayxqlq7c45rvtlupxnyoqfsqicaddjqszt6ea"
+                },
+                {
+                    "name": "oke-c626ar55gfa-nxo2f6igsla-s323r5z2xlq-1",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljso7vto7ice5ycb6t65r7gxp6tmgr4dqkbplavrafanbxxq5yziawq"
+                },
+                {
+                    "name": "oke-cod6ero6nxa-nq2dpriub2a-s323r5z2xlq-3",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljso7vto7icunnbmnlgkvfnuyjnxswseujyvo2focosznah7idmig2a"
+                }
+            ],
+            "Block Volumes": [
+                {
+                    "name": "amd-storage",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljrcfz3ceyluszyz4gw2b5bnuglnr5ogllybveg4xyl3pb2r7tepnuq"
+                },
+                {
+                    "name": "ollama",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljri4gwyim2jkucjn4dfesuhnpwhuufwqyhlvy3ttu2swjdhdflpela"
+                },
+                {
+                    "name": "csi-3e0d5a22-0d02-4ea1-aab5-4bc25749373e",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljr2ezf2myriba44au2isnw6c2jvm23p3qluvezsff3wyr3dqnv5uaa"
+                },
+                {
+                    "name": "csi-6ded5240-6f63-41af-b394-0ec1ca3a9dd0",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljrclg56u6dgtd23wf7simo2obrwnyyrpgmzfyealoyrxv4xl56cuoq"
+                },
+                {
+                    "name": "csi-2dc84d26-ee60-41dc-b9a1-c4eb426de51c",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljtmhnrircbziqa264nj2cqh6mldxkxwfk32qm3ad4o3eis4m3ok5rq"
+                },
+                {
+                    "name": "csi-c271ef4b-633c-4e2e-8514-169bd66d92fa",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljs2uqqfq2ijhlft277wo34m7hxtoznxenqzypxocbikyqhckqcfq7q"
+                },
+                {
+                    "name": "csi-477c120c-4944-440c-9851-c6d1b66e186a",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljszkcx6braofywpazyrybnqa7f4uomb6rgysyu7mxerfke6zz5tgtq"
+                },
+                {
+                    "name": "csi-ead1430f-4169-42db-a208-522f5fc75292",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljs7yqsh2caf2zvmitaq5hfy7vhfmqit6lro4kzpctbo5j5go57mueq"
+                },
+                {
+                    "name": "csi-ac0ad395-32b1-4d83-95e6-ab0053a9c073",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljsgavcd6swqygqua2vp7dlgs2shaylw6wpdt7zswfenn7i7slmefyq"
+                }
+            ]
+        },
+        "cmp-ats-mgmt": {},
+        "cmp-axi-dev": {},
+        "cmp-axi-mgmt": {},
+        "cmp-axi-prod": {},
+        "cmp-axi-stage": {},
+        "cmp-axi-test": {},
+        "cmp-cust": {},
+        "cmp-custA": {},
+        "cmp-customers01": {},
+        "cmp-demo": {},
+        "cmp-enowa": {},
+        "cmp-enowa-dev": {},
+        "cmp-enowa-shared": {},
+        "cmp-enowa-test": {},
+        "cmp-epsilon-apex01": {},
+        "cmp-epsilon-mgt": {},
+        "cmp-mgmt": {},
+        "cmp-mic": {
+            "VCNs": [
+                {
+                    "name": "vcn-mic-exa",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iaspe3qjnmhifbwwj67y47tzko5ke2gnokqaewakhtuo5q"
+                }
+            ]
+        },
+        "cmp-nprd": {},
+        "cmp-ortec-db": {},
+        "cmp-ortec-mgmt": {},
+        "cmp-ortec-mgt": {},
+        "cmp-plw": {},
+        "cmp-plw2": {},
+        "cmp-prd": {},
+        "cmp-scope-client1": {},
+        "cmp-scope-mgmt": {},
+        "cmp-transtek-mgt": {
+            "VCNs": [
+                {
+                    "name": "vcn202310301342",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iakxgm4ym4f5r4mryfszf2xjr2uc5tmqyhfvel26zbtgcq"
+                }
+            ]
+        },
+        "cmp-transtek-poc": {},
+        "cmp_cegid_app1": {},
+        "cmp_customer01": {},
+        "cmp_customer02": {},
+        "cmp_demo_app": {},
+        "Comarch-workshop": {
+            "VCNs": [
+                {
+                    "name": "comarch-vcn",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iaidbh43nlwdv7eu7ijdtsrpiaihybroovbtnx2krqulwq"
+                }
+            ],
+            "Load Balancers": [
+                {
+                    "name": "Comarch-LB",
+                    "id": "ocid1.loadbalancer.oc1.eu-frankfurt-1.aaaaaaaagkjxfxbu4wypwel4ygdylpiflr6isosoiue54co3rcbt3qbkdiwa"
+                }
+            ]
+        },
+        "Comp_Managed_keys": {},
+        "comp_mgt": {},
+        "Companjon": {},
+        "Companjon-final_test": {},
+        "Companjon_POC": {},
+        "Companjon_SPLIT": {},
+        "cust01": {},
+        "cust01-acc": {},
+        "customer-comp": {},
+        "Customer1": {},
+        "Customer2": {
+            "VCNs": [
+                {
+                    "name": "Customer2-VCN",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iaedq2zpalkhhedzzfsypb2fyn34kj6xx6nzu7nedbbuua"
+                }
+            ]
+        },
+        "Customer3": {
+            "VCNs": [
+                {
+                    "name": "Customer3-VCN",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iagf3jaajbrhu2lvtdrd76qg5uq6txdfy2hsvsnfwlvwzq"
+                }
+            ]
+        },
+        "customers": {},
+        "daniel.munteanu": {
+            "VCNs": [
+                {
+                    "name": "Target-VCN",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7ia6eccb6qase2q6cjagi3bznltrlhsra4khnuwzv764dqq"
+                },
+                {
+                    "name": "Test-VCN",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iasvbmr62kvqcs4tf7evm47gd6ftwi2lwelncbpcfbmxaa"
+                }
+            ],
+            "Compute Instances": [
+                {
+                    "name": "test-app-1",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icxk2ugvbpsnh67jlo747s2kxwtnnj4rshdt5vipvnwjka"
+                },
+                {
+                    "name": "test-app-2",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ichty2zup42rxaman4w726ybkskdotbhi5g7tsaqolnkka"
+                },
+                {
+                    "name": "test-lb-instance",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icci2clll6kvj7egtxb2wljmtxarmsal6x2ucrveuhzcvq"
+                },
+                {
+                    "name": "test-lb-instance-2",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icezbc7my75mmbtqajttncvorchdklmlm42svpxuoz4jda"
+                },
+                {
+                    "name": "test1",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icdk6khgghvcexpai2yphmahomrkslmbczzvttaick2ezq"
+                }
+            ],
+            "Load Balancers": [
+                {
+                    "name": "test-lb",
+                    "id": "ocid1.loadbalancer.oc1.eu-frankfurt-1.aaaaaaaaa4npvg7qeim5co5dhji2jv3pnqxkflmly33chhtmde5ggpt2ufca"
+                }
+            ]
+        },
+        "daniel.munteanu-test": {
+            "Compute Instances": [
+                {
+                    "name": "bastion-instance",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icxdwmjxqcli2vf3lol3mj3nx64pfsqgw4jcyd4ym4tmpq"
+                }
+            ]
+        },
+        "daniela.croitoru": {
+            "VCNs": [
+                {
+                    "name": "labVCN",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iaeglcsocbbzwhupvqst2kqh3h4wcde6y2ldwpiugg56gq"
+                },
+                {
+                    "name": "VCN_DC_OCI_LAB",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iasfs4jjbagcn5ind45ycbmswjkofxcavwtvgzy6n6ngqa"
+                }
+            ],
+            "Compute Instances": [
+                {
+                    "name": "JumpHostDC",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icr2rxegmzcrub7sksp2esm4dtwsejqgqmgwroyzpykwrq"
+                },
+                {
+                    "name": "OGG-ZDM-ON",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icyvkkqu6y3ev3obr3wqgarhqrd3tnkkbh3w3t3mmwie3q"
+                },
+                {
+                    "name": "OGG4DEMO",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ic4arhqvjxuq4io2lmw6uukta3n5tneci6bksx5v57fxqa"
+                },
+                {
+                    "name": "instance-1914",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ichtjl7w6ldk5nob2jb4i7x6deipyxg4ozxrnek7q7morq"
+                },
+                {
+                    "name": "onprem19c",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icpzi2dn7rfjsjutgjg42x7x2vjbkwpupouzccosdwadza"
+                },
+                {
+                    "name": "srchost",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7iclocrncua4unsgdzmhg2mhv4mhjbznzmekmuhsv2giura"
+                },
+                {
+                    "name": "test1000",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icjpeu3gdfzjceeairpzof5zev4f5nyjcwu4bp4kh62xpq"
+                },
+                {
+                    "name": "test_19cru14_ol8",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icjnswh6xubqpqaz6kahz7nlpw44z6cwd5gveh4goxex3q"
+                },
+                {
+                    "name": "zdm",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icugjpkuo6a6icjkgo4voehvw5n7gxvpocygwzbtkxkura"
+                },
+                {
+                    "name": "zdm03",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icozg3mwilgp6spxzqbmzolqohkcna7rrly6iec52on7ba"
+                },
+                {
+                    "name": "JumpServer",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljto7vto7icq72m36bnam4dc63ujvomhzvg7dlmdcce2ccqmrj5pymq"
+                }
+            ],
+            "Block Volumes": [
+                {
+                    "name": "BV-DC-LABS-OCI",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljrppogwajo6e5tq4bdcqd5g56j7dn3g2wesr6ybldubiwzuzozrm4a"
+                },
+                {
+                    "name": "OGG4DEMO (Trails)",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljr7j43o3geeb5nzprhkhdgkj7qigygks6hci3mhjp22jf7igzhgcmq"
+                },
+                {
+                    "name": "OGG4DEMO (Swap)",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljrui2jitepcfewfrxpqpb2ir5hgmxplbjmv7bbx7pbynevq5nsv2da"
+                },
+                {
+                    "name": "OGG4DEMO (Cache Manager)",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljrylhuxuyvdktmggknnvjuv7gdvfgcdoipaw6i5x73zjdlbzncrlwa"
+                },
+                {
+                    "name": "OGG4DEMO (Deployments)",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljr2qf5qhep7shet6owmzjiuoz64kwyi6vr2lfoc3t33dv3sdullh7q"
+                },
+                {
+                    "name": "OGG-ZDM-ON (Swap)",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljrce3zwim7z5qvl7eh2nymfrsungf7oxxy46aq7uvfr5tlpm5ql5mq"
+                },
+                {
+                    "name": "OGG-ZDM-ON (Cache Manager)",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljrkrwjlxsioylwi7iunvfkies3w6mkdpulwxlesorsmixpoh7gavga"
+                },
+                {
+                    "name": "OGG-ZDM-ON (Deployments)",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljrjkgbb2uucm4xr3zba5rku24m6ym2oltsf5i2bjiktxtk5z4szlzq"
+                },
+                {
+                    "name": "OGG-ZDM-ON (Trails)",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljrycl56rmbbyzkd5qx2dwhwbiwozzavn5r7ramtqeeju4yauopgy6a"
+                }
+            ],
+            "Autonomous Databases": [
+                {
+                    "name": "ADWDC19",
+                    "id": "ocid1.autonomousdatabase.oc1.eu-frankfurt-1.antheljro7vto7iagte4rsmgnynfx4jo7gx2mesnain3vplhnltxxo6m7ocq"
+                },
+                {
+                    "name": "ATPDC19",
+                    "id": "ocid1.autonomousdatabase.oc1.eu-frankfurt-1.antheljro7vto7iazmbrhlr2lvu2tjbw5ydszuu4lyfbut6x5sah6s55pwaq"
+                },
+                {
+                    "name": "OCICLIDemo1",
+                    "id": "ocid1.autonomousdatabase.oc1.eu-frankfurt-1.antheljto7vto7iaeicgnawjo4vnk57jjmrbjaumfq3xl54v6mj3jzpilhca"
+                }
+            ]
+        },
+        "daniela.manta": {
+            "VCNs": [
+                {
+                    "name": "testnexus",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7ialgka4hj5szydfcypg2hyx2bxvluzke4fgz5vvzgz6hka"
+                },
+                {
+                    "name": "EXAvcn",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7ia5itrygibzbkd3b2k73lirbejz4mwipafeh4svh74a62a"
+                },
+                {
+                    "name": "vcv-second",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iasdqslq7q62wtsfzzwdespidbksif4eqxgi66vndu6pra"
+                },
+                {
+                    "name": "vcn-central1",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iarxz3pbwbnmykp4kb6z6ly4clukqx4g72ykzwhhljj3oa"
+                }
+            ],
+            "Compute Instances": [
+                {
+                    "name": "Cloud_Developer",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icq7ajk2poe54b23mbmoyhesr3zxfehn2xijlsjwjcwvna"
+                },
+                {
+                    "name": "bastionexa",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ic2i6lnee3ek6l6a26doqfgs4ge2ylome6vf4tjeiodrza"
+                },
+                {
+                    "name": "instance-ADBsub",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icxxudepvj4jddpxo6vmwlqsormd7uhxg7nhyhzdgquoaq"
+                },
+                {
+                    "name": "sourseIAAS1",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icq6qrd4phwkyit3hivwsld53nzs5hkqmc5vxpqds5vllq"
+                },
+                {
+                    "name": "zdm21.3",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ic5st4qhzlb6ltdngpi3fwyycpwot4a7cvf4ktgdtebqba"
+                },
+                {
+                    "name": "zdm21.4",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ic5xxnyv2u7ll4ubyktxuqzihhgh5kome6sac6uopxnlvq"
+                }
+            ],
+            "Autonomous Databases": [
+                {
+                    "name": "kitt419c",
+                    "id": "ocid1.autonomousdatabase.oc1.eu-frankfurt-1.antheljro7vto7iawjlc2ltgasuzzpeoulqgx2v4wgg7s2zmnxs4kwc3rxyq"
+                },
+                {
+                    "name": "ATPPR",
+                    "id": "ocid1.autonomousdatabase.oc1.eu-frankfurt-1.antheljto7vto7iaz7zw7qijef6xdus2qjvg2rflmgzz4u6azbu4ojsz6rdq"
+                }
+            ]
+        },
+        "dbcs_association": {},
+        "dbmgmt-demo": {},
+        "demo": {},
+        "Demo": {
+            "VCNs": [
+                {
+                    "name": "vcn3",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7ia6zmqr4jniu5fgu7hfsz5yvyjnb46qfiaqtqfnbivynpq"
+                },
+                {
+                    "name": "vcn2",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iazquyn22zjpimpqirlzwiwsdegtc2amppe34pyr5wvdrq"
+                },
+                {
+                    "name": "vcn1",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7ia5x5l37fzxdy22tsyghfpzahjbpc5usglnotpnf547bsa"
+                },
+                {
+                    "name": "Demo_lab",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iarcebtymcp2ebk4w7wf53kekaoyyiarc3vi5vorsaoobq"
+                }
+            ],
+            "Compute Instances": [
+                {
+                    "name": "instance-private",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icdjytmcgb7mxgo3iz4yulm7s7xvcsxvasjrrcrrk7l6ba"
+                },
+                {
+                    "name": "instance-public",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icddf27pj6i4qz7rwcaskbxseqzrpmcqqrpsy55qpja5cq"
+                },
+                {
+                    "name": "instance-vcn3",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icuu334zfowexorbiuzhvytoyjbramefh33lfugmqfcovq"
+                }
+            ]
+        },
+        "demo-poc": {
+            "VCNs": [
+                {
+                    "name": "vcn-oke",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iacdqd4s5emmbjnuxiooxmywcyyh4sso5ok4vtoiuqlvsq"
+                }
+            ]
+        },
+        "demo_devops": {},
+        "deployment1": {},
+        "dev": {
+            "VCNs": [
+                {
+                    "name": "vcn",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iaaob2kacudguz6ngvs7clu35z367mv75kl22ckutggcla"
+                },
+                {
+                    "name": "VCN for remote-exec integ test",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iatbvpgaplny7obp6ya6lrggke6kbqfxj3ou6g55xgeaxq"
+                },
+                {
+                    "name": "dev",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iawabkssyizns4w7iaafijrsialc2ygxibrexgeywkscka"
+                }
+            ],
+            "Compute Instances": [
+                {
+                    "name": "bastion",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7iceblvrdrcf53enepwkuhz5ibh5cyo7ixcrbtdzqlmgmhq"
+                },
+                {
+                    "name": "bastion-eve-ng",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ic7elnszrhdyws3ijqkxaezwobdwiw7ba2qlazg7jsb24a"
+                },
+                {
+                    "name": "eve-ng-vm",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icpmvnzgvjeqivjkvcxceypqdovlw2326ken2y6drbu44q"
+                },
+                {
+                    "name": "oke-c3fzl5ikapa-nbda4siuasa-szjmcawckba-0",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljto7vto7icc5neqjtb2mbfjych7dvdjnd3e7oke4cc5ud4fvkhru2a"
+                }
+            ],
+            "Block Volumes": [
+                {
+                    "name": "csi-c6008019-6e94-449a-a3ba-b88347490b68",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljrhvzpjdrczbd6g2e5o2f2tltggt25xjmqt47unpsuddkc4us6fjkq"
+                },
+                {
+                    "name": "csi-10e48c9f-79a9-41af-a7fe-9e1dd74adfc3",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljrppdiwlv3hq7uahv5tb4iv4nsyaui53dj2j2htym5vyoiwblvmavq"
+                },
+                {
+                    "name": "vasilica",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljrgayq7ebvmgn4hbx2nb3m5wucwmdahme47atnxnqtitjpt4sr2zia"
+                }
+            ],
+            "Load Balancers": [
+                {
+                    "name": "d86afe00-27d6-4101-ad57-c992e2fadbc4",
+                    "id": "ocid1.loadbalancer.oc1.eu-frankfurt-1.aaaaaaaatrpd4q635lupculwibif47s523ncyxukunudrbmut6lcjpkifhrq"
+                }
+            ]
+        },
+        "DEVOPS": {},
+        "DotNext": {},
+        "dotNext": {},
+        "emad.masoud": {
+            "VCNs": [
+                {
+                    "name": "Comarch",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iakryb24mbwwo7gvpkex6rcfxpintwjljbewmvsc632cqa"
+                },
+                {
+                    "name": "VCN_ATTACH",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iacdsypn2zl6bk4x3efpd4i7ccmzlo5bftrhmwei5jqiwq"
+                },
+                {
+                    "name": "VCN_LPG",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iauvcohun5brjs2ru34eptywkcvrddqqpiivw7philfmua"
+                },
+                {
+                    "name": "VCN_HUB",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7ia3z3w2rz7mczhj4iffpdrfnc6upmta3uu2xbtuihkslja"
+                }
+            ],
+            "Compute Instances": [
+                {
+                    "name": "ATTACH_Instance_Private",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icb6lzcjyoyi6kx4cp2yqepkgjholg7or5b7zoihfevuzq"
+                },
+                {
+                    "name": "DanielTest",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icbac4ygb6ovbg6wighkxixbkn75mi3hk2wow7lslqviqa"
+                },
+                {
+                    "name": "HUB_Instance_Private_1",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7iczv7fa5qfhkscpbbdd74gdbq4mazzwhako2a7uixb4y4a"
+                },
+                {
+                    "name": "HUB_Instance_Public_NAT",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ic6cqu4th5yw4icovgki4tf33uoojojxpspmomct7a3ara"
+                },
+                {
+                    "name": "LPG_Instance_Private",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icms6rvbqnt3k437jdm46uyezlil3rvpslkpbzr6wwrf6q"
+                },
+                {
+                    "name": "dev_av",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ic2phqurrucu4hc5dtcxbd76pqzocvrhvfk3e2rcq44o4a"
+                },
+                {
+                    "name": "instance-20240708-1258",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icewhdlsnkvzozqyrc3vqxmz6lilvzk4ep5zty2hyg3faq"
+                },
+                {
+                    "name": "instance-CAS",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icntszbm5cqwcz5oal4ovdo7w3ybvuccof4lhgrmu3zkga"
+                },
+                {
+                    "name": "openvpn",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icdvfs7yfshke4qpenp3dkubvs52ds2n4gopzwj7kot2fa"
+                },
+                {
+                    "name": "thales",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icf3w5u4btxfrii4nyi5bv65bxokdkhlpcnfi4g3siqmfq"
+                },
+                {
+                    "name": "HUB_Instance_Private_2",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljto7vto7ico6mbosmzjusmy5wkemu3pqcmpzbtbcrduuq6fhkf375a"
+                }
+            ],
+            "Block Volumes": [
+                {
+                    "name": "emad_test",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljrfepzthl6ebryjh7eiz2xfgsw37pqodiriiqvmuwn555bvf3rs6ka"
+                },
+                {
+                    "name": "small_emad",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljr7qjtwwoeaerthpqyhdjbkabivty2clqouaqz2khhewyap25cnroq"
+                }
+            ],
+            "Autonomous Databases": [
+                {
+                    "name": "Z0Q10IIU54WQK4JN",
+                    "id": "ocid1.autonomousdatabase.oc1.eu-frankfurt-1.antheljso7vto7iapsuyahgz3u5wnv5mhsn6527vvnhp4maduewh4jxgiioq"
+                }
+            ],
+            "Load Balancers": [
+                {
+                    "name": "lb_Emad_SSL",
+                    "id": "ocid1.loadbalancer.oc1.eu-frankfurt-1.aaaaaaaa36z42ibysvu6aiek7uicveoj4p53wv6jejkzfrt7exug5q3zm4hq"
+                },
+                {
+                    "name": "lb_2023-0628-1731",
+                    "id": "ocid1.loadbalancer.oc1.eu-frankfurt-1.aaaaaaaapndpe4yi7x3iu6nlbcu63o4dgc7girwszvq2w52p3st22ihyqrrq"
+                },
+                {
+                    "name": "testlb",
+                    "id": "ocid1.loadbalancer.oc1.eu-frankfurt-1.aaaaaaaa72d6zm4e7mzm2u24jekrlua5rn75ltmxjhcsb5dwji2u23xldwiq"
+                }
+            ]
+        },
+        "email-compartment": {
+            "VCNs": [
+                {
+                    "name": "email-VCN",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iadbbv54e36eiti7n3bc4xhmoysr3xoxvyaqjjza2nypwq"
+                }
+            ]
+        },
+        "Epsilon": {},
+        "Epsilon2": {
+            "VCNs": [
+                {
+                    "name": "oke-vcn-quick-cluster1-9034f3af8",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iaocm2q2ntmwmytuvxgvhvlgxuvd6omh5m6faf6hsvt44a"
+                },
+                {
+                    "name": "oke-vcn-quick-cluster1-41142428c",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iahpmxd3b3rjgr7337h6njdor225luoajw55ct75bnphta"
+                },
+                {
+                    "name": "vcn- epsilon-apex01",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7ia7t75tmxhichqhivvls2khyirhbasc7mrwzeusjpx3dqa"
+                }
+            ],
+            "Compute Instances": [
+                {
+                    "name": "instance-20241213-1605",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icbnkmdkhviq7726xe7g3fmpwdyp5ao6hi43xa4otuexnq"
+                },
+                {
+                    "name": "instance-windows",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icjouryrgo7w75acyxtquqs2iks66bhdneejwv3xvd45mq"
+                },
+                {
+                    "name": "oke-cnlii4v2oia-n6izecqgeoq-sm3k3ph7ebq-0",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icfbz4ytvjywslyvazszpme4t6hxvfhclo5qzr3vs44obq"
+                },
+                {
+                    "name": "oke-cnlii4v2oia-n6izecqgeoq-sm3k3ph7ebq-1",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljto7vto7icdbvahx6nwgtdze7spgo37qmzu56valvmtw6rkjhrbhxq"
+                },
+                {
+                    "name": "oke-cnlii4v2oia-n6izecqgeoq-sm3k3ph7ebq-2",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljso7vto7icbloycy74ghtbhphv6tsynbxny3676rruyshtorzulvma"
+                }
+            ],
+            "Block Volumes": [
+                {
+                    "name": "bvtest",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljrspldywszkm62mnyamlgctsbboygdbaemkhbvbnqycqnxs7wdanqq"
+                }
+            ],
+            "Load Balancers": [
+                {
+                    "name": "lb_2024-0422-1528",
+                    "id": "ocid1.loadbalancer.oc1.eu-frankfurt-1.aaaaaaaabhlybzk26yg45gglotthtff2buc43wmo6wifdz4dd4apyy22yzua"
+                }
+            ]
+        },
+        "Ericsson": {},
+        "ericsson": {},
+        "FCRS_DEV": {
+            "VCNs": [
+                {
+                    "name": "VCN_FCRS_DEMO",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iadyfy627ytjzkxvwyc2vai2vojmdlcpkshzlwhgocxpja"
+                }
+            ],
+            "Compute Instances": [
+                {
+                    "name": "VM-FCRS-POC",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icpcbu4mcoqrf7plupg6526b4jpkuxwwmeozmewbewur4a"
+                }
+            ],
+            "Autonomous Databases": [
+                {
+                    "name": "FCRS_POC_23",
+                    "id": "ocid1.autonomousdatabase.oc1.eu-frankfurt-1.antheljso7vto7iacztn5bqaekaqr7gjq6kubzagnmb7m7ae4enrx7gnqouq"
+                }
+            ],
+            "Load Balancers": [
+                {
+                    "name": "LB_FCRS_POC",
+                    "id": "ocid1.loadbalancer.oc1.eu-frankfurt-1.aaaaaaaau4fzmhgmidkamgpnqvh65c3u6canexz3usk3jec6fmrxgriwb5kq"
+                }
+            ]
+        },
+        "FSDR": {
+            "VCNs": [
+                {
+                    "name": "FSDR-VCN",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iavcy6heyu3g3ydnmji3a7shxvgchpklvcxnl6dheoxfma"
+                }
+            ],
+            "Compute Instances": [
+                {
+                    "name": "Linux-fsdr",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icscdgfdnhbrqhfzjqm6lxdpi24eld4afe5v7v34ufdgjq"
+                },
+                {
+                    "name": "Windows-FSDR",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ic2xzlrz3anssoyo2edoviuevs6regvanyfck4yaepxx2a"
+                }
+            ],
+            "Autonomous Databases": [
+                {
+                    "name": "M1G6V7I21S8WRATM",
+                    "id": "ocid1.autonomousdatabase.oc1.eu-frankfurt-1.antheljto7vto7iada7aveecnmmrujd54sru4ftm4hneulmux3ymzq2nmjbq"
+                }
+            ]
+        },
+        "FSDR_Demo": {
+            "VCNs": [
+                {
+                    "name": "VCNFR",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iaaq5wpgmdyl7c7hdj2xc3f3273uox7hhigdjkgqumlyha"
+                }
+            ]
+        },
+        "FTP-test": {
+            "VCNs": [
+                {
+                    "name": "DB",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iakbsjhwbp2zmqsy2ilu3l7yo3dfjflq7tmslmjvlm5hnq"
+                },
+                {
+                    "name": "ftp-test",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iaroutojvvy532m7vgygjraquocymt6xuxdtqhyc7fhaua"
+                }
+            ],
+            "Compute Instances": [
+                {
+                    "name": "instance-8",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ic7uc4nxrbht5xhrkcuqb2jf6dwto3uusrehkxvygm5nkq"
+                },
+                {
+                    "name": "upgrade-to-8",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7iclhsecixuha6cqns77ig6fdlw522o5db53qwvidwouamq"
+                },
+                {
+                    "name": "windows-1",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ic3c57vfd7h6iqds4s4alkogip7xogrlzq7mruqp5zosaa"
+                },
+                {
+                    "name": "windows-2",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ic7taazjupdl6f2bbr5ympvr5gayf3hjjis4g2ujiaj6hq"
+                },
+                {
+                    "name": "windows-private-instance",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ic3y2enejfpt5cicj2pw4dp6jl5vgetuxqb533ysqzgtaq"
+                }
+            ],
+            "Block Volumes": [
+                {
+                    "name": "test-ftp",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljr36q3plxz3dnnlj5tov7q73rdhtwkoiyfap7adjzz2m3vx2op5vtq"
+                }
+            ]
+        },
+        "gabriel.tarasescu": {
+            "Compute Instances": [
+                {
+                    "name": "Work-Env-GT",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icbztcvtub7izrbyz3ejov6c5r26ccygat2tz24qqpadbq"
+                }
+            ]
+        },
+        "george.constantin": {
+            "VCNs": [
+                {
+                    "name": "apex-ords-db-vcn",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iaohngxfvfy2xinnlja73qfutfjl5cnifhza7mqixru2qq"
+                },
+                {
+                    "name": "VCN_HUB",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iaxqw74rrnwwz6jya5qnanv7sgqlxwxk6ffa7oa4u6jbdq"
+                }
+            ],
+            "Block Volumes": [
+                {
+                    "name": "gec-bv-dev-instance",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljrowtbythqlzuq7egmwkq2hixdcii775onlm4elpwzqwujxtnykoxq"
+                }
+            ]
+        },
+        "george.soare": {
+            "VCNs": [
+                {
+                    "name": "xsgsvcn",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iaxw4ne4ejudf2wqthaetojrnsqhoew37ennaug7vyl3va"
+                },
+                {
+                    "name": "xsvcn",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iaxbbo4spgzgwhyrwt535kpo2hx4wuzrbh5unswfn6chaa"
+                },
+                {
+                    "name": "GS_VCN",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iamzgkz7tigwxirifq3ahn65wxnhpu5s6a2zb4k7htzj7a"
+                }
+            ],
+            "Compute Instances": [
+                {
+                    "name": "CIPAL-Ansible",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icc2kk6apzzmeceqjnn72cufllfxstoqvjibhhhmg7coqq"
+                },
+                {
+                    "name": "CloudDevLinux",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ic6grwuls5dn5nl3ss75rvzdeyydtuilqa7uy2unuj3efa"
+                },
+                {
+                    "name": "ZDM_Private",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ic4362id654dtrmlk6c3co2oy3uwmcnwqclblcxh7fmn7a"
+                },
+                {
+                    "name": "bastion-mgmt",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ict5gcunve4q2f4kchvhlpjx4p2l2kxlbcpaiwpmcjheea"
+                },
+                {
+                    "name": "instance-raducu-grafana",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icy5x7plwxcvzv5fm2vl26p5unq7qsmxwzxggicu5jfcbq"
+                },
+                {
+                    "name": "EM-OMS",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljto7vto7iczj2wa5mvlgzsv222q2oc6uu26vzc34pj7befw2zokxbq"
+                },
+                {
+                    "name": "UbuntuGS",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljto7vto7icbnkr6jqd327ed7fceqdd55pjjoaz3xvizyhmkadsxwoa"
+                },
+                {
+                    "name": "MariaDB1",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljso7vto7icu4t5itaqkyfskmaz5naxncrkncerybzfwpkh5sxcqfwq"
+                }
+            ],
+            "Block Volumes": [
+                {
+                    "name": "ubuntublckvol1",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljtlffuntumdf5ssxqzy2e4577ym5kkglmbvjkuxmr6434dzcac4y5q"
+                }
+            ],
+            "Autonomous Databases": [
+                {
+                    "name": "RAGATP23",
+                    "id": "ocid1.autonomousdatabase.oc1.eu-frankfurt-1.antheljro7vto7ia7lbw5wqs5hml2hlgcouoxco54t34xqfwms5obu7s5q4a"
+                },
+                {
+                    "name": "RAG_WITH_RAS",
+                    "id": "ocid1.autonomousdatabase.oc1.eu-frankfurt-1.antheljto7vto7iabaf5ffyq3l66u6bkduajim47ukumr64poutrvt7pzc5q"
+                },
+                {
+                    "name": "RAG_DB_USERS",
+                    "id": "ocid1.autonomousdatabase.oc1.eu-frankfurt-1.antheljto7vto7iamj67l2ynd45otjsjq3guazerzon3lknbbu5heloe2cjq"
+                },
+                {
+                    "name": "RAGDB_APEX",
+                    "id": "ocid1.autonomousdatabase.oc1.eu-frankfurt-1.antheljto7vto7iavldtwfl4f6mktf52zw2sy64s6xyh26abot5ln44vb7jq"
+                }
+            ],
+            "Load Balancers": [
+                {
+                    "name": "Load Balancer for GoldenGate deployment ocid1.goldengatedeployment.oc1.eu-frankfurt-1.amaaaaaao7vto7iazayghrlaqzo4t3vnoyx2umxsq6yucfzc6vcz64otfwtq",
+                    "id": "ocid1.loadbalancer.oc1.eu-frankfurt-1.aaaaaaaa4ep7f2xdnhgpfjd2neigoqmqcevzk3th4hj2lcovfh7aoztqjkcq"
+                },
+                {
+                    "name": "Load Balancer for GoldenGate deployment ocid1.goldengatedeployment.oc1.eu-frankfurt-1.amaaaaaao7vto7ia4w2smy4whyg22ktygihj274g2ndhthgsdkbac5od7r5q",
+                    "id": "ocid1.loadbalancer.oc1.eu-frankfurt-1.aaaaaaaaiemj5vdntzl3jkm4cq3e3njwscweiyhr6deewmkzv6vyz3kfpwyq"
+                }
+            ]
+        },
+        "github.tests": {},
+        "GT-AI": {
+            "VCNs": [
+                {
+                    "name": "OpenSearch-GT-AI-VCN",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iaub3nzbkpgbf77qryazzflylsomqq44ctvhhufuslilyq"
+                }
+            ],
+            "Compute Instances": [
+                {
+                    "name": "GT-Ubuntu-python",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icojcvojkctc2ovco66zprf773a2guqo2mvgnomtkfsokq"
+                },
+                {
+                    "name": "gt-ai-python",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ic5qdpa7rae2blgynznt2sif5td3didfka5ucgbawqpieq"
+                }
+            ],
+            "Autonomous Databases": [
+                {
+                    "name": "ATP-Apex-GT",
+                    "id": "ocid1.autonomousdatabase.oc1.eu-frankfurt-1.antheljro7vto7ia75diqwrcd2mosedotavhni5qqlb3yua5b6sbga7eb5cq"
+                },
+                {
+                    "name": "ATP-APEX-AI-GT",
+                    "id": "ocid1.autonomousdatabase.oc1.eu-frankfurt-1.antheljto7vto7ia5vpvtiyt5ys22cmlr6e5slr46b7amshd27mh6ayxua3a"
+                },
+                {
+                    "name": "H3R8VFMU700SL7S2",
+                    "id": "ocid1.autonomousdatabase.oc1.eu-frankfurt-1.antheljto7vto7iaodk7whqz3i4yhoktfivfiieftlpoqvcm2ldbby7tziza"
+                }
+            ]
+        },
+        "GTAnsible": {},
+        "GTTerraform": {},
+        "GTTests": {
+            "VCNs": [
+                {
+                    "name": "VCNTests",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7ialwcw5qtcdbjyuqb2szvm3dqrvfzymzjtho6qn4kqm4ta"
+                }
+            ],
+            "Compute Instances": [
+                {
+                    "name": "OLAM-New",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icyynzqwviz242jj5q7yolzimjp6twx3syfinn2sannfna"
+                },
+                {
+                    "name": "OLAM-Test",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ica5deivgfpuzuacf6rawp34keepypi6eeg6glr5aoi7bq"
+                },
+                {
+                    "name": "Rancher-Oracle-Linux",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icxuqvgypea7qvbqwz6f3i52zepdvnze73onjbjtuxl2ba"
+                },
+                {
+                    "name": "centos-rancher",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icpdjay3pw6d53lqyy7ddreyp3t4vqzbw5zfshhymehs6a"
+                },
+                {
+                    "name": "docker-rancher-redhat",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icwao7tkukoz5jhjigeckcylnq34op6ztgl6umxbpahx5q"
+                },
+                {
+                    "name": "instance-20250709-1036",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icuiutkmqkhlm2d3irxm5clck5yky76mhwdesh27bijrtq"
+                },
+                {
+                    "name": "OLAM-Demo",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljso7vto7icubzexltoukni46pff36xct3gitei6tq3ttapykaaolrq"
+                },
+                {
+                    "name": "OLAM2",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljso7vto7iche5phyyige7tjfhcj6z4yq2qf7adc2hjxywiscbvx2dq"
+                },
+                {
+                    "name": "VM1GT",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljso7vto7iculnizj7aclymbe4x2xrfjbsik36xbtlpwxr2to67hqeq"
+                }
+            ],
+            "Block Volumes": [
+                {
+                    "name": "bch1-disk_i",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljrmb4gce4d37c66yurtketeaa2exrtqpxpnmjjai4qlevwmrvrxwrq"
+                },
+                {
+                    "name": "bch3-disk",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljrxjh7c4kbheworv6hjzemkt2uevodr6xiutpthhbksal2swp5fmta"
+                },
+                {
+                    "name": "bch2-disk_i",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljtrz7auwjgvga2x2bgojiuptgmnfqrfm6iuxd7su64txolfpfdp7ua"
+                }
+            ]
+        },
+        "hitachi": {},
+        "Idtech": {},
+        "Infra": {
+            "VCNs": [
+                {
+                    "name": "west-lpg-vcn",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iav65ph3tuytr7dyonusm2khxidpoubn74qzh7m47wbkva"
+                },
+                {
+                    "name": "west-vcn",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7ias2vbxadhxifn5mwlezzm6xkfkelbzbxmnjnlyupz34sq"
+                },
+                {
+                    "name": "HUB-VCN",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iazct7nlrchu2dvfz25s6txvxzs2xkyz52usduhcgbgnoa"
+                }
+            ],
+            "Compute Instances": [
+                {
+                    "name": "test-instance",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icgzsdopvexs5dp6gch5otgnxhijra7lo6arjpjypm5eta"
+                }
+            ]
+        },
+        "ISV_Projects": {},
+        "KCS-AMS": {},
+        "kerridge": {
+            "VCNs": [
+                {
+                    "name": "kerridge-VCN",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7ia2mcvkr44stn5ernnwxy4vlkx3teabolpxlqsiuatn42a"
+                }
+            ],
+            "Compute Instances": [
+                {
+                    "name": "dev-instance-kerridge",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7iciivg3c7cxqcvih7lxlwznflpncdhi6ysbprtmogg7b6a"
+                },
+                {
+                    "name": "prod-instance-kerridge",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icoy5n5a4en44msupwskbpnpqluuipgospaoafyv7hwoxq"
+                },
+                {
+                    "name": "test-8.0-same-compartment",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ico66rrggmaczbmlx5jaqb474zy47dkccnekfkgqabrpna"
+                },
+                {
+                    "name": "test-instance-kerridge",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ictca5qj2bkire5djed5izdg4p7a34x5hb74d3itzdwfma"
+                }
+            ]
+        },
+        "kerridge-child": {
+            "VCNs": [
+                {
+                    "name": "child-vcn",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iay5lgbphgumlp6n4h4boj5632grf4jdaadqdqokugfsha"
+                }
+            ],
+            "Compute Instances": [
+                {
+                    "name": "test-2-child",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icpqbh2scvy4ho55cvmbcnsfzguoyuc7go3fnp65e5mbja"
+                },
+                {
+                    "name": "test-child-mgmt-hub",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ic6k7mtlhuqnilepjcyr4zc3rcxzbhh5andfsxulfb677q"
+                }
+            ]
+        },
+        "kerridge-child2": {},
+        "KerridgeSA": {
+            "VCNs": [
+                {
+                    "name": "kerridge-customer2-vcn",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7ia375cwpis7tk3e62fsngvyy363sn74vkevcbg2t7eodma"
+                },
+                {
+                    "name": "kerridge-customer-vcn",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7ia45xnutud5n5ytyr36htl5f7dvoy2fmk3euyk6jkq5p3q"
+                },
+                {
+                    "name": "kerridge-mgmt-vcn",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iajtqavzojgeekldwo2jkd7kusudp3gfou7pxhuqno3tma"
+                }
+            ],
+            "Compute Instances": [
+                {
+                    "name": "customer-vm",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icousuextxs5j6smnpw7ve2qeo3hgqslz55dokn6ulpi2a"
+                },
+                {
+                    "name": "customer2-vm",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icu2jfsonyyq6pc6d6wdtshtr5dvco4mblkdmr7lo4aw4q"
+                },
+                {
+                    "name": "jumphost-mgmt",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ic75illzuck5thxntqvjeg2gmvd2prjtrrapt6dvbzcjxa"
+                }
+            ]
+        },
+        "Konfigurator": {},
+        "KPD": {},
+        "kuka": {
+            "VCNs": [
+                {
+                    "name": "oke-vcn-quick-cluster1-bc6547dcc",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7ia4s333j7643brqspeme3nbcobkl67roqj6avjv5auyrqq"
+                }
+            ],
+            "Block Volumes": [
+                {
+                    "name": "csi-111121ae-3fdb-4879-b845-f4009aafdf9e",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljrsxmiicuz5zs2cbdyaqks5ewkvajcq7dsmml4dqgcbirgohjuzapa"
+                }
+            ],
+            "Load Balancers": [
+                {
+                    "name": "opco1-nativeingress-lb",
+                    "id": "ocid1.loadbalancer.oc1.eu-frankfurt-1.aaaaaaaa7jo53hkqd7zp64hjgltb423do7i77kep3qvqyp4hztbot47ebeca"
+                }
+            ]
+        },
+        "kuka_poc": {},
+        "labs": {},
+        "LABS": {},
+        "LABS-mbostina": {
+            "VCNs": [
+                {
+                    "name": "vcn_fra",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iaq2tddy6iwrxe5ikqobtb3jugt4sixk5rmssqd44zwsda"
+                }
+            ]
+        },
+        "laura.tanasescu": {
+            "VCNs": [
+                {
+                    "name": "vcn-web",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iabl5eg3bb7fi4h3px3mnszzireg4r23etlxf5bebhjgwa"
+                },
+                {
+                    "name": "OpsVCN",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iail55d32c5lwalpvi7fi5tu3srqtefncvrtt33cullenq"
+                },
+                {
+                    "name": "sgtechSS-studiovcn",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iaztnefstb5jqxkylvanth4ojk2zzxncwby7g3vvzocglq"
+                }
+            ],
+            "Compute Instances": [
+                {
+                    "name": "opsterraform",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icdf2333ioid7o5zclwq3csbxejmod6cnis7a6ohm4f7za"
+                },
+                {
+                    "name": "sgtechSS-instance-Lo8V",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icf5zacrjke6byx5ojgh6rf2ispg4lgkzjb5kp3melu6gq"
+                }
+            ]
+        },
+        "learning": {
+            "VCNs": [
+                {
+                    "name": "SecureDesktop_LAB_VCN_ACO",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7ian42fkuj74d7qkodruwvqg2nq3ftz5in4onhrga7tngsa"
+                },
+                {
+                    "name": "VCN_LAB_01",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7ia24h4p5lv733x36vg4up3ifxwy6nzo5jn7ruzqrm6qzmq"
+                }
+            ],
+            "Compute Instances": [
+                {
+                    "name": "INS_LAB_01",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ichnfj5b3cfs6atnfjpaomssw4u7q6khxjo56fp3cjywza"
+                },
+                {
+                    "name": "desktop_ocid1.desktoppooldesktop.oc1.eu-frankfurt-1.antheljro7vto7iaf7lv6lrqxtordtulec7uo2p757shynxx6ymiuaswyafq",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icfsdr4nttt3dh6etiv7zqv32spcth7pgrffxquh7htrjq"
+                },
+                {
+                    "name": "desktop_ocid1.desktoppooldesktop.oc1.eu-frankfurt-1.antheljro7vto7iaoitcsvsp3xf7v53nhnm4rwldiahxikiyt4bntxeojcha",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icoqobkk6sd5p4sdvzfrprdfsobzs6hsat47ee25gw22zq"
+                },
+                {
+                    "name": "instance1_LB_ACO",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icjff4bfa2zuppyd2ypxbxgzqhqwmps4wk5znhvfku4xdq"
+                },
+                {
+                    "name": "instance2_LB_ACO",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icu3wpn6eeimnoco62qkn42eb5bixbyj46f6t5u2gmwocq"
+                },
+                {
+                    "name": "n8n-demo",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icmcyyq3d7rluffcz43gi2a3hoiwdoia3untnofmnbwguq"
+                },
+                {
+                    "name": "secure_desktop_OL8_ACO",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icoaibc4gkpw4qnocsvqc7i4kfkb5k5bgju3oeomcmvuha"
+                }
+            ],
+            "Block Volumes": [
+                {
+                    "name": "volume-alexandrucofaruoraclecom_dc98155a-4f42-4c34-a666-c284b767151f",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljr27i6hp3jpdqydlbxxvwec7aogak2rqbqqrvmwoyyniggb5gsa6kq"
+                }
+            ],
+            "Load Balancers": [
+                {
+                    "name": "LB_LAB_ACO",
+                    "id": "ocid1.loadbalancer.oc1.eu-frankfurt-1.aaaaaaaamvbzgbqp6cc47ey3bmtesq5qz4rgzhysn5wogzzm22juyduqnekq"
+                }
+            ]
+        },
+        "Learning": {
+            "VCNs": [
+                {
+                    "name": "OCVS",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iaosjmf2yiodmuzuexvsmdsahxjs7bmnrwhmnrvr2bkgoa"
+                }
+            ]
+        },
+        "LINEDATA": {
+            "VCNs": [
+                {
+                    "name": "Customer1",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7ia6tuavc7wqop2sesjoywers22xoet2dsaby57dvs2qpuq"
+                },
+                {
+                    "name": "cmp-linedata-mgt",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iab7spg2nviytbgkqkiy3fuitpjvlldczbjqvgnmsxgv5q"
+                }
+            ],
+            "Compute Instances": [
+                {
+                    "name": "app",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ic5ioxtauslwig4iqtw2a2bn5mdbcf6dj2sxse7x76q3da"
+                },
+                {
+                    "name": "linux-mgmt",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icwjvxpz2lvwpk26bcabexoxlyynycotxflgfica4o3ycq"
+                },
+                {
+                    "name": "win-bastion",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icfemuiibforazdxtjsgmrlllpwrwomxz3tc2bhwy5ykra"
+                }
+            ]
+        },
+        "llm": {},
+        "llm-rag": {
+            "VCNs": [
+                {
+                    "name": "demo-vcn",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7ia72zboagzvuepjpgde5tnkdof6lcw4jqjaxttlkytb7uq"
+                }
+            ],
+            "Block Volumes": [
+                {
+                    "name": "csi-7da27563-33ef-44d5-aca8-0ee573f28431",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljtyawlfa4re2hu5maglwekvfl4yybk4xmlpiqyih2ywnt73e4x5j3a"
+                }
+            ],
+            "Load Balancers": [
+                {
+                    "name": "demo-lb",
+                    "id": "ocid1.loadbalancer.oc1.eu-frankfurt-1.aaaaaaaajftwshxso6ykxsoth4mqtngio5av7gbvvdvkiwen5ahqe7y4ylia"
+                }
+            ]
+        },
+        "lukasz.klimas": {
+            "Block Volumes": [
+                {
+                    "name": "block_volume",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljrnu7zmsom4eibtkk7hxzas7k2pd4lvms5ihp6l7db23cbowjjncmq"
+                }
+            ]
+        },
+        "management": {},
+        "Management-Agents": {},
+        "marc.torne": {
+            "Autonomous Databases": [
+                {
+                    "name": "SANDBOX_APEX",
+                    "id": "ocid1.autonomousdatabase.oc1.eu-frankfurt-1.antheljto7vto7iaxxsxklpccev2omvhasjk45cxankc7f7k3locqpnh3gva"
+                }
+            ]
+        },
+        "marius.bostinaru": {
+            "VCNs": [
+                {
+                    "name": "core_vcn",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7ia7bagiwb5k7cpz3oxwywld6swf4f4taonkpamx4phmmia"
+                }
+            ]
+        },
+        "marius.ciotir": {
+            "VCNs": [
+                {
+                    "name": "vcn-20240905-1509",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iacrp3szm22txfosbxnbwieo275imbmsyqtgzvrvxd7fdq"
+                }
+            ]
+        },
+        "MC-test": {
+            "VCNs": [
+                {
+                    "name": "comarch-vcn",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iagdd7wfuctqlzwnc4cgpanenux22ia7zjo4fc3vlfy4ca"
+                },
+                {
+                    "name": "MC-Network",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iala2phlcdw4mxfwh5msgdrctdovufpbqsecnfn4hyr4oq"
+                }
+            ],
+            "Compute Instances": [
+                {
+                    "name": "Linux-KVM",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ickriat5x5pqypubtuj533eunz7fqwh2kb5xgyfaaywhja"
+                },
+                {
+                    "name": "instance-20240906-1217",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icncjwfvvxhooftbjlhiyt2zodn3dyfspef4zpariozabq"
+                },
+                {
+                    "name": "instanta-pentru-upgrade",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ice5qhtpsfmif2rz27zl6orvxno6pyzdo36s36pgexi2za"
+                },
+                {
+                    "name": "instanta2",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ickqmbknhnwm5vqjwkvglda7wo4jcjrdb3iqp7ae62trfa"
+                },
+                {
+                    "name": "new-instance-for-okv",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icq3ccxqzk4lrtkpir3gdn6eraskvsny5upg4nzeg2wpta"
+                },
+                {
+                    "name": "oracle9",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icrqwu5xmotgiawdn5zd2o5kqcsdssplmw6qytahff52wa"
+                },
+                {
+                    "name": "test-raducu-2-copie-cu-osms-on",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ickfginhjkchuhegijayfq5au42czgx322w4pop3abnzvq"
+                },
+                {
+                    "name": "test-raducu2",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icxjw42i2eeoohg4onulqzhixulavhzfzixspfszeanava"
+                },
+                {
+                    "name": "test-shared-BV",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icxnrdmxxrh72omrmbbsjpztgaa5sw7iy7aqtmrcnfa3pa"
+                }
+            ],
+            "Block Volumes": [
+                {
+                    "name": "shared-BV",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljrrlj4wu2o3dgsu2533ekxk7pmh2nrudzhkdf6c32hbxqlfz6qiezq"
+                },
+                {
+                    "name": "ocfs2-bv01",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljrct6e2mjc5godw3552vlej3ozcs3lhhrylaqe4t5lk2tge4jeiaqq"
+                }
+            ]
+        },
+        "mgmt": {},
+        "mihai.cazacu": {},
+        "NEC": {
+            "VCNs": [
+                {
+                    "name": "NEC_VCN",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7ianv4zq4yhhzajpknjj3qsvfowvz2wwypp5iserfcs3iaa"
+                }
+            ],
+            "Compute Instances": [
+                {
+                    "name": "NewVMWin",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ich27wb33tohsxa5hooy7fc56xtlixr5lawfh47x2nv6tq"
+                },
+                {
+                    "name": "WinVMOriginal",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icdtmn7gjhotdglj5ixb35exbhrgob6lo63zc6in4fijqq"
+                }
+            ],
+            "Block Volumes": [
+                {
+                    "name": "BV_one",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljr35cwzjxaldicutg5l62qidf4pn7p4i75jrgyk4i2zgxloqv3tjwa"
+                },
+                {
+                    "name": "BV_two",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljrysz5snzso5dbdr7wurzeyyayrvt6yg27vxzi2rndmxngpp4v5tdq"
+                },
+                {
+                    "name": "NewVMWin-WinVMOriginal-2025-01-29-13-13-ocid1.volume.oc1.eu-frankfurt-1.abtheljrysz5snzso5dbdr7wurzeyyayrvt6yg27vxzi2rndmxngpp4v5tdq",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljrjblrqs4khsmawtzmculhjdwdlxl6kb4jsj76gvenbanmcivxpfda"
+                },
+                {
+                    "name": "NewVMWin-WinVMOriginal-2025-01-29-13-13-ocid1.volume.oc1.eu-frankfurt-1.abtheljr35cwzjxaldicutg5l62qidf4pn7p4i75jrgyk4i2zgxloqv3tjwa",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljrw46j2aeyqdi2sxgnx4logavbtlnglbeozh5yjhs3x7w4oztogz6q"
+                }
+            ]
+        },
+        "networking": {},
+        "Networking": {
+            "VCNs": [
+                {
+                    "name": "oke-mtorne-vcn",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iaryphjezd6a7rfgxu7z6t3davuq6y54faqjnufx7slbga"
+                }
+            ]
+        },
+        "new": {},
+        "nexus": {
+            "VCNs": [
+                {
+                    "name": "demo_vcn",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iaaaflipa6n2qq3dtrijxrhsba4n5soxejjcfctvy53ujq"
+                },
+                {
+                    "name": "vcn",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iavqjgteyauojf6hj2zlsxniikp5dlw3opbu4tdpgjilpa"
+                }
+            ],
+            "Compute Instances": [
+                {
+                    "name": "domain_controller1",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ic6jg3ao4hzlj5ddglarj2uqk6covh7ylobjngiqtf6rla"
+                },
+                {
+                    "name": "domain_controller2",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icqfgoiynwqe2wj3umygprazeokd3iveok4qsl3q5tcefa"
+                },
+                {
+                    "name": "vm_custom_dhcp",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ics4s24tjdh4udra6quzjocv4t3lc4tg2f5xponf7z2iqq"
+                }
+            ],
+            "Block Volumes": [
+                {
+                    "name": "bv_domain_controller1",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljrncvc4rxbyu6o3akiocf2pexplkrgzo2eilkp4ov4kmd2c5vuhcpa"
+                },
+                {
+                    "name": "bv_domain_controller2",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljrf4efd3iaewwgo6ykm5ckk32hqhskknm7fzcvnnlwx6obln3jpk2a"
+                },
+                {
+                    "name": "bv_test2",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljrf4rn3fugdyyl5l2wgye6c6yw7lb3h2palx6eq2ndkpqqiyh4ys6a"
+                },
+                {
+                    "name": "bv_test",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljr2brna5aub36ri456mb2q4cmhonoej3544uzwoqby3upcwozq52ma"
+                }
+            ]
+        },
+        "nexus-dbcs": {},
+        "nexus_2025": {},
+        "nexus_2025_1": {
+            "VCNs": [
+                {
+                    "name": "vcn",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iaw4m64nnpy2kr4gebg2l5k7jnbawflbr6neqkqzsswfqq"
+                }
+            ],
+            "Compute Instances": [
+                {
+                    "name": "domain_controller1",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icjqzcjbkvcjshdb6fl6svf7t33ehqfyxtw44b63xchsza"
+                },
+                {
+                    "name": "domain_controller2",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icyw4n3hfj2wonfug7zmhlwik42qwlvlhv2cmvlndeauoq"
+                },
+                {
+                    "name": "vm_custom_dhcp",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icie2m433o34bpoikppewooy6l4ihry4ckpto64qewhqgq"
+                }
+            ],
+            "Block Volumes": [
+                {
+                    "name": "bv_domain_controller2",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljrwctlyo4wggrrcwezhtxnvkx66tadijgwvxy64aa7vwupw2sberpq"
+                },
+                {
+                    "name": "bv_domain_controller1",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljrj4fhlj3vdxhlp5swurzs463dh6evbq5g2kosga4pvlqdlyusamiq"
+                },
+                {
+                    "name": "bv_test2",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljrxckn42crsq22duaotdue7qxvsne74wapd6jwgukgzgavr4irkoba"
+                },
+                {
+                    "name": "bv_test",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljrxfzojj6mqlh6em7f2qqogv2iqlxjujjcdofrdypr2o4pnvct3noa"
+                }
+            ]
+        },
+        "nexus_2025_remote": {
+            "VCNs": [
+                {
+                    "name": "vcn",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iagys6dfiv6qwb4xaih3bmsmrz5bmt27vduhw3jx5ohwzq"
+                }
+            ],
+            "Compute Instances": [
+                {
+                    "name": "domain_controller1",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icudjopg6unahxcffwskcng5zegrxxqw76gxdgm2gxwmvq"
+                },
+                {
+                    "name": "domain_controller2",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ic4oyt4opo7jilgvf5ypwhabyj37qxf5ifwy5ru5mpzb7a"
+                },
+                {
+                    "name": "vm_custom_dhcp",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icbwf5qojedo5ncpm4rhsayy5xjwsrohbdz46gij466gha"
+                }
+            ],
+            "Block Volumes": [
+                {
+                    "name": "bv_domain_controller1_backup_20250205_010215_restored_20250205_195301",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljreahexc4mpvcohplelqrnf6exvaham772ipbmo5xhly5m5ff3bg7q"
+                },
+                {
+                    "name": "bv_domain_controller1",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljrpxsix4ez7yw3sqwk24snirbxmhx2nworp7fnt4pizrfmt6r6giea"
+                },
+                {
+                    "name": "bv_domain_controller2",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljrdotubmfvpnwur4jgegulhv6lsghmn4acpq2n2cuzfk4ukansigsa"
+                },
+                {
+                    "name": "bv_test2",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljramch24swmtt2kwxy5axibjulovekwkiolkucnv4uvi454hamlaka"
+                },
+                {
+                    "name": "bv_test",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljriwf7tgoportqk7zy653u2monelmohu3j7e2derhb4kjmnuq6svpa"
+                }
+            ]
+        },
+        "nexus_bug": {},
+        "nexus_dual_region": {
+            "VCNs": [
+                {
+                    "name": "vcn",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iad4pa7sw5pu5v3stk53mmhxkipj5j7p3ejqe27yniygra"
+                }
+            ],
+            "Compute Instances": [
+                {
+                    "name": "instance-20240913-1113",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icyypj54sprvt2itrv43vbr2kar3ec6ktqi3uui7dyywta"
+                }
+            ]
+        },
+        "nexus_dwi": {
+            "VCNs": [
+                {
+                    "name": "vcnoke",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iakfu7njaqav5uc75kky3ur4c7mdubcvm35f5s4yiz2hxq"
+                }
+            ],
+            "Compute Instances": [
+                {
+                    "name": "bastion",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icpg253ldcrrdmoewxd6zgcx2peitzdjf47mjh5ncdounq"
+                },
+                {
+                    "name": "gobdc02",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ichlyjd5i2yaf4qpcj4tsdeuzl44e7yzdz3mbmaojacfrq"
+                },
+                {
+                    "name": "oke-coe43b63s5a-n32h6ktw5pq-scgga7gxmpa-0",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icaecayz7tfkqamqtbpsntn37sldyhtguomayuga6swt4a"
+                },
+                {
+                    "name": "oke-coe43b63s5a-n32h6ktw5pq-scgga7gxmpa-2",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljto7vto7icjd3o7sb2jshovryozifbdso3qvcuxqr6632uox4hxq4q"
+                },
+                {
+                    "name": "oke-coe43b63s5a-n32h6ktw5pq-scgga7gxmpa-1",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljso7vto7icfblflwuuiapzipb3gsdg4xa4lahpwwv2p2hejm73tesa"
+                }
+            ]
+        },
+        "nexus_oke": {
+            "VCNs": [
+                {
+                    "name": "vcn-labs-prd",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iawx7kqur3jxdfbbhtzvg7t6fi77xhx76vivyuxaen4yua"
+                },
+                {
+                    "name": "oke-vcn-quick-cluster1-e2d4694c2",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7ia7qpoxfatsvyh66qruxlcbxzijpaq7b7si6dfsqv2lmvq"
+                }
+            ],
+            "Compute Instances": [
+                {
+                    "name": "oke-cwyyzdrqj4a-n23yzj5lb3a-sikyksoxuia-0",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icz2ngmehjmdijiry6tlzeo3l7dptjosbyhjo54fdlyr6a"
+                },
+                {
+                    "name": "oke-cwyyzdrqj4a-n23yzj5lb3a-sikyksoxuia-1",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljto7vto7icq4p6etgilokpzrnaxiubuzhvrdloxf636v4psaaxstla"
+                },
+                {
+                    "name": "oke-cwyyzdrqj4a-n23yzj5lb3a-sikyksoxuia-2",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljso7vto7iceyvp76h6uibulqb3psjeawv37auksuq2ve7syof6gkja"
+                }
+            ]
+        },
+        "nexus_oke_custom": {},
+        "nexus_test": {
+            "VCNs": [
+                {
+                    "name": "vcn",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iaspbp6nme3nsnb5py3sbvmxmsuygv3hh5yvd3hfb54caq"
+                }
+            ],
+            "Compute Instances": [
+                {
+                    "name": "domain_controller1",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ic73f6z5iwb3ij7torvcacz43hbv6hpfnlivct574tdh2q"
+                },
+                {
+                    "name": "domain_controller2",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ic3bve6cd2ia222mua734utuiycrd74d3bc4ljf7eqjvwa"
+                },
+                {
+                    "name": "vm_custom_dhcp",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icvuezj523tzkktqe26gilf5skdqatdmld2srlyfsgpbaq"
+                }
+            ],
+            "Block Volumes": [
+                {
+                    "name": "bv_domain_controller1",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljromlrunqguy4kz33czu2vfhyukuthka2ljeaobnngtuq7fdr7jasa"
+                },
+                {
+                    "name": "bv_domain_controller2",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljr7gsvyah5cjy6rkyzy3uow4ejt2xh5d4l6p4l4nvkfakoxuxyyjhq"
+                },
+                {
+                    "name": "bv_test",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljrlnq46s545ryfhngc6itjbbeoder6wgetculyr73fp2fk2bdez7nq"
+                },
+                {
+                    "name": "bv_test2",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljrczqdooh43ih4rxjxpm33dxb6oepgxhzrri7eid2yfcc6e3r4sjma"
+                }
+            ]
+        },
+        "nokia-cloudran": {
+            "VCNs": [
+                {
+                    "name": "oke-vcn-quick-cluster2-043aea1e3",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iaxo36jfnrmogf3t2qlzfsm2lwutjhisskpeqwvfftoulq"
+                }
+            ]
+        },
+        "non-prod": {},
+        "oci_prof_certification": {
+            "VCNs": [
+                {
+                    "name": "IAD-AP-LAB07-1-VCN-01",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iarouzf2kh7xexqa5gjkjdk7w6bikdehpzydzqwejhovia"
+                }
+            ]
+        },
+        "OCM": {
+            "VCNs": [
+                {
+                    "name": "OCM-VCN",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7ianzfzz6pim7aw6p4d2kuce3rctu3mtg3r36mqtodmbhma"
+                }
+            ]
+        },
+        "OKE": {},
+        "oke": {
+            "Block Volumes": [
+                {
+                    "name": "csi-0bcd72eb-0574-450f-9e97-8853f17b2735",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljtufqiooeimqjsmhrs33p5g2wpohfl3j7r47lyvngeupysml7pdg3q"
+                }
+            ]
+        },
+        "OKE_Test": {},
+        "opcoworkload": {},
+        "OpenshiftTest": {
+            "VCNs": [
+                {
+                    "name": "workloadvcn",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iaqx6leao5kehagezpxm3qrajw5kdnkcxs5vifldp7mjbq"
+                },
+                {
+                    "name": "cluster-sn02",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7ia4ujmndppf4f2hzekwsjkhsn6dkmxcbayjhbxueqimava"
+                }
+            ],
+            "Compute Instances": [
+                {
+                    "name": "cluster-sn02-cp-1",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icmv2lhhihojqbo5xdjqrcgrbobrq44vyatouqxjso4chq"
+                },
+                {
+                    "name": "testinstance",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ictvuyl74ghgotg4gv36rnefg7vopvl3kbdfidoicvg52a"
+                }
+            ],
+            "Load Balancers": [
+                {
+                    "name": "cluster-sn02-openshift_api_int_lb",
+                    "id": "ocid1.loadbalancer.oc1.eu-frankfurt-1.aaaaaaaabpan3ltiyk4n6liqpcqhzijzvykwromwchjgkujxkqirl6p4hwta"
+                },
+                {
+                    "name": "cluster-sn02-openshift_api_apps_lb",
+                    "id": "ocid1.loadbalancer.oc1.eu-frankfurt-1.aaaaaaaaywejkx5g5pm4l2bdqsridt6zpoxuwp3hzyzeb4y5t6oydwfswlra"
+                }
+            ]
+        },
+        "OpenWay": {},
+        "ortec": {},
+        "Ortec": {},
+        "ORTEC_POC": {},
+        "os-management": {
+            "VCNs": [
+                {
+                    "name": "vcn-20240930-2214",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iae4kmt2maxa3clyqibhhkerqkiqlvtgkopzzwnwzetwxa"
+                }
+            ]
+        },
+        "OS-mgmnt-HUB": {
+            "VCNs": [
+                {
+                    "name": "OS-mgmnt-HUB",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iabh6su4d43zecpnkxzwrtaniub2ufsp5k5yzbqkezqn7q"
+                }
+            ],
+            "Compute Instances": [
+                {
+                    "name": "dev-instance",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icqnyqgb4bwoqgvdsot2lkdvr2jibod25e445o6qyc6xea"
+                },
+                {
+                    "name": "prod-instance",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7iceg3rm4fdiefbgbowmqc3y2aa3ogvzzriu4wp4rmfx3yq"
+                },
+                {
+                    "name": "test-instance",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ic4sfqh44rin3fsjqojbacmue2jdexiyoa33ulkc4h6gzq"
+                }
+            ]
+        },
+        "OSMS-TEST-Kerridge-after-rename": {},
+        "parent": {},
+        "Planisware": {},
+        "playground": {
+            "VCNs": [
+                {
+                    "name": "oke-vcn-quick-cluster2-a9c91dd34",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iauotxmdakcesudsn6pcctwkh5frp46i4wmc3oucfze6rq"
+                },
+                {
+                    "name": "defaultVCN",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iadjdc4vzh33o3yh7blirbfa6uu5i4rftgsliu2zbt2z2a"
+                }
+            ],
+            "Compute Instances": [
+                {
+                    "name": "instance-20250904-1316",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icxbr5c73lek4ru6z5b7bsvugccgetmyxuekgq424q4uyq"
+                },
+                {
+                    "name": "instance-20250904-1318",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icixydixrwgqe56lb4nq4kcgxp6ryii6ob74b2p3q33lsa"
+                },
+                {
+                    "name": "instance-20251002-1224",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icwclv4bw7jg5dfx2imbh2xe7h5m4hvwe6u54vtmurxbja"
+                },
+                {
+                    "name": "oke-ctgtvx4wwiq-nwgyb73mrya-skpugjgf7ha-0",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ict6v5fgb75w7obu7qjal4alnl2zuwtkojbuh5couti5ga"
+                },
+                {
+                    "name": "sowgen",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icslau7uyzcrrpnprqzggqujxwhupeixc2gwtfck5j62sa"
+                }
+            ],
+            "Load Balancers": [
+                {
+                    "name": "lb_2025-0904-1343",
+                    "id": "ocid1.loadbalancer.oc1.eu-frankfurt-1.aaaaaaaab7ir4dk55kezrln7chx6brykobeyg4jjqqkmbuagnirgsp5tzscq"
+                },
+                {
+                    "name": "8b94e665-9b64-4378-a9ea-bfca59d0267e",
+                    "id": "ocid1.loadbalancer.oc1.eu-frankfurt-1.aaaaaaaab5jfjz6eijovib54xhe446jkx4dvoq6eddtddpyaeavl5agz4pya"
+                }
+            ]
+        },
+        "POC": {},
+        "poccompartment": {},
+        "poke": {
+            "VCNs": [
+                {
+                    "name": "poke_v1",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iakycy3imiz3e5wegurbrjwir6sgaujkq5tgbm25sgjw5a"
+                }
+            ],
+            "Compute Instances": [
+                {
+                    "name": "oke-cbdkvywmxaa-nfxb5sx2loq-sin6pfeha2q-0",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icqb4vihoz7swq5v3kecewxhtvjrbh3kzmjt6p2zlimdkq"
+                }
+            ]
+        },
+        "presentationDemo": {
+            "VCNs": [
+                {
+                    "name": "vcn-demo",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iagf3pvg732vu22lrnfgtowahcwbxm6f2cpupdi7k62txa"
+                }
+            ]
+        },
+        "presight": {
+            "VCNs": [
+                {
+                    "name": "presightvcn",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iazdzrwx6mo7z7rdepnzde7da2ekc5a5wm24pflwvvtd2q"
+                }
+            ],
+            "Compute Instances": [
+                {
+                    "name": "instance-20240515-1125",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icbkkdmwol6kvmxnatjwplbncjfa7h3cdgrnixdfhjhroa"
+                },
+                {
+                    "name": "instance-from restore",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icwdp4pjxepsoqultk273qrpqicnxj6phorocwcog42fdq"
+                },
+                {
+                    "name": "instance-kvm-amd",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icmalb7g5ppa5ul3hlcbob75y6h75o6gbniq6m5oelk56a"
+                }
+            ]
+        },
+        "prod": {},
+        "production": {},
+        "Projects": {},
+        "raducu.lungoci": {
+            "VCNs": [
+                {
+                    "name": "vcn-comp",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iaiajajprcoofhyy5e25dekesk7nvjzzskm24nyqj2fpza"
+                },
+                {
+                    "name": "oke-vcn-quick-k8s-primion-osmngmnt-7674ac107",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iajlkxadzuihu4jehxhiqem24mia4exqyxacjpjplls2uq"
+                }
+            ],
+            "Compute Instances": [
+                {
+                    "name": "instance-bst",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icpy3ytr6oe7wvc26mzgtjaxx7vgbfglrniedamt24mwrq"
+                },
+                {
+                    "name": "instance-terr",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icf2wclvnxnxjkpd6wieeyzxwvlz4pn4aqkeqkh5cl4jqa"
+                }
+            ],
+            "Block Volumes": [
+                {
+                    "name": "bv",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljrbujhaqkg37bpxvzrgxpkmdmbmgmdhg67finsqh3glsckbhekthwa"
+                }
+            ]
+        },
+        "rancher": {
+            "VCNs": [
+                {
+                    "name": "oke-vcn-quick-cegid_demo-208586413",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iaq7dzzphhpaw5mcdndiwxt6mstdy4fun5nhm2ehntwria"
+                },
+                {
+                    "name": "oke-vcn-quick-cegid_predemo-97ef45382",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iadjq74zqjmiz6y5r3eqj7xjxgsakmdokhyuh6265dkaya"
+                },
+                {
+                    "name": "oke-vcn-quick-cegidimportnew-f8f1c1682",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iawqmhrr43xb5yumrneyzz4nxbnorkhnysscf7wkt2ysbq"
+                },
+                {
+                    "name": "oke-vcn-quick-cegidImport2-b89a16480",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iadkm7v7yowr5alcm3kb3dlecmznv2himepnwzpeuir3wq"
+                },
+                {
+                    "name": "oke-vcn-quick-cegid_import-738843a74",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iahu6fpocoaeacpnnlv6tvznbmyz2wbxeeyvdjli62xp6a"
+                },
+                {
+                    "name": "oke-vcn-quick-testimport-51e8f07f6",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iaehmuatjmdoh2c5gn6mmnvo2roskmqzfhfbe2zv4mqcca"
+                }
+            ],
+            "Compute Instances": [
+                {
+                    "name": "instantA",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ic3koxk66l5ondtizcs2wajru3q2veeuzbcib7stvozj4a"
+                }
+            ],
+            "Load Balancers": [
+                {
+                    "name": "62896896-4dd9-46c5-a641-0854aa348197",
+                    "id": "ocid1.loadbalancer.oc1.eu-frankfurt-1.aaaaaaaa4ksq4m27liiglle4jvqbczbig7g3klnyhw2rtfbzdt5veovukf2a"
+                },
+                {
+                    "name": "39e4d526-aee8-48ca-9c74-23210d287fcc",
+                    "id": "ocid1.loadbalancer.oc1.eu-frankfurt-1.aaaaaaaaetjhzlbpszunjzlhhe2n5oifluujsypwozdsdcphu2slwgwwaiqa"
+                }
+            ]
+        },
+        "scope_solution_ag": {},
+        "scope_solution_faze2": {},
+        "secure_desktop": {},
+        "secure_desktop_test": {
+            "Block Volumes": [
+                {
+                    "name": "test",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljrhuiobkqo5b6ntdzekmepsaeqz334sbuqcxvpa3nmc37l6ajexniq"
+                }
+            ]
+        },
+        "Security": {
+            "VCNs": [
+                {
+                    "name": "secure-vcn2",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7ias76vs5zzoz6seltxi5s5xmd5edhnrh6stev3fzj766yq"
+                },
+                {
+                    "name": "secure-vcn",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iauyttit2s2lqdwptn66gsakxwchftwdmrsd2p7ua222ia"
+                }
+            ],
+            "Compute Instances": [
+                {
+                    "name": "dev-webserver",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icbupmmat3bvu3jzn7i4abfv3dx5ppfxub2how2mrt55ka"
+                },
+                {
+                    "name": "dev2-webserver",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ic2ti3q7x7qs6xpx6rg5rig7hwnrwsez5w3rx4st6ogoza"
+                },
+                {
+                    "name": "test",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icub4kuxvpg6plhaymiko4vhbw6xjpz6ea7dlorywfszza"
+                },
+                {
+                    "name": "webserver",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ic4nxh6quxrneasstourhfb2nsuhxbfu7ctz3doaokinoq"
+                }
+            ],
+            "Load Balancers": [
+                {
+                    "name": "learn-cybs-tech",
+                    "id": "ocid1.loadbalancer.oc1.eu-frankfurt-1.aaaaaaaaitxzvvasop55nvre72xlpge6ewsjvxj5qnbt7d3ozlf4a75any4q"
+                }
+            ]
+        },
+        "security-zone2": {},
+        "shared": {},
+        "SICPA": {},
+        "Siemens": {
+            "VCNs": [
+                {
+                    "name": "oke-vcn-quick-cluster1-48b13c3b0",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7ia6w2oaj57t77ui4roftnzbagqff2hdspcok23ttrfrk7a"
+                }
+            ],
+            "Compute Instances": [
+                {
+                    "name": "instance-20251022-1522",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ict46hnq4cl2g6lxzjulgcgetv7nlqeybes4zsd2lxreia"
+                },
+                {
+                    "name": "oke-cz25hocwuha-nj6oerzqxba-sdogiamzfoq-0",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ich3h2kfxewidv62w7pxlzrx5inysslpigr6ixg4m3riba"
+                }
+            ]
+        },
+        "Siemens-Advanta": {
+            "VCNs": [
+                {
+                    "name": "Mgmt-VCN",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7ia35iyvs73desdzqm4jedkbrguvehonusfzh64mljy3ttq"
+                },
+                {
+                    "name": "TestDev-VCN",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iasj7fremkk7d6yw5u3hu6l2eegr34a626jfh3yydhf2ma"
+                }
+            ],
+            "Compute Instances": [
+                {
+                    "name": "Test App Server 1",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icnz7ckzi3nmkfssdqwa5rnulp4hifjrreqxmmiuz5yq2q"
+                },
+                {
+                    "name": "Test UI server 1",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icsg2bzwpmtzsv4lwsnhwkw644eaze5p2nawdzaafz3edq"
+                },
+                {
+                    "name": "openvpn",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ic7drn6d6lf4sk7aymogmzrzi2qhplludynodytvjqtjta"
+                }
+            ],
+            "Load Balancers": [
+                {
+                    "name": "Test-LB-APP",
+                    "id": "ocid1.loadbalancer.oc1.eu-frankfurt-1.aaaaaaaa6xlaeusecbwjuklfhsdcvpmdplv3gvvuysho76t7q5hjypgjxqra"
+                },
+                {
+                    "name": "Test-LB-UI",
+                    "id": "ocid1.loadbalancer.oc1.eu-frankfurt-1.aaaaaaaaddigxch4xw4dnrj454l5zb5kxzjkowxjqg6w2xdxvylyh5kaahea"
+                }
+            ]
+        },
+        "siemens-advanta": {},
+        "silvian.dumitru": {
+            "VCNs": [
+                {
+                    "name": "dsvcnwizard",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7ia7nkuxtrss7hhoeaywrmcrx7vhvtca7kuhzoxp5fj3wqq"
+                },
+                {
+                    "name": "dsvcnlearn",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7ia4776oenljjdpgfr3tcgwnm2asakjfq3ulpzsswtc4goa"
+                }
+            ],
+            "Compute Instances": [
+                {
+                    "name": "FMW",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icfyy7gkmfshtfuoepild4kcvz7khozzftxvv3zff7njoa"
+                },
+                {
+                    "name": "Oracle GoldenGate 23.9.0.25.07 Microservices Edition for Oracle",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ic5xqd5fcrqgk27grhwgw4gzjh6ulurtpmovlq5jh2liyq"
+                },
+                {
+                    "name": "Oracle11gR2SE_OL7.9",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icz3mb7xpwvrrh6zhefzfbiqecjeyv3jlrrteslbrc3eta"
+                },
+                {
+                    "name": "Prometheus-new",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icpfi33lhxhaiklvbncjvgvjba2y7hxpw4tjirad25npcq"
+                },
+                {
+                    "name": "Win2016",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ic4aacadpa5turxijo2rvh3psaho4lpqlfm534vltdh4fq"
+                },
+                {
+                    "name": "db19cse",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ic2v4osgduqa4nbe5g2zfzhzhnc7qjmrkwimwv26m7hswa"
+                },
+                {
+                    "name": "devhost",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icgp76ozkufhloktft2cs4nf3ejlwnnr2sw3khixvdvqpq"
+                },
+                {
+                    "name": "dsJumpserver",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icvkjdiym6brzj3y54go6sqsgfm2szpaxne6im5v6lgwla"
+                },
+                {
+                    "name": "podman",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ic63bkqthmkkolozx2xmzm7iymuqih5u7twbv6t47gcwgq"
+                },
+                {
+                    "name": "zdmhost",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icu5pxtlzjq6ctktulwohr3f6l3fy3ngcm4n2okqimif5q"
+                }
+            ],
+            "Block Volumes": [
+                {
+                    "name": "block_vm_devhost_u01",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljr2vwuy5j6i46fohx7sa3eznauqk22fjhu2cxvxazykcookvf2bakq"
+                },
+                {
+                    "name": "podman_block_volume",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljrijwiwyg52e63oyflyk4y472evvzze7piaxajbwnuggu5wye672ga"
+                },
+                {
+                    "name": "Oracle GoldenGate 23.8.0.25.04 Microservices Edition for Oracle (Cache Manager)",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljrzq4na4iisy45lxd3pryragpgxacwowcomd4o7w5gi6n7ol323cpa"
+                },
+                {
+                    "name": "Oracle GoldenGate 23.8.0.25.04 Microservices Edition for Oracle (Deployments)",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljr5vvks5rkwbjltdyapkoafnbafwcknlfk7ynwnyaiy5rwnq6l23eq"
+                },
+                {
+                    "name": "Oracle GoldenGate 23.8.0.25.04 Microservices Edition for Oracle (Swap)",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljrdafdv622jkvh5a72zeqpfis3hau2drqfgyvyx4oixvzvmydyfyja"
+                },
+                {
+                    "name": "Oracle GoldenGate 23.8.0.25.04 Microservices Edition for Oracle (Trails)",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljrjn5lvmgr6dfvk63cvg6mol3h2fgzlk5ldjhlbp33hu4mksg6tlcq"
+                },
+                {
+                    "name": "Oracle GoldenGate 23.9.0.25.07 Microservices Edition for Oracle (Trails)",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljrkvvzs42u3r72a6pskwkbghqxzayddzpx2d5srkjy7elfi2zfpy3q"
+                },
+                {
+                    "name": "Oracle GoldenGate 23.9.0.25.07 Microservices Edition for Oracle (Cache Manager)",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljr4wb6swka36ldny62bcpz6sjotucv6qpebvg7jlaqfxd4v3q5jsoq"
+                },
+                {
+                    "name": "Oracle GoldenGate 23.9.0.25.07 Microservices Edition for Oracle (Deployments)",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljrpsoccygemhafbj2jg6s6244qqf7hxpfpsu63qconlc6wyc56kdzq"
+                },
+                {
+                    "name": "Oracle GoldenGate 23.9.0.25.07 Microservices Edition for Oracle (Swap)",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljryak46l6v7nvu3dpg5hkih3mcas42w7sgaja6byla52pyi5tbaqna"
+                }
+            ],
+            "Autonomous Databases": [
+                {
+                    "name": "ADWDS",
+                    "id": "ocid1.autonomousdatabase.oc1.eu-frankfurt-1.antheljto7vto7iaujfaxajw65tfk4kztqcwpvjqurocapipzckrbo3gf32a"
+                },
+                {
+                    "name": "ATPDS",
+                    "id": "ocid1.autonomousdatabase.oc1.eu-frankfurt-1.antheljto7vto7iavldm6ln4x7d2shc5sgxduprq7hgxfplbu7tkd7stkhya"
+                },
+                {
+                    "name": "ATPSE",
+                    "id": "ocid1.autonomousdatabase.oc1.eu-frankfurt-1.antheljto7vto7iawxw5ax5fn2zhmnb3eif5iyscs3xhujo4xai7fpqkvuqq"
+                }
+            ]
+        },
+        "Software-AG": {},
+        "sportsradar": {
+            "VCNs": [
+                {
+                    "name": "vcn-20251026-2238",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iaus6xsaogv5ps4o6utf5f2p5l6k635kvnfnutlded4yqq"
+                }
+            ],
+            "Compute Instances": [
+                {
+                    "name": "autosclaer",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ico33swsuxmygz5s7jr7taoo7vbxue3wrr2uflbjwj5kfa"
+                }
+            ],
+            "Autonomous Databases": [
+                {
+                    "name": "adb-01-hq-poc",
+                    "id": "ocid1.autonomousdatabase.oc1.eu-frankfurt-1.antheljto7vto7ia7yynw6zoap2dzohafp457bus6hvvfkpaxz657ipjvj7a"
+                },
+                {
+                    "name": "adb-01-ev-poc",
+                    "id": "ocid1.autonomousdatabase.oc1.eu-frankfurt-1.antheljso7vto7iag7657n2jm543pbavxxkiwdrv4aabt6qgvfqxm3kqw57a"
+                },
+                {
+                    "name": "adb-01-dw-poc",
+                    "id": "ocid1.autonomousdatabase.oc1.eu-frankfurt-1.antheljso7vto7iamkpzbbqxzpyap7ppwxqkaudqlbloq7dqv2xecu7t4bzq"
+                }
+            ]
+        },
+        "stack-monitoring": {
+            "VCNs": [
+                {
+                    "name": "stack-monitoring",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7ialsmgsiu464khqdcqrqbghsfey4jsme2tvyihbvts4zha"
+                }
+            ],
+            "Compute Instances": [
+                {
+                    "name": "instance-3-stack-monitoring",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icbmkjmtwgnoa3afaoditqyazeqewszn5mgxe7zhxkqaeq"
+                },
+                {
+                    "name": "instance1-stack-monitoring",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7iciwbjbwvtgiffwvmrk7vmwi527faxc2sa7b56xpjfvx7q"
+                },
+                {
+                    "name": "instance2-stack-monitoring",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icia5wxpg2g2iywz2hx27xvea2y2cm5a5bpxumqtbjeghq"
+                }
+            ]
+        },
+        "Symphony": {},
+        "tacher_test2": {},
+        "tcmp-transtek-poc": {},
+        "Tenancy-Management": {
+            "VCNs": [
+                {
+                    "name": "management-vcn",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7ia2dhad6vspeq4a6xdwqcgvq7vrkitaqgzbozqysrzcaxq"
+                }
+            ],
+            "Compute Instances": [
+                {
+                    "name": "management-instance",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ico24pfy3db633wdyvu2o3uhcrthue3x36vpdkjxlsgkwq"
+                }
+            ]
+        },
+        "Terraform_Infrastructure_pending_vault_delation": {},
+        "Terraform_Management": {},
+        "test": {},
+        "tgw": {},
+        "transtek": {},
+        "transtek_new": {},
+        "TranstekRM": {},
+        "tudor.deleanu": {},
+        "uc3": {},
+        "vcn-ortec-mgt": {
+            "VCNs": [
+                {
+                    "name": "vcn-ortec-mgt",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iagaedcb7bed5zghi2a3b3ndb5m2kk7smzlg5cuyab3upq"
+                }
+            ]
+        },
+        "Velocix": {},
+        "victor.gabor": {},
+        "Visma": {
+            "VCNs": [
+                {
+                    "name": "Test_VCN",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iaklswfr7ep5tlnv35jyafnjvufvopx7xh4jnqlfayhv2q"
+                }
+            ],
+            "Compute Instances": [
+                {
+                    "name": "NewVM",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icotzsb7gavffc3lx4dpkve6qnjrqqpc7dyfhjb3dardhq"
+                },
+                {
+                    "name": "instance-windows",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icra2rsrqg3tfytibxvov5yhaih5g2dhguw5aaaibdpd3a"
+                }
+            ],
+            "Block Volumes": [
+                {
+                    "name": "visma blockvolume",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljrvuzphbjvol54igzqjn3ulxnzxhk644vbqgs5opn6r6qbgrbi2pqa"
+                },
+                {
+                    "name": "NewVM-instance-windows-2025-01-29-11-26-ocid1.volume.oc1.eu-frankfurt-1.abtheljrvuzphbjvol54igzqjn3ulxnzxhk644vbqgs5opn6r6qbgrbi2pqa",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljrslxnirxrdqoykrbotvmmktyugwfnd2cgfyfi4mxtuvvftdsdrl6a"
+                }
+            ]
+        },
+        "Visma-Fivaldi": {},
+        "Visma-LB": {},
+        "visma-poc": {},
+        "Visma-restore": {},
+        "work": {
+            "VCNs": [
+                {
+                    "name": "tecnotree",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iabclbvr2yrueradskv3rpb3e24wwxbyn22cbojzmcg3ya"
+                },
+                {
+                    "name": "vcn-oke",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iacdtaozawqzmb32ehb2pql4varoxal3lh7d2dxce52nxa"
+                }
+            ],
+            "Compute Instances": [
+                {
+                    "name": "bastion",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icstfumbt4ugimguvtcxsv6q4lmbe6znblzys3fbde3vca"
+                },
+                {
+                    "name": "llmwithadb",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ico5kpqfcz2vekc5xedvinec2mh2pyhgrk7jxjbqbjzj7q"
+                },
+                {
+                    "name": "oke-cssvuhqxc2q-nbn2hjc7ikq-sxij3kde2aa-0",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icwbsfmh2ey3xtqhrx6x34jjpk23mi4qtl3thrhqjq2cua"
+                },
+                {
+                    "name": "oke-cssvuhqxc2q-nbn2hjc7ikq-sxij3kde2aa-1",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icz3gxxx53tyuwtzv5c3xmxjcdvhxqr4ilaeftvj4y5via"
+                }
+            ],
+            "Block Volumes": [
+                {
+                    "name": "csi-0a72b98f-abae-4cc8-af32-3e3de7fe1bee",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljr33awowgzcoh6qyi65qrukzpm6qkhuar3gqbzn25xmiv2lrr6y2gq"
+                },
+                {
+                    "name": "csi-fe43bc5f-7e4e-4a4e-93ca-9c2201556003",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljrhay4lrky4qd7y7uqlmnkgafds32dog6ypzagtw45u6xg2arjxhzq"
+                },
+                {
+                    "name": "csi-53017c12-40c1-4503-bc8d-1bafe0b258de",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljr2vu5ogjch67ilagxydmo2vflij36slpfdjw6irzq74i37wbycbua"
+                },
+                {
+                    "name": "csi-d49fe413-7ddf-458e-a7eb-dfbcfff9cb06",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljrfilkd54umcxhvgebo5xgpigyr3enlsrmg5a6umhtesaqsjdhxhgq"
+                },
+                {
+                    "name": "csi-51a0163e-00c0-47c5-8466-ce05a94f3834",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljrh7keyrfv3gflpndi6kmoi56zr2nlcmb6tlvj2vvbyfmvbwxyluqq"
+                },
+                {
+                    "name": "csi-a7cd2694-a808-4004-820c-8bf8e12225de",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljrv7gxlnje5vf4h5uplzyffn7le5hp4ary2vx57q7sycp6niqu6qza"
+                }
+            ],
+            "Load Balancers": [
+                {
+                    "name": "768a56a8-0c6c-4933-963d-a00c3caa6e47",
+                    "id": "ocid1.loadbalancer.oc1.eu-frankfurt-1.aaaaaaaat3ua6ww4sxper6obotimgxki5hqdfju3iniyg42yusjl3r3pni6q"
+                }
+            ]
+        },
+        "Yellowstar": {},
+        "yss_lab01": {
+            "VCNs": [
+                {
+                    "name": "oke-vcn-quick-cluster1-b18c41988",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7ia5cxj2qsrsvxuapesiqaxqmdszdguk3nndgp3gk4oic3q"
+                },
+                {
+                    "name": "temenosStack-Temenos_vcn01",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iabwgqqrl3gxftrtnyy3uhc2pznfognqsjrkkst5cgpnkq"
+                },
+                {
+                    "name": "oke-vcn-quick-cluster1-293f4a18c",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iaor76icqwwj3aau3b65ynwjogoslxn6njixvcpl2jwdea"
+                },
+                {
+                    "name": "vcn_classb",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iawexh2z6st435wjhwhtekdgihnjhciuufusdsbxm33njq"
+                },
+                {
+                    "name": "vcn_lab01",
+                    "id": "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaao7vto7iavvjzwqcsocd5upo6kpvtyuo6qwplf5yme3kkvb3mrrgq"
+                }
+            ],
+            "Compute Instances": [
+                {
+                    "name": "Linux7",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icyyrokhfdepm3lvob2yk6ugyxbpw4vz56ta6bukfwmlaa"
+                },
+                {
+                    "name": "PythonFlask Application",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ic6tcsp2o4zyrpqxhltxqmwk4xsolxyq7ipo7zlxs5h6qa"
+                },
+                {
+                    "name": "jumpServer01",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7icfacbbtlpwwe7bu67nnefbtha553yranick7o5t5bb27q"
+                },
+                {
+                    "name": "windows_mllp_oic_agent",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljro7vto7ic73gqhe3ixa6raysvbjeeye6dwu4gzhbeh2uaq4hk7lba"
+                },
+                {
+                    "name": "yss_dbping_ad3",
+                    "id": "ocid1.instance.oc1.eu-frankfurt-1.antheljso7vto7ican6vlrtc4sxdmms57dnvqyp24szf2jwssih6cf4xeyiq"
+                }
+            ],
+            "Block Volumes": [
+                {
+                    "name": "RestoredBlock",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljrjzgliufrebn5frh7zpnqybnsak5uiudlh6kcyieg3bdju2p3hmqq"
+                }
+            ],
+            "Autonomous Databases": [
+                {
+                    "name": "Atp01_yss",
+                    "id": "ocid1.autonomousdatabase.oc1.eu-frankfurt-1.antheljro7vto7iafpcooezaj5itlopfvxsdqhv7ulbkwjmxs5qjc5obpnya"
+                }
+            ],
+            "Load Balancers": [
+                {
+                    "name": "lb01_lab01",
+                    "id": "ocid1.loadbalancer.oc1.eu-frankfurt-1.aaaaaaaa7yor26l2aov64kf2wthtpbhco3gjd3sb54o3jtya2pamte3awruq"
+                },
+                {
+                    "name": "YSS-ords_lv01",
+                    "id": "ocid1.loadbalancer.oc1.eu-frankfurt-1.aaaaaaaa32ogoorpjz3aouzll5gdnckcseuryurvltwdxabn2v3gu6iqg3oa"
+                }
+            ]
+        }
+    },
+    "findings": {
+        "acceptance": [],
+        "acotest": [
+            "Instance 'control' is using a basic shape.",
+            "Instance 'email_intance' is using a basic shape.",
+            "Instance 'instance1-Centos' is using a basic shape.",
+            "Instance 'instance2-OL8' is using a basic shape.",
+            "Volume 'acotest_blockvolume_test' does not have auto-tune enabled."
+        ],
+        "Adequasys": [],
+        "adequasys-hub-v2": [],
+        "ai": [
+            "Instance 'GENAI-LAB' is using a basic shape.",
+            "Instance 'workscheduler' is using a basic shape."
+        ],
+        "ai-sandbox": [],
+        "alex.cofaru": [],
+        "alexandru.irimia": [],
+        "andrei.teodoroiu": [],
+        "ansible_demo": [
+            "Instance 'ansible-demo-e5' is using a basic shape."
+        ],
+        "Aplis": [],
+        "app": [],
+        "apps": [
+            "Instance 'gec-linux8-box-cloud-dev' is using a basic shape.",
+            "Instance 'webserver' is using a basic shape."
+        ],
+        "Architecture": [
+            "Instance 'vm-01-vcn-cust-bastion' is using a basic shape.",
+            "Instance 'vm-03-vcn-cust-app2' is using a basic shape.",
+            "Instance 'vm-04-vcn-cust-db' is using a basic shape."
+        ],
+        "ATS_TEST": [],
+        "automation": [
+            "Volume 'csi-ead8b5da-b1d7-4e13-962a-538c63adcb38' is not attached to any instance.",
+            "Load Balancer 'e7c3ced3-f995-41ad-8227-70a8f6f46855' is not using a flexible shape."
+        ],
+        "avaloc": [],
+        "Avaloq": [],
+        "avaloq": [
+            "Volume 'block1' is not attached to any instance.",
+            "Volume 'block1' does not have auto-tune enabled."
+        ],
+        "board-intelligence": [
+            "Instance 'bastion' is using a basic shape.",
+            "Volume 'test_oke' is not attached to any instance.",
+            "Volume 'test_oke' does not have auto-tune enabled."
+        ],
+        "bogdan_darie": [],
+        "CaaS-ATH-Compartment": [
+            "Instance 'instance-20250506-1501' is using a basic shape.",
+            "Volume 'ath-original-_DataDisk_1' is not attached to any instance.",
+            "Volume 'TEMP_VMNAMEATH-a-23_DataDisk_' is not attached to any instance."
+        ],
+        "CaaS-MET-Compartment": [],
+        "catalin.nedelcu": [
+            "Instance 'OKV' is using a basic shape.",
+            "Instance 'customer01' is using a basic shape.",
+            "Instance 'customer01-vm2' is using a basic shape.",
+            "Instance 'customer02' is using a basic shape.",
+            "Instance 'webserver' is using a basic shape."
+        ],
+        "Cegid": [],
+        "cegid": [
+            "Instance 'e5vm' is using a basic shape.",
+            "Instance 'fcrs-vm01' is using a basic shape.",
+            "Instance 'instance-20250325-1556' is using a basic shape.",
+            "Instance 'jump01-inst' is using a basic shape.",
+            "Instance 'letsencrypt-oci-dns' is using a basic shape.",
+            "Load Balancer '639a8adc-516e-4d9b-a5bb-7fa7ff234cec' is not using a flexible shape."
+        ],
+        "cegid-bkpolicy": [],
+        "cegid-test": [
+            "Instance 'cegid-test-instance' is using a basic shape."
+        ],
+        "Cegid-XRP": [],
+        "cegid_fcrs": [],
+        "cegid_pdb_clone": [],
+        "cegid_xrp_dataguard": [],
+        "cegid_xrp_dataguard_fix": [],
+        "cegid_xrp_debug": [],
+        "cegid_xrp_v2": [],
+        "cegid_xrp_v3": [],
+        "cegidtagns": [],
+        "Centric": [],
+        "cicd": [
+            "Instance 'oke-cq6pj55kmmq-nf7bc53bgfa-sdifrqkq6aa-0' is using a basic shape."
+        ],
+        "Citrix2": [
+            "Instance 'Auntonomous-Linux-8' is using a basic shape.",
+            "Instance 'Citrix-OEL-Emulated' is using a basic shape.",
+            "Instance 'Citrix-OEL-PV' is using a basic shape.",
+            "Instance 'Citrix-windows' is using a basic shape.",
+            "Instance 'Dynatrace-test' is using a basic shape.",
+            "Instance 'dynatrace-for-presentation' is using a basic shape.",
+            "Instance 'dynatrace-new' is using a basic shape.",
+            "Instance 'stack-monitoring-test' is using a basic shape."
+        ],
+        "client_code": [],
+        "cloudbank": [],
+        "cmp-ape-nprd": [],
+        "cmp-ape-prd": [],
+        "cmp-aplis-mgt": [],
+        "cmp-app": [
+            "Instance 'bastion' is using a basic shape.",
+            "Instance 'gitlab' is using a basic shape.",
+            "Instance 'jenkis' is using a basic shape.",
+            "Instance 'oke-c626ar55gfa-nxo2f6igsla-s323r5z2xlq-2' is using a basic shape.",
+            "Instance 'oke-cod6ero6nxa-nq2dpriub2a-s323r5z2xlq-4' is using a basic shape.",
+            "Instance 'oke-c626ar55gfa-nxo2f6igsla-s323r5z2xlq-0' is using a basic shape.",
+            "Instance 'oke-cod6ero6nxa-nq2dpriub2a-s323r5z2xlq-5' is using a basic shape.",
+            "Instance 'oke-c626ar55gfa-nxo2f6igsla-s323r5z2xlq-1' is using a basic shape.",
+            "Instance 'oke-cod6ero6nxa-nq2dpriub2a-s323r5z2xlq-3' is using a basic shape.",
+            "Volume 'amd-storage' is not attached to any instance.",
+            "Volume 'amd-storage' does not have auto-tune enabled.",
+            "Volume 'ollama' is not attached to any instance.",
+            "Volume 'ollama' does not have auto-tune enabled.",
+            "Volume 'csi-3e0d5a22-0d02-4ea1-aab5-4bc25749373e' is not attached to any instance.",
+            "Volume 'csi-c271ef4b-633c-4e2e-8514-169bd66d92fa' is not attached to any instance.",
+            "Volume 'csi-477c120c-4944-440c-9851-c6d1b66e186a' is not attached to any instance.",
+            "Volume 'csi-ead1430f-4169-42db-a208-522f5fc75292' is not attached to any instance."
+        ],
+        "cmp-ats-mgmt": [],
+        "cmp-axi-dev": [],
+        "cmp-axi-mgmt": [],
+        "cmp-axi-prod": [],
+        "cmp-axi-stage": [],
+        "cmp-axi-test": [],
+        "cmp-cust": [],
+        "cmp-custA": [],
+        "cmp-customers01": [],
+        "cmp-demo": [],
+        "cmp-enowa": [],
+        "cmp-enowa-dev": [],
+        "cmp-enowa-shared": [],
+        "cmp-enowa-test": [],
+        "cmp-epsilon-apex01": [],
+        "cmp-epsilon-mgt": [],
+        "cmp-mgmt": [],
+        "cmp-mic": [],
+        "cmp-nprd": [],
+        "cmp-ortec-db": [],
+        "cmp-ortec-mgmt": [],
+        "cmp-ortec-mgt": [],
+        "cmp-plw": [],
+        "cmp-plw2": [],
+        "cmp-prd": [],
+        "cmp-scope-client1": [],
+        "cmp-scope-mgmt": [],
+        "cmp-transtek-mgt": [],
+        "cmp-transtek-poc": [],
+        "cmp_cegid_app1": [],
+        "cmp_customer01": [],
+        "cmp_customer02": [],
+        "cmp_demo_app": [],
+        "Comarch-workshop": [],
+        "Comp_Managed_keys": [],
+        "comp_mgt": [],
+        "Companjon": [],
+        "Companjon-final_test": [],
+        "Companjon_POC": [],
+        "Companjon_SPLIT": [],
+        "cust01": [],
+        "cust01-acc": [],
+        "customer-comp": [],
+        "Customer1": [],
+        "Customer2": [],
+        "Customer3": [],
+        "customers": [],
+        "daniel.munteanu": [
+            "Instance 'test-app-1' is using a basic shape.",
+            "Instance 'test-app-2' is using a basic shape.",
+            "Instance 'test-lb-instance' is using a basic shape.",
+            "Instance 'test-lb-instance-2' is using a basic shape.",
+            "Instance 'test1' is using a basic shape."
+        ],
+        "daniel.munteanu-test": [
+            "Instance 'bastion-instance' is using a basic shape."
+        ],
+        "daniela.croitoru": [
+            "Instance 'JumpHostDC' is using a basic shape.",
+            "Instance 'OGG-ZDM-ON' is using a basic shape.",
+            "Instance 'OGG4DEMO' is using a basic shape.",
+            "Instance 'instance-1914' is using a basic shape.",
+            "Instance 'onprem19c' is using a basic shape.",
+            "Instance 'srchost' is using a basic shape.",
+            "Instance 'test1000' is using a basic shape.",
+            "Instance 'test_19cru14_ol8' is using a basic shape.",
+            "Instance 'zdm' is using a basic shape.",
+            "Instance 'zdm03' is using a basic shape.",
+            "Instance 'JumpServer' is using a basic shape.",
+            "Volume 'BV-DC-LABS-OCI' is not attached to any instance.",
+            "Volume 'BV-DC-LABS-OCI' does not have auto-tune enabled.",
+            "ADB 'ADWDC19' is not optimized for OLTP workloads."
+        ],
+        "daniela.manta": [
+            "Instance 'Cloud_Developer' is using a basic shape.",
+            "Instance 'bastionexa' is using a basic shape.",
+            "Instance 'instance-ADBsub' is using a basic shape.",
+            "Instance 'sourseIAAS1' is using a basic shape.",
+            "Instance 'zdm21.3' is using a basic shape.",
+            "Instance 'zdm21.4' is using a basic shape."
+        ],
+        "dbcs_association": [],
+        "dbmgmt-demo": [],
+        "demo": [],
+        "Demo": [
+            "Instance 'instance-private' is using a basic shape.",
+            "Instance 'instance-public' is using a basic shape.",
+            "Instance 'instance-vcn3' is using a basic shape."
+        ],
+        "demo-poc": [],
+        "demo_devops": [],
+        "deployment1": [],
+        "dev": [
+            "Instance 'bastion' is using a basic shape.",
+            "Instance 'bastion-eve-ng' is using a basic shape.",
+            "Instance 'eve-ng-vm' is using a basic shape.",
+            "Instance 'oke-c3fzl5ikapa-nbda4siuasa-szjmcawckba-0' is using a basic shape.",
+            "Volume 'csi-c6008019-6e94-449a-a3ba-b88347490b68' is not attached to any instance.",
+            "Volume 'csi-10e48c9f-79a9-41af-a7fe-9e1dd74adfc3' is not attached to any instance.",
+            "Volume 'vasilica' does not have auto-tune enabled.",
+            "Load Balancer 'd86afe00-27d6-4101-ad57-c992e2fadbc4' is not using a flexible shape."
+        ],
+        "DEVOPS": [],
+        "DotNext": [],
+        "dotNext": [],
+        "emad.masoud": [
+            "Instance 'ATTACH_Instance_Private' is using a basic shape.",
+            "Instance 'DanielTest' is using a basic shape.",
+            "Instance 'HUB_Instance_Private_1' is using a basic shape.",
+            "Instance 'HUB_Instance_Public_NAT' is using a basic shape.",
+            "Instance 'LPG_Instance_Private' is using a basic shape.",
+            "Instance 'dev_av' is using a basic shape.",
+            "Instance 'instance-20240708-1258' is using a basic shape.",
+            "Instance 'instance-CAS' is using a basic shape.",
+            "Instance 'openvpn' is using a basic shape.",
+            "Instance 'thales' is using a basic shape.",
+            "Instance 'HUB_Instance_Private_2' is using a basic shape.",
+            "Volume 'emad_test' is not attached to any instance.",
+            "Volume 'emad_test' does not have auto-tune enabled.",
+            "Volume 'small_emad' is not attached to any instance.",
+            "Volume 'small_emad' does not have auto-tune enabled.",
+            "ADB 'Z0Q10IIU54WQK4JN' is not optimized for OLTP workloads."
+        ],
+        "email-compartment": [],
+        "Epsilon": [],
+        "Epsilon2": [
+            "Instance 'instance-20241213-1605' is using a basic shape.",
+            "Instance 'instance-windows' is using a basic shape.",
+            "Instance 'oke-cnlii4v2oia-n6izecqgeoq-sm3k3ph7ebq-0' is using a basic shape.",
+            "Instance 'oke-cnlii4v2oia-n6izecqgeoq-sm3k3ph7ebq-1' is using a basic shape.",
+            "Instance 'oke-cnlii4v2oia-n6izecqgeoq-sm3k3ph7ebq-2' is using a basic shape.",
+            "Volume 'bvtest' does not have auto-tune enabled."
+        ],
+        "Ericsson": [],
+        "ericsson": [],
+        "FCRS_DEV": [
+            "Instance 'VM-FCRS-POC' is using a basic shape."
+        ],
+        "FSDR": [
+            "Instance 'Linux-fsdr' is using a basic shape.",
+            "Instance 'Windows-FSDR' is using a basic shape."
+        ],
+        "FSDR_Demo": [],
+        "FTP-test": [
+            "Instance 'instance-8' is using a basic shape.",
+            "Instance 'upgrade-to-8' is using a basic shape.",
+            "Instance 'windows-1' is using a basic shape.",
+            "Instance 'windows-2' is using a basic shape.",
+            "Instance 'windows-private-instance' is using a basic shape.",
+            "Volume 'test-ftp' does not have auto-tune enabled."
+        ],
+        "gabriel.tarasescu": [
+            "Instance 'Work-Env-GT' is using a basic shape."
+        ],
+        "george.constantin": [
+            "Volume 'gec-bv-dev-instance' is not attached to any instance.",
+            "Volume 'gec-bv-dev-instance' does not have auto-tune enabled."
+        ],
+        "george.soare": [
+            "Instance 'CIPAL-Ansible' is using a basic shape.",
+            "Instance 'CloudDevLinux' is using a basic shape.",
+            "Instance 'ZDM_Private' is using a basic shape.",
+            "Instance 'bastion-mgmt' is using a basic shape.",
+            "Instance 'instance-raducu-grafana' is using a basic shape.",
+            "Instance 'EM-OMS' is using a basic shape.",
+            "Instance 'UbuntuGS' is using a basic shape.",
+            "Instance 'MariaDB1' is using a basic shape."
+        ],
+        "github.tests": [],
+        "GT-AI": [
+            "Instance 'GT-Ubuntu-python' is using a basic shape.",
+            "Instance 'gt-ai-python' is using a basic shape.",
+            "ADB 'ATP-Apex-GT' is not optimized for OLTP workloads.",
+            "ADB 'H3R8VFMU700SL7S2' is not optimized for OLTP workloads."
+        ],
+        "GTAnsible": [],
+        "GTTerraform": [],
+        "GTTests": [
+            "Instance 'OLAM-New' is using a basic shape.",
+            "Instance 'OLAM-Test' is using a basic shape.",
+            "Instance 'Rancher-Oracle-Linux' is using a basic shape.",
+            "Instance 'centos-rancher' is using a basic shape.",
+            "Instance 'docker-rancher-redhat' is using a basic shape.",
+            "Instance 'instance-20250709-1036' is using a basic shape.",
+            "Instance 'OLAM-Demo' is using a basic shape.",
+            "Instance 'OLAM2' is using a basic shape.",
+            "Instance 'VM1GT' is using a basic shape.",
+            "Volume 'bch1-disk_i' is not attached to any instance.",
+            "Volume 'bch3-disk' is not attached to any instance.",
+            "Volume 'bch2-disk_i' is not attached to any instance."
+        ],
+        "hitachi": [],
+        "Idtech": [],
+        "Infra": [
+            "Instance 'test-instance' is using a basic shape."
+        ],
+        "ISV_Projects": [],
+        "KCS-AMS": [],
+        "kerridge": [
+            "Instance 'dev-instance-kerridge' is using a basic shape.",
+            "Instance 'prod-instance-kerridge' is using a basic shape.",
+            "Instance 'test-8.0-same-compartment' is using a basic shape.",
+            "Instance 'test-instance-kerridge' is using a basic shape."
+        ],
+        "kerridge-child": [
+            "Instance 'test-2-child' is using a basic shape.",
+            "Instance 'test-child-mgmt-hub' is using a basic shape."
+        ],
+        "kerridge-child2": [],
+        "KerridgeSA": [
+            "Instance 'customer-vm' is using a basic shape.",
+            "Instance 'customer2-vm' is using a basic shape.",
+            "Instance 'jumphost-mgmt' is using a basic shape."
+        ],
+        "Konfigurator": [],
+        "KPD": [],
+        "kuka": [
+            "Volume 'csi-111121ae-3fdb-4879-b845-f4009aafdf9e' is not attached to any instance."
+        ],
+        "kuka_poc": [],
+        "labs": [],
+        "LABS": [],
+        "LABS-mbostina": [],
+        "laura.tanasescu": [
+            "Instance 'opsterraform' is using a basic shape.",
+            "Instance 'sgtechSS-instance-Lo8V' is using a basic shape."
+        ],
+        "learning": [
+            "Instance 'INS_LAB_01' is using a basic shape.",
+            "Instance 'desktop_ocid1.desktoppooldesktop.oc1.eu-frankfurt-1.antheljro7vto7iaf7lv6lrqxtordtulec7uo2p757shynxx6ymiuaswyafq' is using a basic shape.",
+            "Instance 'desktop_ocid1.desktoppooldesktop.oc1.eu-frankfurt-1.antheljro7vto7iaoitcsvsp3xf7v53nhnm4rwldiahxikiyt4bntxeojcha' is using a basic shape.",
+            "Instance 'instance1_LB_ACO' is using a basic shape.",
+            "Instance 'instance2_LB_ACO' is using a basic shape.",
+            "Instance 'n8n-demo' is using a basic shape.",
+            "Instance 'secure_desktop_OL8_ACO' is using a basic shape.",
+            "Volume 'volume-alexandrucofaruoraclecom_dc98155a-4f42-4c34-a666-c284b767151f' does not have auto-tune enabled."
+        ],
+        "Learning": [],
+        "LINEDATA": [
+            "Instance 'app' is using a basic shape.",
+            "Instance 'linux-mgmt' is using a basic shape.",
+            "Instance 'win-bastion' is using a basic shape."
+        ],
+        "llm": [],
+        "llm-rag": [
+            "Volume 'csi-7da27563-33ef-44d5-aca8-0ee573f28431' is not attached to any instance."
+        ],
+        "lukasz.klimas": [
+            "Volume 'block_volume' is not attached to any instance.",
+            "Volume 'block_volume' does not have auto-tune enabled."
+        ],
+        "management": [],
+        "Management-Agents": [],
+        "marc.torne": [
+            "ADB 'SANDBOX_APEX' is not optimized for OLTP workloads."
+        ],
+        "marius.bostinaru": [],
+        "marius.ciotir": [],
+        "MC-test": [
+            "Instance 'Linux-KVM' is using a basic shape.",
+            "Instance 'instance-20240906-1217' is using a basic shape.",
+            "Instance 'instanta-pentru-upgrade' is using a basic shape.",
+            "Instance 'instanta2' is using a basic shape.",
+            "Instance 'new-instance-for-okv' is using a basic shape.",
+            "Instance 'oracle9' is using a basic shape.",
+            "Instance 'test-raducu-2-copie-cu-osms-on' is using a basic shape.",
+            "Instance 'test-raducu2' is using a basic shape.",
+            "Instance 'test-shared-BV' is using a basic shape.",
+            "Volume 'shared-BV' is not attached to any instance.",
+            "Volume 'shared-BV' does not have auto-tune enabled.",
+            "Volume 'ocfs2-bv01' does not have auto-tune enabled."
+        ],
+        "mgmt": [],
+        "mihai.cazacu": [],
+        "NEC": [
+            "Instance 'NewVMWin' is using a basic shape.",
+            "Instance 'WinVMOriginal' is using a basic shape.",
+            "Volume 'BV_one' does not have auto-tune enabled.",
+            "Volume 'BV_two' does not have auto-tune enabled."
+        ],
+        "networking": [],
+        "Networking": [],
+        "new": [],
+        "nexus": [
+            "Instance 'domain_controller1' is using a basic shape.",
+            "Instance 'domain_controller2' is using a basic shape.",
+            "Instance 'vm_custom_dhcp' is using a basic shape."
+        ],
+        "nexus-dbcs": [],
+        "nexus_2025": [],
+        "nexus_2025_1": [
+            "Instance 'domain_controller1' is using a basic shape.",
+            "Instance 'domain_controller2' is using a basic shape.",
+            "Instance 'vm_custom_dhcp' is using a basic shape."
+        ],
+        "nexus_2025_remote": [
+            "Instance 'domain_controller1' is using a basic shape.",
+            "Instance 'domain_controller2' is using a basic shape.",
+            "Instance 'vm_custom_dhcp' is using a basic shape.",
+            "Volume 'bv_domain_controller1_backup_20250205_010215_restored_20250205_195301' is not attached to any instance.",
+            "Volume 'bv_domain_controller1_backup_20250205_010215_restored_20250205_195301' does not have auto-tune enabled."
+        ],
+        "nexus_bug": [],
+        "nexus_dual_region": [
+            "Instance 'instance-20240913-1113' is using a basic shape."
+        ],
+        "nexus_dwi": [
+            "Instance 'bastion' is using a basic shape.",
+            "Instance 'gobdc02' is using a basic shape.",
+            "Instance 'oke-coe43b63s5a-n32h6ktw5pq-scgga7gxmpa-0' is using a basic shape.",
+            "Instance 'oke-coe43b63s5a-n32h6ktw5pq-scgga7gxmpa-2' is using a basic shape.",
+            "Instance 'oke-coe43b63s5a-n32h6ktw5pq-scgga7gxmpa-1' is using a basic shape."
+        ],
+        "nexus_oke": [
+            "Instance 'oke-cwyyzdrqj4a-n23yzj5lb3a-sikyksoxuia-0' is using a basic shape.",
+            "Instance 'oke-cwyyzdrqj4a-n23yzj5lb3a-sikyksoxuia-1' is using a basic shape.",
+            "Instance 'oke-cwyyzdrqj4a-n23yzj5lb3a-sikyksoxuia-2' is using a basic shape."
+        ],
+        "nexus_oke_custom": [],
+        "nexus_test": [
+            "Instance 'domain_controller1' is using a basic shape.",
+            "Instance 'domain_controller2' is using a basic shape.",
+            "Instance 'vm_custom_dhcp' is using a basic shape."
+        ],
+        "nokia-cloudran": [],
+        "non-prod": [],
+        "oci_prof_certification": [],
+        "OCM": [],
+        "OKE": [],
+        "oke": [
+            "Volume 'csi-0bcd72eb-0574-450f-9e97-8853f17b2735' is not attached to any instance."
+        ],
+        "OKE_Test": [],
+        "opcoworkload": [],
+        "OpenshiftTest": [
+            "Instance 'cluster-sn02-cp-1' is using a basic shape.",
+            "Instance 'testinstance' is using a basic shape."
+        ],
+        "OpenWay": [],
+        "ortec": [],
+        "Ortec": [],
+        "ORTEC_POC": [],
+        "os-management": [],
+        "OS-mgmnt-HUB": [
+            "Instance 'dev-instance' is using a basic shape.",
+            "Instance 'prod-instance' is using a basic shape.",
+            "Instance 'test-instance' is using a basic shape."
+        ],
+        "OSMS-TEST-Kerridge-after-rename": [],
+        "parent": [],
+        "Planisware": [],
+        "playground": [
+            "Instance 'instance-20250904-1316' is using a basic shape.",
+            "Instance 'instance-20250904-1318' is using a basic shape.",
+            "Instance 'instance-20251002-1224' is using a basic shape.",
+            "Instance 'oke-ctgtvx4wwiq-nwgyb73mrya-skpugjgf7ha-0' is using a basic shape.",
+            "Instance 'sowgen' is using a basic shape.",
+            "Load Balancer '8b94e665-9b64-4378-a9ea-bfca59d0267e' is not using a flexible shape."
+        ],
+        "POC": [],
+        "poccompartment": [],
+        "poke": [
+            "Instance 'oke-cbdkvywmxaa-nfxb5sx2loq-sin6pfeha2q-0' is using a basic shape."
+        ],
+        "presentationDemo": [],
+        "presight": [
+            "Instance 'instance-20240515-1125' is using a basic shape.",
+            "Instance 'instance-from restore' is using a basic shape.",
+            "Instance 'instance-kvm-amd' is using a basic shape."
+        ],
+        "prod": [],
+        "production": [],
+        "Projects": [],
+        "raducu.lungoci": [
+            "Instance 'instance-bst' is using a basic shape.",
+            "Instance 'instance-terr' is using a basic shape.",
+            "Volume 'bv' is not attached to any instance.",
+            "Volume 'bv' does not have auto-tune enabled."
+        ],
+        "rancher": [
+            "Instance 'instantA' is using a basic shape.",
+            "Load Balancer '62896896-4dd9-46c5-a641-0854aa348197' is not using a flexible shape.",
+            "Load Balancer '39e4d526-aee8-48ca-9c74-23210d287fcc' is not using a flexible shape."
+        ],
+        "scope_solution_ag": [],
+        "scope_solution_faze2": [],
+        "secure_desktop": [],
+        "secure_desktop_test": [
+            "Volume 'test' is not attached to any instance.",
+            "Volume 'test' does not have auto-tune enabled."
+        ],
+        "Security": [
+            "Instance 'dev-webserver' is using a basic shape.",
+            "Instance 'dev2-webserver' is using a basic shape.",
+            "Instance 'test' is using a basic shape.",
+            "Instance 'webserver' is using a basic shape."
+        ],
+        "security-zone2": [],
+        "shared": [],
+        "SICPA": [],
+        "Siemens": [
+            "Instance 'instance-20251022-1522' is using a basic shape.",
+            "Instance 'oke-cz25hocwuha-nj6oerzqxba-sdogiamzfoq-0' is using a basic shape."
+        ],
+        "Siemens-Advanta": [
+            "Instance 'Test App Server 1' is using a basic shape.",
+            "Instance 'Test UI server 1' is using a basic shape.",
+            "Instance 'openvpn' is using a basic shape."
+        ],
+        "siemens-advanta": [],
+        "silvian.dumitru": [
+            "Instance 'FMW' is using a basic shape.",
+            "Instance 'Oracle GoldenGate 23.9.0.25.07 Microservices Edition for Oracle' is using a basic shape.",
+            "Instance 'Oracle11gR2SE_OL7.9' is using a basic shape.",
+            "Instance 'Prometheus-new' is using a basic shape.",
+            "Instance 'Win2016' is using a basic shape.",
+            "Instance 'db19cse' is using a basic shape.",
+            "Instance 'devhost' is using a basic shape.",
+            "Instance 'dsJumpserver' is using a basic shape.",
+            "Instance 'podman' is using a basic shape.",
+            "Instance 'zdmhost' is using a basic shape.",
+            "Volume 'block_vm_devhost_u01' does not have auto-tune enabled.",
+            "Volume 'podman_block_volume' does not have auto-tune enabled.",
+            "Volume 'Oracle GoldenGate 23.8.0.25.04 Microservices Edition for Oracle (Cache Manager)' is not attached to any instance.",
+            "Volume 'Oracle GoldenGate 23.8.0.25.04 Microservices Edition for Oracle (Deployments)' is not attached to any instance.",
+            "Volume 'Oracle GoldenGate 23.8.0.25.04 Microservices Edition for Oracle (Swap)' is not attached to any instance.",
+            "Volume 'Oracle GoldenGate 23.8.0.25.04 Microservices Edition for Oracle (Trails)' is not attached to any instance.",
+            "ADB 'ADWDS' is not optimized for OLTP workloads."
+        ],
+        "Software-AG": [],
+        "sportsradar": [
+            "Instance 'autosclaer' is using a basic shape.",
+            "ADB 'adb-01-dw-poc' is not optimized for OLTP workloads."
+        ],
+        "stack-monitoring": [
+            "Instance 'instance-3-stack-monitoring' is using a basic shape.",
+            "Instance 'instance1-stack-monitoring' is using a basic shape.",
+            "Instance 'instance2-stack-monitoring' is using a basic shape."
+        ],
+        "Symphony": [],
+        "tacher_test2": [],
+        "tcmp-transtek-poc": [],
+        "Tenancy-Management": [
+            "Instance 'management-instance' is using a basic shape."
+        ],
+        "Terraform_Infrastructure_pending_vault_delation": [],
+        "Terraform_Management": [],
+        "test": [],
+        "tgw": [],
+        "transtek": [],
+        "transtek_new": [],
+        "TranstekRM": [],
+        "tudor.deleanu": [],
+        "uc3": [],
+        "vcn-ortec-mgt": [],
+        "Velocix": [],
+        "victor.gabor": [],
+        "Visma": [
+            "Instance 'NewVM' is using a basic shape.",
+            "Instance 'instance-windows' is using a basic shape."
+        ],
+        "Visma-Fivaldi": [],
+        "Visma-LB": [],
+        "visma-poc": [],
+        "Visma-restore": [],
+        "work": [
+            "Instance 'bastion' is using a basic shape.",
+            "Instance 'llmwithadb' is using a basic shape.",
+            "Instance 'oke-cssvuhqxc2q-nbn2hjc7ikq-sxij3kde2aa-0' is using a basic shape.",
+            "Instance 'oke-cssvuhqxc2q-nbn2hjc7ikq-sxij3kde2aa-1' is using a basic shape.",
+            "Volume 'csi-0a72b98f-abae-4cc8-af32-3e3de7fe1bee' is not attached to any instance.",
+            "Volume 'csi-fe43bc5f-7e4e-4a4e-93ca-9c2201556003' is not attached to any instance.",
+            "Volume 'csi-53017c12-40c1-4503-bc8d-1bafe0b258de' is not attached to any instance.",
+            "Volume 'csi-d49fe413-7ddf-458e-a7eb-dfbcfff9cb06' is not attached to any instance.",
+            "Volume 'csi-51a0163e-00c0-47c5-8466-ce05a94f3834' is not attached to any instance.",
+            "Volume 'csi-a7cd2694-a808-4004-820c-8bf8e12225de' is not attached to any instance."
+        ],
+        "Yellowstar": [],
+        "yss_lab01": [
+            "Instance 'Linux7' is using a basic shape.",
+            "Instance 'PythonFlask Application' is using a basic shape.",
+            "Instance 'jumpServer01' is using a basic shape.",
+            "Instance 'windows_mllp_oic_agent' is using a basic shape.",
+            "Instance 'yss_dbping_ad3' is using a basic shape.",
+            "Volume 'RestoredBlock' does not have auto-tune enabled."
+        ]
+    }
+}
