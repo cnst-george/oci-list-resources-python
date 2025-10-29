@@ -10,7 +10,7 @@
                             "Stop": "FALSE"
                         },
                         "Oracle-Tags": {
-                            "CreatedBy": "default/marius.ciotir@oracle.com",
+                            "CreatedBy": "default/xxxxxx.xxxx@oracle.com",
                             "CreatedOn": "2025-07-25T17:18:09.781Z"
                         }
                     },
@@ -27,7 +27,7 @@
                             "Stop": "FALSE"
                         },
                         "Oracle-Tags": {
-                            "CreatedBy": "default/marius.ciotir@oracle.com",
+                            "CreatedBy": "default/xxxxxx.xxxx@oracle.com",
                             "CreatedOn": "2025-10-24T09:15:42.852Z"
                         }
                     },
@@ -44,7 +44,7 @@
                             "Stop": "FALSE"
                         },
                         "Oracle-Tags": {
-                            "CreatedBy": "default/marius.ciotir@oracle.com",
+                            "CreatedBy": "default/xxxxxx.xxxx@oracle.com",
                             "CreatedOn": "2025-10-28T17:54:24.461Z"
                         }
                     },
@@ -58,7 +58,7 @@
                             "Stop": "FALSE"
                         },
                         "Oracle-Tags": {
-                            "CreatedBy": "default/marius.ciotir@oracle.com",
+                            "CreatedBy": "default/xxxxxx.xxxx@oracle.com",
                             "CreatedOn": "2025-10-23T12:05:43.000Z"
                         }
                     },
@@ -236,7 +236,7 @@
                     "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljrcfz3ceyluszyz4gw2b5bnuglnr5ogllybveg4xyl3pb2r7tepnuq",
                     "defined_tags": {
                         "Oracle-Tags": {
-                            "CreatedBy": "default/marius.ciotir@oracle.com",
+                            "CreatedBy": "default/xxxxxx.xxxx@oracle.com",
                             "CreatedOn": "2025-01-29T08:48:25.487Z"
                         }
                     },
@@ -247,7 +247,7 @@
                     "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljri4gwyim2jkucjn4dfesuhnpwhuufwqyhlvy3ttu2swjdhdflpela",
                     "defined_tags": {
                         "Oracle-Tags": {
-                            "CreatedBy": "default/marius.ciotir@oracle.com",
+                            "CreatedBy": "default/xxxxxx.xxxx@oracle.com",
                             "CreatedOn": "2025-03-13T13:24:45.685Z"
                         }
                     },
