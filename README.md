@@ -9,7 +9,7 @@ This repository contains a collection of Python scripts for automating various t
 ├── oci-list-all                         # List all
 ├── oci-list-buckets                     # List buckets
 ├── oci-list-policies                    # List policies
-├── oci-list-resources                   # List all resources
+├── oci-list-resources                   # List all by resources
 ├── oci-list-unused                      # List unused resources
 ├── oci-list-storage                     # List block volumes, File Systems
 ├── requirements.txt                     # Dependencies for running scripts

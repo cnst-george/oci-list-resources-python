@@ -5,13 +5,17 @@ import subprocess
 from datetime import datetime
 
 # Load OCI configuration
-config = oci.config.from_file("~/.oci/config")
+configAPI = oci.config.from_file("~/.oci/config")
+
+# Initialize OCI clients
+identity_client = oci.identity.IdentityClient(configAPI)
 
 def fetch_policies():
     try:       
         # Get tenancy ID
-        tenancy_ocid = config["tenancy"]
-        print(f"Using Tenancy OCID: {tenancy_ocid}")
+        tenancy_ocid = configAPI["tenancy"]
+        tenancy_name = identity_client.get_tenancy(tenancy_id=tenancy_ocid).data.name
+        print(f"Using Tenancy Name: {tenancy_name}")
 
         # Fetch policies using OCI CLI
         print("Fetching policies using OCI CLI...")
@@ -55,7 +59,7 @@ def save_files(df, tenancy_ocid):
     try:
         # Get current date for the file name
         current_date = datetime.now().strftime("%Y-%m-%d")
-        tenancy_name = tenancy_ocid.split(".")[1] if tenancy_ocid else "unknown"
+        tenancy_name = identity_client.get_tenancy(tenancy_id=tenancy_ocid).data.name
 
         # Generate file names with dynamic titles
         csv_file = f"oci_policies_{tenancy_name}_{current_date}.csv"

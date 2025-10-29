@@ -7,17 +7,19 @@ from openpyxl.styles import PatternFill, Font
 from openpyxl.chart import PieChart, BarChart, Reference
 
 # Load OCI configuration
-config = oci.config.from_file("~/.oci/config")
+configAPI = oci.config.from_file("~/.oci/config")
 
 # Initialize OCI clients
-identity_client = oci.identity.IdentityClient(config)
-object_storage_client = oci.object_storage.ObjectStorageClient(config)
+identity_client = oci.identity.IdentityClient(configAPI)
+object_storage_client = oci.object_storage.ObjectStorageClient(configAPI)
 
 # Get Object Storage namespace
 namespace = object_storage_client.get_namespace().data
 
 # Get tenancy ID
-tenancy_ocid = config["tenancy"]
+tenancy_ocid = configAPI["tenancy"]
+tenancy_name = identity_client.get_tenancy(tenancy_id=tenancy_ocid).data.name
+print(f"Using Tenancy Name: {tenancy_name}")
 
 # Fetch availability domains
 availability_domains = identity_client.list_availability_domains(tenancy_ocid).data
@@ -73,7 +75,7 @@ try:
 
     # Get current date for the file name
     current_date = datetime.now().strftime("%Y-%m-%d")
-    tenancy_name = tenancy_ocid.split(".")[1] if tenancy_ocid else "unknown"
+    tenancy_name = identity_client.get_tenancy(tenancy_id=tenancy_ocid).data.name
     
     # Generate file name with dynamic titles
     file_name = f"oci_buckets_{tenancy_name}_{current_date}.json"

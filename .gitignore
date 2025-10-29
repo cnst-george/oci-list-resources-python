@@ -1,8 +1,9 @@
 # Ignore macOS system files
 .DS_Store
 
-/*.xlsx
-/*.json
+oci_*.xlsx
+oci_*.json
+oci_*.csv
 
 #*.xlsx
 #*.csv
