@@ -226,7 +226,7 @@ try:
         sheet.append(["Compartment", "Name", "ID", "Defined_tags", "Freeform_tags" ])
         for compartment, resource_data in resources.items():
             for item in resource_data.get(resource_type, []):
-                sheet.append([compartment, item.get("name"), item.get("id", "N/A"),item.get(f"defined_tags"),item.get(f"freeform_tags")])
+                sheet.append([compartment, item.get("name"), item.get("id", "N/A"),str(item.get("defined_tags")),str(item.get(f"freeform_tags"))])
 
     # Add visualization sheet
     visualization_sheet = workbook.create_sheet(title="Visualizations")
