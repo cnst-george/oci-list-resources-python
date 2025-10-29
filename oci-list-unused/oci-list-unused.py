@@ -38,7 +38,7 @@ def collect_unused_resources():
     # Define sheet names
     sheets = {
         "Unattached Volumes": ["Compartment", "Volume Name", "Volume OCID", "Size (GB)", "State", "Defined Tags","Freeform Tags","Created Time", "Last Backup Time", "Remarks"],
-        "Orphaned Instances": ["Compartment", "Instance Name", "Instance OCID", "State", "Defined Tags","Freeform Tags","Shape", "Created Time", "Remarks"],
+        # "Orphaned Instances": ["Compartment", "Instance Name", "Instance OCID", "State", "Defined Tags","Freeform Tags","Shape", "Created Time", "Remarks"],
         "Unused FileSystems": ["Compartment", "File System", "Type", "Size (GB)", "State", "Defined Tags","Freeform Tags","Created Time", "Remarks"],
         # "Unused Buckets": ["Compartment", "Bucket Name", "Type", "Size (GB)", "State", "Defined Tags","Freeform Tags", "Created Time", "Remarks"],
         # "Unattached VNICs": ["Compartment", "VNIC Name", "VNIC OCID", "State", "Defined Tags","Freeform Tags", "Created Time", "Remarks"],
@@ -60,7 +60,7 @@ def collect_unused_resources():
     workbook.remove(workbook["Sheet"])
 
     for compartment in compartments:
-        print(f"Checking compartment: {compartment.name}")
+        print(f"Discovering unused resources in compartment: {compartment.name}")
         
         # Unattached Volumes
         volumes = blockstorage_client.list_volumes(compartment_id=compartment.id).data
@@ -73,8 +73,8 @@ def collect_unused_resources():
                 volume.id,
                 volume.size_in_gbs, 
                 volume.lifecycle_state,
-                volume.defined_tags,
-                volume.freeform_tags,
+                str(volume.defined_tags),
+                str(volume.freeform_tags),
                 volume.time_created.strftime('%Y-%m-%d %H:%M:%S'), "N/A", "Unattached"
             ])
         
@@ -122,8 +122,8 @@ def collect_unused_resources():
                     "File Storage", 
                     "N/A", 
                     fs.lifecycle_state, 
-                    fs.defined_tags,
-                    fs.freeform_tags,                    
+                    str(fs.defined_tags),
+                    str(fs.freeform_tags),                    
                     fs.time_created.strftime('%Y-%m-%d %H:%M:%S'), remarks
                 ])
         
@@ -136,8 +136,8 @@ def collect_unused_resources():
         #             vnic.display_name, 
         #             vnic.id,
         #             vnic.lifecycle_state, 
-        #             vnic.defined_tags,
-        #             vnic.freeform_tags,                      
+        #             str(vnic.defined_tags),
+        #             str(vnic.freeform_tags),                      
         #             vnic.time_created.strftime('%Y-%m-%d %H:%M:%S'), "Unattached"
         #         ])
         
@@ -150,8 +150,8 @@ def collect_unused_resources():
         #             lb.display_name, 
         #             lb.id,
         #             lb.lifecycle_state,
-        #             lb.defined_tags,
-        #             lb.freeform_tags,  
+        #             str(lb.defined_tags),
+        #             str(lb.freeform_tags),  
         #             lb.time_created.strftime('%Y-%m-%d %H:%M:%S'), "Orphaned"
         #         ])
         
@@ -164,8 +164,8 @@ def collect_unused_resources():
         #         ip.ip_address, 
         #         assigned_to,
         #         ip.lifecycle_state, 
-        #         ip.defined_tags,
-        #         ip.freeform_tags,                 
+        #         str(ip.defined_tags),
+        #         str(ip.freeform_tags),                 
         #         ip.time_created.strftime('%Y-%m-%d %H:%M:%S'), "Unused"
         #     ])
         
@@ -178,8 +178,8 @@ def collect_unused_resources():
         #             drg.display_name, 
         #             "DRG", 
         #             drg.lifecycle_state,
-        #             drg.defined_tags,
-        #             drg.freeform_tags,                     
+        #             str(drg.defined_tags),
+        #             str(drg.freeform_tags),                     
         #             drg.time_created.strftime('%Y-%m-%d %H:%M:%S'), "Inactive"
         #         ])
 

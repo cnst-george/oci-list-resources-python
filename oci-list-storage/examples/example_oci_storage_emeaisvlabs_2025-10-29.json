@@ -1,0 +1,131 @@
+{
+    "resources": {
+        "cmp-app": {
+            "Block Volumes": [
+                {
+                    "name": "amd-storage",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljrcfz3ceyluszyz4gw2b5bnuglnr5ogllybveg4xyl3pb2r7tepnuq",
+                    "defined_tags": {
+                        "Oracle-Tags": {
+                            "CreatedBy": "default/xxxx.xxxx@oracle.com",
+                            "CreatedOn": "2025-01-29T08:48:25.487Z"
+                        }
+                    },
+                    "freeform_tags": {}
+                },
+                {
+                    "name": "ollama",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljri4gwyim2jkucjn4dfesuhnpwhuufwqyhlvy3ttu2swjdhdflpela",
+                    "defined_tags": {
+                        "Oracle-Tags": {
+                            "CreatedBy": "default/xxxx.xxxx@oracle.com",
+                            "CreatedOn": "2025-03-13T13:24:45.685Z"
+                        }
+                    },
+                    "freeform_tags": {}
+                },
+                {
+                    "name": "csi-3e0d5a22-0d02-4ea1-aab5-4bc25749373e",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljr2ezf2myriba44au2isnw6c2jvm23p3qluvezsff3wyr3dqnv5uaa",
+                    "defined_tags": {
+                        "Oracle-Tags": {
+                            "CreatedBy": "ocid1.cluster.oc1.eu-frankfurt-1.aaaaaaaastjgwytmc5jofbqf6xo6b4xmg7cm4dcj2yx564xflcyxejyln2fa",
+                            "CreatedOn": "2025-03-13T13:31:10.272Z"
+                        }
+                    },
+                    "freeform_tags": {
+                        "pvc": "demo-manag"
+                    }
+                },
+                {
+                    "name": "csi-6ded5240-6f63-41af-b394-0ec1ca3a9dd0",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljrclg56u6dgtd23wf7simo2obrwnyyrpgmzfyealoyrxv4xl56cuoq",
+                    "defined_tags": {
+                        "Do-not-stop-scheduler": {
+                            "Stop": "FALSE"
+                        },
+                        "Oracle-Tags": {
+                            "CreatedBy": "ocid1.cluster.oc1.eu-frankfurt-1.aaaaaaaaoyovb2l7ninwpuysyrkexzu5seytkyezg44hcepwocod6ero6nxa",
+                            "CreatedOn": "2025-10-24T18:22:28.800Z"
+                        }
+                    },
+                    "freeform_tags": {
+                        "pvc": "demo-manag"
+                    }
+                },
+                {
+                    "name": "csi-2dc84d26-ee60-41dc-b9a1-c4eb426de51c",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljtmhnrircbziqa264nj2cqh6mldxkxwfk32qm3ad4o3eis4m3ok5rq",
+                    "defined_tags": {
+                        "Do-not-stop-scheduler": {
+                            "Stop": "FALSE"
+                        },
+                        "Oracle-Tags": {
+                            "CreatedBy": "ocid1.cluster.oc1.eu-frankfurt-1.aaaaaaaaoyovb2l7ninwpuysyrkexzu5seytkyezg44hcepwocod6ero6nxa",
+                            "CreatedOn": "2025-10-24T18:22:28.739Z"
+                        }
+                    },
+                    "freeform_tags": {
+                        "pvc": "demo-manag"
+                    }
+                },
+                {
+                    "name": "csi-c271ef4b-633c-4e2e-8514-169bd66d92fa",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljs2uqqfq2ijhlft277wo34m7hxtoznxenqzypxocbikyqhckqcfq7q",
+                    "defined_tags": {
+                        "Oracle-Tags": {
+                            "CreatedBy": "ocid1.cluster.oc1.eu-frankfurt-1.aaaaaaaastjgwytmc5jofbqf6xo6b4xmg7cm4dcj2yx564xflcyxejyln2fa",
+                            "CreatedOn": "2024-12-13T12:45:20.001Z"
+                        }
+                    },
+                    "freeform_tags": {
+                        "pvc": "demo-manag"
+                    }
+                },
+                {
+                    "name": "csi-477c120c-4944-440c-9851-c6d1b66e186a",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljszkcx6braofywpazyrybnqa7f4uomb6rgysyu7mxerfke6zz5tgtq",
+                    "defined_tags": {
+                        "Oracle-Tags": {
+                            "CreatedBy": "ocid1.cluster.oc1.eu-frankfurt-1.aaaaaaaastjgwytmc5jofbqf6xo6b4xmg7cm4dcj2yx564xflcyxejyln2fa",
+                            "CreatedOn": "2024-12-18T14:11:27.311Z"
+                        }
+                    },
+                    "freeform_tags": {
+                        "pvc": "demo-manag"
+                    }
+                },
+                {
+                    "name": "csi-ead1430f-4169-42db-a208-522f5fc75292",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljs7yqsh2caf2zvmitaq5hfy7vhfmqit6lro4kzpctbo5j5go57mueq",
+                    "defined_tags": {
+                        "Oracle-Tags": {
+                            "CreatedBy": "ocid1.cluster.oc1.eu-frankfurt-1.aaaaaaaastjgwytmc5jofbqf6xo6b4xmg7cm4dcj2yx564xflcyxejyln2fa",
+                            "CreatedOn": "2024-12-18T14:11:27.351Z"
+                        }
+                    },
+                    "freeform_tags": {
+                        "pvc": "demo-manag"
+                    }
+                },
+                {
+                    "name": "csi-ac0ad395-32b1-4d83-95e6-ab0053a9c073",
+                    "id": "ocid1.volume.oc1.eu-frankfurt-1.abtheljsgavcd6swqygqua2vp7dlgs2shaylw6wpdt7zswfenn7i7slmefyq",
+                    "defined_tags": {
+                        "Do-not-stop-scheduler": {
+                            "Stop": "FALSE"
+                        },
+                        "Oracle-Tags": {
+                            "CreatedBy": "ocid1.cluster.oc1.eu-frankfurt-1.aaaaaaaaoyovb2l7ninwpuysyrkexzu5seytkyezg44hcepwocod6ero6nxa",
+                            "CreatedOn": "2025-10-24T18:22:28.749Z"
+                        }
+                    },
+                    "freeform_tags": {
+                        "pvc": "demo-manag"
+                    }
+                }
+            ]
+        },
+
+    }
+}
