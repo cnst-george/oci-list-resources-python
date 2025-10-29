@@ -25,7 +25,7 @@ Ensure you have the following installed before running the scripts:
   - Ensure you have an OCI **config file** at `~/.oci/config` with required credentials.
   - Example config file:
     ```ini
-    oci setup config
+    $ oci setup config
     [DEFAULT]
     user=ocid1.user.oc1..xxxxx
     fingerprint=xx:xx:xx:xx:xx:xx
