@@ -1,8 +1,8 @@
 # Ignore macOS system files
 .DS_Store
 
-*.xlsx
-*.csv
-*.json
-*.log
+#*.xlsx
+#*.csv
+#*.json
+#*.log
 
