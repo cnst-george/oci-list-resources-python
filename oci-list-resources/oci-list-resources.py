@@ -7,21 +7,27 @@ from openpyxl.styles import PatternFill, Font
 from openpyxl.chart import PieChart, BarChart, Reference
 
 # Load OCI configuration
-config = oci.config.from_file("~/.oci/config")
+configAPI = oci.config.from_file("~/.oci/config")
 
 # Initialize OCI clients
-identity_client = oci.identity.IdentityClient(config)
-virtual_network_client = oci.core.VirtualNetworkClient(config)
-compute_client = oci.core.ComputeClient(config)
-block_storage_client = oci.core.BlockstorageClient(config)
-file_storage_client = oci.file_storage.FileStorageClient(config)
-object_storage_client = oci.object_storage.ObjectStorageClient(config)
-database_client = oci.database.DatabaseClient(config)
-load_balancer_client = oci.load_balancer.LoadBalancerClient(config)
+identity_client = oci.identity.IdentityClient(configAPI)
+virtual_network_client = oci.core.VirtualNetworkClient(configAPI)
+compute_client = oci.core.ComputeClient(configAPI)
+block_storage_client = oci.core.BlockstorageClient(configAPI)
+file_storage_client = oci.file_storage.FileStorageClient(configAPI)
+object_storage_client = oci.object_storage.ObjectStorageClient(configAPI)
+database_client = oci.database.DatabaseClient(configAPI)
+load_balancer_client = oci.load_balancer.LoadBalancerClient(configAPI)
+
+# Get Object Storage namespace
 namespace = object_storage_client.get_namespace().data
 
 # Get tenancy ID
-tenancy_ocid = config["tenancy"]
+tenancy_ocid = configAPI["tenancy"]
+# tenancy_name = tenancy_ocid.split(".")[1] if tenancy_ocid else "unknown"
+
+# Fetch availability domains
+availability_domains = identity_client.list_availability_domains(tenancy_ocid).data
 
 # Initialize result storage
 resources = {}
@@ -60,17 +66,19 @@ try:
             # Discover Compute Instances
             instance_response = oci.pagination.list_call_get_all_results(
                 compute_client.list_instances,
-                compartment_id=compartment.id
+                compartment_id=compartment.id,
             ).data
             instance_findings = []
             for instance in instance_response:
                 resources[compartment.name].setdefault("Compute Instances", []).append({
                     "name": instance.display_name,
-                    "id": instance.id
+                    "id": instance.id,
+                    "defined_tags" : instance.defined_tags,
+                    "freeform_tags" : instance.freeform_tags
                 })
                 # Best practice: Check if instance metadata is restricted
                 if instance.shape.startswith("VM.Standard"):
-                    instance_findings.append(f"Instance '{instance.display_name}' is using a basic shape.")
+                    instance_findings.append(f"Instance '{instance.display_name}' is using '{instance.shape}' shape")
             findings[compartment.name].extend(instance_findings)
 
             # Discover Block Volumes
@@ -82,7 +90,9 @@ try:
             for volume in volume_response:
                 resources[compartment.name].setdefault("Block Volumes", []).append({
                     "name": volume.display_name,
-                    "id": volume.id
+                    "id": volume.id,
+                    "defined_tags" : volume.defined_tags,
+                    "freeform_tags" : volume.freeform_tags
                 })
                 # Check if the volume is attached to any instance 
                 attachments = oci.pagination.list_call_get_all_results(
@@ -91,39 +101,28 @@ try:
                     volume_id=volume.id
                 ).data
                 if not attachments:  # No attachments found
-                    volume_findings.append(f"Volume '{volume.display_name}' is not attached to any instance.")
+                    volume_findings.append(f"Volume '{volume.display_name}' is NOT attached to any instance.")
                 # Best practice: Ensure backup policy is set
                 if not volume.is_auto_tune_enabled:
                     volume_findings.append(f"Volume '{volume.display_name}' does not have auto-tune enabled.")
             findings[compartment.name].extend(volume_findings)
 
-            # Discover Object Storage Buckets
-            # bucket_response = oci.pagination.list_call_get_all_results(
-            #     object_storage_client.list_buckets,
-            #     namespace_name=namespace,
-            #     compartment_id=compartment.id
-            # ).data
-            # bucket_findings = []
-            # for bucket in bucket_response:
-            #     resources[compartment.name].setdefault("Buckets", []).append({"name": bucket.name})
-            #     # Fetch detailed bucket info to check for public access
-            #     bucket_details = object_storage_client.get_bucket(
-            #         namespace_name=namespace,
-            #         bucket_name=bucket.name
-            #     ).data
-            #     # Best practice: Check for public access
-            #     if bucket_details.public_access_type != "NoPublicAccess":
-            #         bucket_findings.append(f"Bucket '{bucket.name}' allows public access.")
-            #     # Discover Objects in Buckets
-            #     object_response = oci.pagination.list_call_get_all_results(
-            #         object_storage_client.list_objects,
-            #         namespace_name=namespace,
-            #         bucket_name=bucket.name
-            #     ).data
-            #     resources[compartment.name].setdefault("Bucket Objects", []).extend([
-            #         {"bucket_name": bucket.name, "object_name": obj.name} for obj in object_response.objects
-            #     ])
-            # findings[compartment.name].extend(bucket_findings)
+            # Discover File Systems 
+            for ad in availability_domains:  
+                fss_response = oci.pagination.list_call_get_all_results(
+                    file_storage_client.list_file_systems,
+                    compartment_id=compartment.id,
+                    availability_domain=ad.name
+                ).data
+                fss_findings = []
+                for fss in fss_response:
+                    resources[compartment.name].setdefault("File Systems", []).append({
+                        "name": fss.display_name,
+                        "id": fss.id,
+                        "defined_tags" : fss.defined_tags,
+                        "freeform_tags" : fss.freeform_tags
+                    })
+                findings[compartment.name].extend(fss_findings)
 
             # Discover Autonomous Databases
             adb_response = oci.pagination.list_call_get_all_results(
@@ -134,7 +133,9 @@ try:
             for adb in adb_response:
                 resources[compartment.name].setdefault("Autonomous Databases", []).append({
                     "name": adb.display_name,
-                    "id": adb.id
+                    "id": adb.id,
+                    "defined_tags" : adb.defined_tags,
+                    "freeform_tags" : adb.freeform_tags
                 })
                 # Best practice: Check for appropriate workload type
                 if adb.db_workload != "OLTP":
@@ -150,7 +151,9 @@ try:
             for lb in lb_response:
                 resources[compartment.name].setdefault("Load Balancers", []).append({
                     "name": lb.display_name,
-                    "id": lb.id
+                    "id": lb.id,
+                    "defined_tags" : lb.defined_tags,
+                    "freeform_tags" : lb.freeform_tags
                 })
                 # Best practice: Ensure SSL termination is configured
                 if not lb.shape_name.startswith("flexible"):
@@ -159,10 +162,9 @@ try:
 
     # Get current date for the file name
     current_date = datetime.now().strftime("%Y-%m-%d")
-    tenancy_name = tenancy_ocid.split(".")[1] if tenancy_ocid else "unknown"
-    
+   
     # Generate file name with dynamic titles
-    file_name = f"oci_resources_{tenancy_name}_{current_date}.json"
+    file_name = f"oci_resources_{namespace}_{current_date}.json"
     
     # Export data to JSON
     with open(file_name, "w") as file:
@@ -176,10 +178,10 @@ try:
     summary_sheet.title = "Findings Summary"
 
     # Add findings summary
-    summary_sheet.append(["Compartment", "Issue", "Recommendation"])
+    summary_sheet.append(["Compartment", "Remarks"])
     for compartment, issues in findings.items():
         for issue in issues:
-            summary_sheet.append([compartment, issue, "Refer to OCI best practices."])
+            summary_sheet.append([compartment, issue])
 
     # Style misconfigurations
     for row in summary_sheet.iter_rows(min_row=2, max_row=summary_sheet.max_row, min_col=2, max_col=2):
@@ -215,15 +217,14 @@ try:
     for resource_type in ["VCNs", 
                         "Compute Instances", 
                         "Block Volumes", 
-                        "Buckets", 
-                        "Bucket Objects", 
+                        "File Systems",
                         "Autonomous Databases", 
                         "Load Balancers"]:
         sheet = workbook.create_sheet(title=resource_type)
-        sheet.append(["Compartment", "Name", "ID"])
+        sheet.append(["Compartment", "Name", "ID", "Defined_tags", "Freeform_tags" ])
         for compartment, resource_data in resources.items():
             for item in resource_data.get(resource_type, []):
-                sheet.append([compartment, item.get("name"), item.get("id", "N/A")])
+                sheet.append([compartment, item.get("name"), item.get("id", "N/A"),item.get(f"defined_tags"),item.get(f"freeform_tags")])
 
     # Add visualization sheet
     visualization_sheet = workbook.create_sheet(title="Visualizations")
@@ -257,7 +258,7 @@ try:
     visualization_sheet.add_chart(bar_chart, "D20")
 
     # Generate file name with dynamic titles
-    file_name = f"oci_resources_{tenancy_name}_{current_date}.xlsx"
+    file_name = f"oci_resources_{namespace}_{current_date}.xlsx"
     
     # Save the Excel workbook
     workbook.save(file_name)

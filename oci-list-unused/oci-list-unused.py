@@ -20,6 +20,10 @@ def collect_unused_resources():
     
     # Get tenancy ID
     tenancy_ocid = config["tenancy"]
+    # tenancy_name = tenancy_ocid.split(".")[1] if tenancy_ocid else "unknown"
+
+    # Get Object Storage namespace
+    namespace = object_storage_client.get_namespace().data
 
     print("Fetching compartments...")
     compartments = identity_client.list_compartments(
@@ -33,14 +37,14 @@ def collect_unused_resources():
     
     # Define sheet names
     sheets = {
-        "Unattached Volumes": ["Compartment", "Volume Name", "Volume OCID", "Size (GB)", "State", "Created Time", "Last Backup Time", "Remarks"],
-        "Orphaned Instances": ["Compartment", "Instance Name", "Instance OCID", "State", "Shape", "Created Time", "Remarks"],
-        "Unused FileSystems": ["Compartment", "File System", "Type", "Size (GB)", "State", "Created Time", "Remarks"],
-        # "Unused Buckets": ["Compartment", "Bucket Name", "Type", "Size (GB)", "State", "Created Time", "Remarks"],
-        # "Unattached VNICs": ["Compartment", "VNIC Name", "VNIC OCID", "State", "Created Time", "Remarks"],
-        # "Orphaned Load Balancers": ["Compartment", "Load Balancer Name", "Load Balancer OCID", "State", "Created Time", "Remarks"],
-        # "Unused Public IPs": ["Compartment", "Public IP", "Assigned To", "State", "Created Time", "Remarks"],
-        # "Inactive DRGs & VPNs": ["Compartment", "Resource Name", "Type", "State", "Created Time", "Remarks"]
+        "Unattached Volumes": ["Compartment", "Volume Name", "Volume OCID", "Size (GB)", "State", "Defined Tags","Freeform Tags","Created Time", "Last Backup Time", "Remarks"],
+        "Orphaned Instances": ["Compartment", "Instance Name", "Instance OCID", "State", "Defined Tags","Freeform Tags","Shape", "Created Time", "Remarks"],
+        "Unused FileSystems": ["Compartment", "File System", "Type", "Size (GB)", "State", "Defined Tags","Freeform Tags","Created Time", "Remarks"],
+        # "Unused Buckets": ["Compartment", "Bucket Name", "Type", "Size (GB)", "State", "Defined Tags","Freeform Tags", "Created Time", "Remarks"],
+        # "Unattached VNICs": ["Compartment", "VNIC Name", "VNIC OCID", "State", "Defined Tags","Freeform Tags", "Created Time", "Remarks"],
+        # "Orphaned Load Balancers": ["Compartment", "Load Balancer Name", "Load Balancer OCID", "State", "Defined Tags","Freeform Tags", "Created Time", "Remarks"],
+        # "Unused Public IPs": ["Compartment", "Public IP", "Assigned To", "State", "Defined Tags","Freeform Tags", "Created Time", "Remarks"],
+        # "Inactive DRGs & VPNs": ["Compartment", "Resource Name", "Type", "State", "Defined Tags","Freeform Tags", "Created Time", "Remarks"]
     }
 
     sheet_objects = {}
@@ -64,22 +68,32 @@ def collect_unused_resources():
             if volume.lifecycle_state != "AVAILABLE":
                 continue
             sheet_objects["Unattached Volumes"].append([
-                compartment.name, volume.display_name, volume.id,
-                volume.size_in_gbs, volume.lifecycle_state,
+                compartment.name, 
+                volume.display_name, 
+                volume.id,
+                volume.size_in_gbs, 
+                volume.lifecycle_state,
+                volume.defined_tags,
+                volume.freeform_tags,
                 volume.time_created.strftime('%Y-%m-%d %H:%M:%S'), "N/A", "Unattached"
             ])
         
-        # Orphaned Compute Instances
+        # # Orphaned Compute Instances
         # instances = compute_client.list_instances(compartment_id=compartment.id).data
         # for instance in instances:
         #     if instance.lifecycle_state in ["TERMINATED", "STOPPED"]:
         #         sheet_objects["Orphaned Instances"].append([
-        #             compartment.name, instance.display_name, instance.id,
-        #             instance.lifecycle_state, instance.shape,
+        #             compartment.name, 
+        #             instance.display_name, 
+        #             instance.id,
+        #             instance.lifecycle_state, 
+        #             instance.defined_tags,
+        #             instance.freeform_tags,          
+        #             instance.shape,
         #             instance.time_created.strftime('%Y-%m-%d %H:%M:%S'), "Orphaned"
         #         ])
 
-        # Unused Object Storage Buckets & File Storage
+        # # Unused Object Storage Buckets & File Storage
         # namespace = object_storage_client.get_namespace().data
         # buckets = object_storage_client.list_buckets(namespace, compartment_id=compartment.id).data
         # for bucket in buckets:
@@ -87,8 +101,13 @@ def collect_unused_resources():
         #     bucket_size = bucket_details.approximate_size if bucket_details.approximate_size is not None else 0
         #     remarks = "Unused" if bucket_details.approximate_count == 0 else "Active"
         #     sheet_objects["Unused Buckets"].append([
-        #         compartment.name, bucket.name, "Object Storage", 
-        #         bucket_size / (1024 * 1024 * 1024), "Available",
+        #         compartment.name, 
+        #         bucket.name, 
+        #         "Object Storage", 
+        #         bucket_size / (1024 * 1024 * 1024), 
+        #         "Available",
+        #         bucket.defined_tags,
+        #         bucket.freeform_tags,                 
         #         bucket.time_created.strftime('%Y-%m-%d %H:%M:%S'), remarks
         #     ])
         
@@ -98,52 +117,77 @@ def collect_unused_resources():
             for fs in file_systems:
                 remarks = "Unused" if fs.lifecycle_state == "AVAILABLE" else "In Use"
                 sheet_objects["Unused FileSystems"].append([
-                    compartment.name, fs.display_name, "File Storage", "N/A", 
-                    fs.lifecycle_state, fs.time_created.strftime('%Y-%m-%d %H:%M:%S'), remarks
+                    compartment.name, 
+                    fs.display_name, 
+                    "File Storage", 
+                    "N/A", 
+                    fs.lifecycle_state, 
+                    fs.defined_tags,
+                    fs.freeform_tags,                    
+                    fs.time_created.strftime('%Y-%m-%d %H:%M:%S'), remarks
                 ])
         
-        # Unattached VNICs
+        # # Unattached VNICs
         # vnic_attachments = compute_client.list_vnic_attachments(compartment_id=compartment.id).data
         # for vnic in vnic_attachments:
         #     if vnic.lifecycle_state != "ATTACHED":
         #         sheet_objects["Unattached VNICs"].append([
-        #             compartment.name, vnic.display_name, vnic.id,
-        #             vnic.lifecycle_state, vnic.time_created.strftime('%Y-%m-%d %H:%M:%S'), "Unattached"
+        #             compartment.name, 
+        #             vnic.display_name, 
+        #             vnic.id,
+        #             vnic.lifecycle_state, 
+        #             vnic.defined_tags,
+        #             vnic.freeform_tags,                      
+        #             vnic.time_created.strftime('%Y-%m-%d %H:%M:%S'), "Unattached"
         #         ])
         
-        # Orphaned Load Balancers
+        # # Orphaned Load Balancers
         # load_balancers = load_balancer_client.list_load_balancers(compartment_id=compartment.id).data
         # for lb in load_balancers:
         #     if lb.lifecycle_state in ["TERMINATED", "FAILED"]:
         #         sheet_objects["Orphaned Load Balancers"].append([
-        #             compartment.name, lb.display_name, lb.id,
-        #             lb.lifecycle_state, lb.time_created.strftime('%Y-%m-%d %H:%M:%S'), "Orphaned"
+        #             compartment.name, 
+        #             lb.display_name, 
+        #             lb.id,
+        #             lb.lifecycle_state,
+        #             lb.defined_tags,
+        #             lb.freeform_tags,  
+        #             lb.time_created.strftime('%Y-%m-%d %H:%M:%S'), "Orphaned"
         #         ])
         
-        # Unused Public IPs
+        # # Unused Public IPs
         # public_ips = network_client.list_public_ips(scope="REGION", compartment_id=compartment.id).data
         # for ip in public_ips:
         #     assigned_to = ip.assigned_entity_id if ip.assigned_entity_id else "Unassigned"
         #     sheet_objects["Unused Public IPs"].append([
-        #         compartment.name, ip.ip_address, assigned_to,
-        #         ip.lifecycle_state, ip.time_created.strftime('%Y-%m-%d %H:%M:%S'), "Unused"
+        #         compartment.name, 
+        #         ip.ip_address, 
+        #         assigned_to,
+        #         ip.lifecycle_state, 
+        #         ip.defined_tags,
+        #         ip.freeform_tags,                 
+        #         ip.time_created.strftime('%Y-%m-%d %H:%M:%S'), "Unused"
         #     ])
         
-        # Inactive DRGs & VPNs
+        # # Inactive DRGs & VPNs
         # drgs = network_client.list_drgs(compartment_id=compartment.id).data
         # for drg in drgs:
         #     if drg.lifecycle_state != "AVAILABLE":
         #         sheet_objects["Inactive DRGs & VPNs"].append([
-        #             compartment.name, drg.display_name, "DRG", drg.lifecycle_state,
+        #             compartment.name, 
+        #             drg.display_name, 
+        #             "DRG", 
+        #             drg.lifecycle_state,
+        #             drg.defined_tags,
+        #             drg.freeform_tags,                     
         #             drg.time_created.strftime('%Y-%m-%d %H:%M:%S'), "Inactive"
         #         ])
 
     # Get current date for the file name
     current_date = datetime.now().strftime("%Y-%m-%d")
-    tenancy_name = tenancy_ocid.split(".")[1] if tenancy_ocid else "unknown"
 
     # Generate file names with dynamic titles
-    excel_file = f"oci_UNUSED_resources_{tenancy_name}_{current_date}.xlsx"
+    excel_file = f"oci_UNUSED_resources_{namespace}_{current_date}.xlsx"
 
     # Save the Excel file
     workbook.save(excel_file)

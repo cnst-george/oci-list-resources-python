@@ -1,3 +1,4 @@
+
 # OCI Cloud Automation Scripts
 
 This repository contains a collection of Python scripts for automating various tasks in Oracle Cloud Infrastructure (OCI). These scripts are designed to streamline cloud management, improve security, optimize costs, and ensure compliance with OCI best practices.
@@ -33,7 +34,7 @@ Ensure you have the following installed before running the scripts:
     fingerprint=xx:xx:xx:xx:xx:xx
     key_file=/path/to/your/private/api_key.pem
     tenancy=ocid1.tenancy.oc1..xxxxx
-    region=us-ashburn-1
+    region=eu-frankfurt-1
     ```
 
 ### 🔧 Installation
@@ -69,7 +70,7 @@ python oci-list-resources.py
 ```
 
 ### Listing Unused Resources
-```bash
+```bas/
 cd oci-list-unused 
 python oci-list-unused.py
 ```
@@ -80,10 +81,10 @@ cd oci-list-storage
 python oci-list-storage.py
 ```
 
-
 ## 📊 Output Formats
 The scripts generate reports in multiple formats for easy analysis:
-- **CSV**: Structured data for Excel/Google Sheets.
+- **CSV**:  Comma-separated values
+- **XLSX**: Structured data for Excel/Google Sheets.
 - **JSON**: Machine-readable structured format.
 - **Log files**: Debugging and execution logs.
 
@@ -91,6 +92,7 @@ The scripts generate reports in multiple formats for easy analysis:
 - Ensure that **API keys** and **sensitive credentials** are securely stored.
 - Use **OCI Vault** for managing secrets if required.
 - Restrict **IAM permissions** to allow only necessary access.
+
 
 ## 📬 Contact
 For any questions or issues, feel free to raise an **Issue** or contact:
