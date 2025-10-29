@@ -52,6 +52,19 @@ try:
             resources[compartment.name] = {}
             findings[compartment.name] = []
 
+            # Discover VCNs
+            vcn_response = oci.pagination.list_call_get_all_results(
+                virtual_network_client.list_vcns,
+                compartment_id=compartment.id
+            ).data
+            vcn_findings = []
+            for vcn in vcn_response:
+                resources[compartment.name].setdefault("VCNs", []).append({"name": vcn.display_name, "id": vcn.id})
+                # Best practice: Check for wide CIDR ranges
+                if vcn.cidr_block == "0.0.0.0/0":
+                    vcn_findings.append(f"VCN '{vcn.display_name}' has an open CIDR block.")
+            findings[compartment.name].extend(vcn_findings)
+
             # Discover Compute Instances
             instance_response = oci.pagination.list_call_get_all_results(
                 compute_client.list_instances,
@@ -131,6 +144,24 @@ try:
                     adb_findings.append(f"ADB '{adb.display_name}' is not optimized for OLTP workloads.")
             findings[compartment.name].extend(adb_findings)
 
+            # Discover Load Balancers
+            lb_response = oci.pagination.list_call_get_all_results(
+                load_balancer_client.list_load_balancers,
+                compartment_id=compartment.id
+            ).data
+            lb_findings = []
+            for lb in lb_response:
+                resources[compartment.name].setdefault("Load Balancers", []).append({
+                    "name": lb.display_name,
+                    "id": lb.id,
+                    "defined_tags" : lb.defined_tags,
+                    "freeform_tags" : lb.freeform_tags
+                })
+                # Best practice: Ensure SSL termination is configured
+                if not lb.shape_name.startswith("flexible"):
+                    lb_findings.append(f"Load Balancer '{lb.display_name}' is not using a flexible shape.")
+            findings[compartment.name].extend(lb_findings)
+
     # Get current date for the file name
     current_date = datetime.now().strftime("%Y-%m-%d")
    
@@ -185,16 +216,17 @@ try:
     summary_sheet.add_chart(bar_chart, f"E{summary_start_row}")
 
     # Add data sheets for each resource type
-    for resource_type in ["Compute Instances", 
+    for resource_type in ["VCNs", 
+                        "Compute Instances", 
                         "Block Volumes", 
                         "File Systems",
-                        "Autonomous Databases"
-                        ]:
+                        "Autonomous Databases", 
+                        "Load Balancers"]:
         sheet = workbook.create_sheet(title=resource_type)
         sheet.append(["Compartment", "Name", "ID", "Defined_tags", "Freeform_tags" ])
         for compartment, resource_data in resources.items():
             for item in resource_data.get(resource_type, []):
-                sheet.append([compartment, item.get("name"), item.get("id", "N/A"),str(item.get("defined_tags")),str(item.get(f"freeform_tags"))])
+                sheet.append([compartment, item.get("name"), item.get("id", "N/A"),item.get(f"defined_tags"),item.get(f"freeform_tags")])
 
     # Add visualization sheet
     visualization_sheet = workbook.create_sheet(title="Visualizations")
