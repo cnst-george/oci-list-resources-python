@@ -18,7 +18,9 @@ object_storage_client = oci.object_storage.ObjectStorageClient(configAPI)
 
 # Get tenancy ID
 tenancy_ocid = configAPI["tenancy"]
-tenancy_name = tenancy_ocid.split(".")[1] if tenancy_ocid else "unknown"
+# tenancy_name = tenancy_ocid.split(".")[1] if tenancy_ocid else "unknown"
+tenancy_name = identity_client.get_tenancy(tenancy_id=tenancy_ocid).data.name
+print(f"Using Tenancy Name: {tenancy_name}")
 
 # Get Object Storage namespace
 namespace = object_storage_client.get_namespace().data
@@ -120,7 +122,7 @@ try:
                 sheet.append([compartment, item.get("name"), item.get("id", "N/A"),item.get(f''"defined_tags"''),item.get(f''"freeform_tags"'')])
 
       # Generate file name with dynamic titles
-    file_name = f"oci_storage_{namespace}_{current_date}.xlsx"
+    file_name = f"oci_storage_{tenancy_name}_{current_date}.xlsx"
     
     # Save the Excel workbook
     workbook.save(file_name)
