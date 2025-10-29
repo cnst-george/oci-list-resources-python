@@ -6,6 +6,7 @@ This repository contains a collection of Python scripts for automating various t
 
 ## 📂 Folder Structure
 ```
+├── oci-list-all                         # List all
 ├── oci-list-buckets                     # List buckets
 ├── oci-list-policies                    # List policies
 ├── oci-list-resources                   # List all resources
