@@ -20,26 +20,12 @@ This repository contains a collection of Python scripts for automating various t
 ### Prerequisites
 Ensure you have the following installed before running the scripts:
 - **Python 3.x**: Download from [python.org](https://www.python.org/downloads/)
-  - Example installation:
-    ```ini
-    sudo dnf install python3.12
-    sudo dnf install python3.12-pip 
-    ```
 - **OCI CLI**: Install using [OCI CLI setup guide](https://docs.oracle.com/en-us/iaas/Content/API/SDKDocs/cliinstall.htm)
-  - Example installation:
-    ```ini
-    sudo dnf -y install oraclelinux-developer-release-el9
-    sudo dnf install python39-oci-cli
-    oci setup config
-    ```
-- **OCI Python SDK**: Install via pip
-  ```bash
-  pip install oci
-  ```
 - **Authentication Setup**:
   - Ensure you have an OCI **config file** at `~/.oci/config` with required credentials.
   - Example config file:
     ```ini
+    oci setup config
     [DEFAULT]
     user=ocid1.user.oc1..xxxxx
     fingerprint=xx:xx:xx:xx:xx:xx
