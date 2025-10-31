@@ -10,7 +10,7 @@ from openpyxl.chart import PieChart, BarChart, Reference
 # Step.1 (required) Run:
 #        oci session authenticate
 # Step.2 Change the profile name DEFAULT with yours
-#        oci session refresh --profile 'DEFAULT'
+#        profile_name='DEFAULT'
 # Step.3 (optional) Refresh Token:
 #        oci session refresh --profile 'DEFAULT'
 
