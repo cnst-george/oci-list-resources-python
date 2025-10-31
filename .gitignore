@@ -1,9 +1,14 @@
 # Ignore macOS system files
 .DS_Store
+/oci-list-all-with-token
+/ocienv
+ocipythonenv
 
 oci_*.xlsx
 oci_*.json
 oci_*.csv
+
+example*.py
 
 #*.xlsx
 #*.csv
