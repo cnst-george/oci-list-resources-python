@@ -45,11 +45,11 @@ Ensure you have the following installed before running the scripts:
     region=eu-frankfurt-1
     security_token_file=/path/to/your/private/sessions/default/token
     ```
-    - Refreshing a Token:
+    - Refreshing an expired Token:
       ```ini
       oci session refresh --profile <profile_name>           
       ```
-      
+
 ### 🔧 Installation
 Clone this repository and install dependencies:
 ```bash
