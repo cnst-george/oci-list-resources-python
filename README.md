@@ -23,18 +23,33 @@ Ensure you have the following installed before running the scripts:
 - **Python 3.x**: Download from [python.org](https://www.python.org/downloads/)
 - **OCI CLI**: Install using [OCI CLI setup guide](https://docs.oracle.com/en-us/iaas/Content/API/SDKDocs/cliinstall.htm)
 - **Authentication Setup**:
-  - Ensure you have an OCI **config file** at `~/.oci/config` with required credentials.
+  - (OPTION.1) Ensure you have an OCI **config file** at `~/.oci/config` with required credentials.
   - Example config file:
     ```ini
     $ oci setup config
-    [DEFAULT]
+    [<profile_name>]
     user=ocid1.user.oc1..xxxxx
     fingerprint=xx:xx:xx:xx:xx:xx
     key_file=/path/to/your/private/api_key.pem
     tenancy=ocid1.tenancy.oc1..xxxxx
     region=eu-frankfurt-1
     ```
-
+  - (OPTION.2) Ensure you have an OCI **security token** at `~/.oci/config` with a valid (unexpired) token.
+  - Example config file:
+    ```ini
+    $ oci session authenticate
+    [<profile_name>]
+    fingerprint=xx:xx:xx:xx:xx:xx
+    key_file=/path/to/your/private/api_key.pem
+    tenancy=ocid1.tenancy.oc1..xxxxx
+    region=eu-frankfurt-1
+    security_token_file=/path/to/your/private/sessions/default/token
+    ```
+    - Refreshing a Token:
+      ```ini
+      oci session refresh --profile <profile_name>           
+      ```
+      
 ### 🔧 Installation
 Clone this repository and install dependencies:
 ```bash
