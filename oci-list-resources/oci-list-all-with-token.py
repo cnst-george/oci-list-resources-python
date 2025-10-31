@@ -9,7 +9,7 @@ from openpyxl.chart import PieChart, BarChart, Reference
 # Pre-requisites 
 # Step.1 (required) Run:
 #        oci session authenticate
-# Step.2 (optinal) Refresh Token:
+# Step.2 (optional) Refresh Token:
 #        oci session refresh --profile 'token'
 
 config = oci.config.from_file(profile_name='token2')
