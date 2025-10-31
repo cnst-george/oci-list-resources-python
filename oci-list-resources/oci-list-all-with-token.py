@@ -9,10 +9,12 @@ from openpyxl.chart import PieChart, BarChart, Reference
 # Pre-requisites 
 # Step.1 (required) Run:
 #        oci session authenticate
-# Step.2 (optional) Refresh Token:
-#        oci session refresh --profile 'token'
+# Step.2 Change the profile name DEFAULT with yours
+#        oci session refresh --profile 'DEFAULT'
+# Step.3 (optional) Refresh Token:
+#        oci session refresh --profile 'DEFAULT'
 
-config = oci.config.from_file(profile_name='token2')
+config = oci.config.from_file(profile_name='DEFAULT')
 token_file = config['security_token_file']
 token = None
 with open(token_file, 'r') as f:
