@@ -14,7 +14,7 @@ from openpyxl.chart import PieChart, BarChart, Reference
 # Step.3 (optional) Refresh Token:
 #        oci session refresh --profile 'DEFAULT'
 
-config = oci.config.from_file(profile_name='DEFAULT')
+config = oci.config.from_file(profile_name='DEFAULT2')
 token_file = config['security_token_file']
 token = None
 with open(token_file, 'r') as f:
@@ -25,13 +25,13 @@ region = config['region']
 
 # Initialize OCI clients
 identity_client = oci.identity.IdentityClient({'region': region}, signer=signer)
-virtual_network_client = oci.core.VirtualNetworkClient({'region': region}, signer=signer)
+# virtual_network_client = oci.core.VirtualNetworkClient({'region': region}, signer=signer)
 compute_client = oci.core.ComputeClient({'region': region}, signer=signer)
 block_storage_client = oci.core.BlockstorageClient({'region': region}, signer=signer)
 file_storage_client = oci.file_storage.FileStorageClient({'region': region}, signer=signer)
 object_storage_client = oci.object_storage.ObjectStorageClient({'region': region}, signer=signer)
 database_client = oci.database.DatabaseClient({'region': region}, signer=signer)
-load_balancer_client = oci.load_balancer.LoadBalancerClient({'region': region}, signer=signer)
+# load_balancer_client = oci.load_balancer.LoadBalancerClient({'region': region}, signer=signer)
 
 # Get Object Storage namespace
 namespace = object_storage_client.get_namespace().data
@@ -65,7 +65,7 @@ try:
             resources[compartment.name] = {}
             findings[compartment.name] = []
 
-            # Discover Compute Instances
+            # Compute Instances
             instance_response = oci.pagination.list_call_get_all_results(
                 compute_client.list_instances,
                 compartment_id=compartment.id,
@@ -83,33 +83,82 @@ try:
                     instance_findings.append(f"Instance '{instance.display_name}' is using '{instance.shape}' shape")
             findings[compartment.name].extend(instance_findings)
 
-            # Discover Block Volumes
-            volume_response = oci.pagination.list_call_get_all_results(
+            # Block Volumes
+            blockVolume_response = oci.pagination.list_call_get_all_results(
                 block_storage_client.list_volumes,
-                compartment_id=compartment.id
+                compartment_id=compartment.id,
+                lifecycle_state='AVAILABLE'
             ).data
             volume_findings = []
-            for volume in volume_response:
+            for volume in blockVolume_response:
                 resources[compartment.name].setdefault("Block Volumes", []).append({
                     "name": volume.display_name,
                     "id": volume.id,
                     "defined_tags" : volume.defined_tags,
                     "freeform_tags" : volume.freeform_tags
                 })
-                # Check if the volume is attached to any instance 
-                attachments = oci.pagination.list_call_get_all_results(
-                    compute_client.list_volume_attachments,
-                    compartment_id=compartment.id,
-                    volume_id=volume.id
-                ).data
-                if not attachments:  # No attachments found
-                    volume_findings.append(f"Volume '{volume.display_name}' is NOT attached to any instance.")
-                # Best practice: Ensure backup policy is set
-                if not volume.is_auto_tune_enabled:
-                    volume_findings.append(f"Volume '{volume.display_name}' does not have auto-tune enabled.")
             findings[compartment.name].extend(volume_findings)
 
-            # Discover File Systems 
+            # Block Volumes Bkp
+            blockVolumeBkp_response = oci.pagination.list_call_get_all_results(
+                block_storage_client.list_volume_backups,
+                compartment_id=compartment.id
+            ).data
+            volume_findings = []
+            for volume in blockVolumeBkp_response:
+                resources[compartment.name].setdefault("Block Volumes Bkp", []).append({
+                    "name": volume.display_name,
+                    "id": volume.id,
+                    "defined_tags" : volume.defined_tags,
+                    "freeform_tags" : volume.freeform_tags
+                })
+            findings[compartment.name].extend(volume_findings)
+
+            # Boot Volumes
+            bootVolume_response = oci.pagination.list_call_get_all_results(
+                block_storage_client.list_boot_volumes,
+                compartment_id=compartment.id
+            ).data
+            volume_findings = []
+            for volume in bootVolume_response:
+                resources[compartment.name].setdefault("Boot Volumes", []).append({
+                    "name": volume.display_name,
+                    "id": volume.id,
+                    "defined_tags" : volume.defined_tags,
+                    "freeform_tags" : volume.freeform_tags
+                })
+                # # Check if the volume is attached to any instance
+                # for ad in availability_domains:  
+                #     attachments = oci.pagination.list_call_get_all_results(
+                #         compute_client.list_boot_volume_attachments, #list_volume_attachments,
+                #         compartment_id=compartment.id,
+                #         boot_volume_id=volume.id,
+                #         # volume_id=volume.id,
+                #         availability_domain=ad.name
+                # ).data
+                # if not attachments:  # No attachments found
+                #     volume_findings.append(f"Boot Volume '{volume.display_name}' is NOT attached to any instance.")
+                # # Best practice: Ensure backup policy is set
+                # # if not volume.is_auto_tune_enabled:
+                # #     volume_findings.append(f"Boot Volume '{volume.display_name}' does not have auto-tune enabled.")
+            findings[compartment.name].extend(volume_findings)
+
+            # Boot Volumes Bkp
+            bootVolumeBkp_response = oci.pagination.list_call_get_all_results(
+                block_storage_client.list_boot_volume_backups,
+                compartment_id=compartment.id
+            ).data
+            volume_findings = []
+            for volume in bootVolumeBkp_response:
+                resources[compartment.name].setdefault("Boot Volumes Bkp", []).append({
+                    "name": volume.display_name,
+                    "id": volume.id,
+                    "defined_tags" : volume.defined_tags,
+                    "freeform_tags" : volume.freeform_tags
+                })
+            findings[compartment.name].extend(volume_findings)
+
+            # File Systems 
             for ad in availability_domains:  
                 fss_response = oci.pagination.list_call_get_all_results(
                     file_storage_client.list_file_systems,
@@ -126,7 +175,7 @@ try:
                     })
                 findings[compartment.name].extend(fss_findings)
 
-            # Discover Autonomous Databases
+            # Autonomous Databases
             adb_response = oci.pagination.list_call_get_all_results(
                 database_client.list_autonomous_databases,
                 compartment_id=compartment.id
@@ -200,6 +249,9 @@ try:
     # Add data sheets for each resource type
     for resource_type in ["Compute Instances", 
                         "Block Volumes", 
+                        "Block Volumes Bkp", 
+                        "Boot Volumes",
+                        "Boot Volumes Bkp",
                         "File Systems",
                         "Autonomous Databases"
                         ]:
