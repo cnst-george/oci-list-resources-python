@@ -5,7 +5,7 @@ from datetime import datetime
 from openpyxl import Workbook
 from openpyxl.styles import PatternFill, Font
 from openpyxl.chart import PieChart, BarChart, Reference
-x
+
 # Pre-requisites 
 # Step.1 (required) Run:
 #        oci session authenticate
