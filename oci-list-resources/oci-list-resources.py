@@ -18,7 +18,6 @@ file_storage_client = oci.file_storage.FileStorageClient(configAPI)
 object_storage_client = oci.object_storage.ObjectStorageClient(configAPI)
 database_client = oci.database.DatabaseClient(configAPI)
 load_balancer_client = oci.load_balancer.LoadBalancerClient(configAPI)
-region_client = oci.tenant_manager_control_plane.SubscriptionClient(configAPI)
 
 # Get Object Storage namespace
 namespace = object_storage_client.get_namespace().data
@@ -28,9 +27,6 @@ tenancy_ocid = configAPI["tenancy"]
 # tenancy_name = tenancy_ocid.split(".")[1] if tenancy_ocid else "unknown"
 tenancy_name = identity_client.get_tenancy(tenancy_id=tenancy_ocid).data.name
 print(f"Using Tenancy Name: {tenancy_name}")
-
-# Get Home Region
-tenancy_ocid = configAPI["region"]
 
 # Fetch availability domains
 availability_domains = identity_client.list_availability_domains(tenancy_ocid).data
@@ -52,20 +48,21 @@ try:
 
     # Discover resources in each compartment
     for compartment in compartments:
-        if compartment.lifecycle_state == "ACTIVE" and compartment.id == "ocid1.compartment.oc1..aaaaaaaa64v3nqu4jauy726w3sui4r54pnbf6lphsez4e747pbbwwn3ccogq":
+        if compartment.lifecycle_state == "ACTIVE":
             print(f"Discovering resources in compartment: {compartment.name}")
             resources[compartment.name] = {}
             findings[compartment.name] = []
 
             # Subscribed regions
             reg_list = oci.pagination.list_call_get_all_results(
-                region_client.list_subscriptions,
-                sort_order="ASC"
+                identity_client.list_region_subscriptions,
+                tenancy_ocid
             ).data
             regions_findings = []
             for r in reg_list:
                 resources[compartment.name].setdefault("Subscribed Regions", []).append({
-                    "name": r.display_name
+                    "name": r.region_name,
+                    "id": r.region_key
                 })
             findings[compartment.name].extend(regions_findings)
 
@@ -280,10 +277,17 @@ try:
                         "Autonomous Databases"
                         ]:
         sheet = workbook.create_sheet(title=resource_type)
-        sheet.append(["Compartment", "Name", "ID", "Defined_tags", "Freeform_tags", "Attached_to" ])
+        sheet.append(["Compartment", "Name", "ID", "Defined_tags", "Freeform_tags", "Attached_to", "Availability_domain" ])
         for compartment, resource_data in resources.items():
             for item in resource_data.get(resource_type, []):
-                sheet.append([compartment, item.get("name"), item.get("id", "N/A"),str(item.get("defined_tags")),str(item.get(f"freeform_tags")),str(item.get(f"attached_to_instance")),str(item.get(f"availability_domain"))]])
+                sheet.append([compartment, 
+                             item.get("name"), 
+                             item.get("id", "N/A"),
+                             str(item.get(f"defined_tags", "N/A")),
+                             str(item.get(f"freeform_tags", "N/A")),
+                             str(item.get(f"attached_to_instance", "N/A")),
+                             str(item.get(f"availability_domain", "N/A"))
+                             ])
 
     # Add visualization sheet
     visualization_sheet = workbook.create_sheet(title="Visualizations")

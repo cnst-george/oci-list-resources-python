@@ -67,6 +67,19 @@ try:
             resources[compartment.name] = {}
             findings[compartment.name] = []
 
+            # Subscribed regions
+            reg_list = oci.pagination.list_call_get_all_results(
+                identity_client.list_region_subscriptions,
+                tenancy_ocid
+            ).data
+            regions_findings = []
+            for r in reg_list:
+                resources[compartment.name].setdefault("Subscribed Regions", []).append({
+                    "name": r.region_name,
+                    "id": r.region_key
+                })
+            findings[compartment.name].extend(regions_findings)
+
             # Compute Instances
             vm_list = oci.pagination.list_call_get_all_results(
                 compute_client.list_instances,
@@ -157,7 +170,9 @@ try:
                             "id": bv.id,
                             "defined_tags" : bv.defined_tags,
                             "freeform_tags" : bv.freeform_tags,
-                            "attached_to_instance" : bva.instance_id
+                            "attached_to_instance" : bva.instance_id,
+                            "availability_domain" : ad.name
+
                         })
                         bv_findings.append(f"Boot Volume '{bv.display_name}={bv.id}' is ' {bva.lifecycle_state}' to instance' {bva.instance_id}")                         
             findings[compartment.name].extend(bv_findings)
@@ -265,7 +280,9 @@ try:
     summary_sheet.add_chart(bar_chart, f"E{summary_start_row}")
 
     # Add data sheets for each resource type
-    for resource_type in ["Compute Instances", 
+    for resource_type in [
+                        "Subscribed Regions",
+                        "Compute Instances", 
                         "Block Volumes", 
                         "Block Volumes Bkp", 
                         "Boot Volumes",
@@ -274,10 +291,17 @@ try:
                         "Autonomous Databases"
                         ]:
         sheet = workbook.create_sheet(title=resource_type)
-        sheet.append(["Compartment", "Name", "ID", "Defined_tags", "Freeform_tags", "Attached_to" ])
+        sheet.append(["Compartment", "Name", "ID", "Defined_tags", "Freeform_tags", "Attached_to", "Availability_domain" ])
         for compartment, resource_data in resources.items():
             for item in resource_data.get(resource_type, []):
-                sheet.append([compartment, item.get("name"), item.get("id", "N/A"),str(item.get("defined_tags")),str(item.get(f"freeform_tags")),str(item.get(f"attached_to_instance"))])
+                sheet.append([compartment, 
+                             item.get("name"), 
+                             item.get("id", "N/A"),
+                             str(item.get(f"defined_tags", "N/A")),
+                             str(item.get(f"freeform_tags", "N/A")),
+                             str(item.get(f"attached_to_instance", "N/A")),
+                             str(item.get(f"availability_domain", "N/A"))
+                             ])
 
     # Add visualization sheet
     visualization_sheet = workbook.create_sheet(title="Visualizations")
