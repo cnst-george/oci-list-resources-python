@@ -30,6 +30,7 @@ print(f"Using Tenancy Name: {tenancy_name}")
 
 # Fetch availability domains
 availability_domains = identity_client.list_availability_domains(tenancy_ocid).data
+print(f"Discovering resources in Availability Domain: {availability_domains}")
 
 # Initialize result storage
 resources = {}
@@ -53,107 +54,124 @@ try:
             findings[compartment.name] = []
 
             # Compute Instances
-            instance_response = oci.pagination.list_call_get_all_results(
+            vm_list = oci.pagination.list_call_get_all_results(
                 compute_client.list_instances,
                 compartment_id=compartment.id,
             ).data
             instance_findings = []
-            for instance in instance_response:
+            for vm in vm_list:
                 resources[compartment.name].setdefault("Compute Instances", []).append({
-                    "name": instance.display_name,
-                    "id": instance.id,
-                    "defined_tags" : instance.defined_tags,
-                    "freeform_tags" : instance.freeform_tags
+                    "name": vm.display_name,
+                    "id": vm.id,
+                    "defined_tags" : vm.defined_tags,
+                    "freeform_tags" : vm.freeform_tags
                 })
                 # Best practice: Check if instance metadata is restricted
-                if instance.shape.startswith("VM.Standard"):
-                    instance_findings.append(f"Instance '{instance.display_name}' is using '{instance.shape}' shape")
+                if vm.shape.startswith("VM.Standard"):
+                    instance_findings.append(f"Instance '{vm.display_name}' is using '{vm.shape}' shape")
             findings[compartment.name].extend(instance_findings)
 
             # Block Volumes
-            blockVolume_response = oci.pagination.list_call_get_all_results(
+            bv_list = oci.pagination.list_call_get_all_results(
                 block_storage_client.list_volumes,
                 compartment_id=compartment.id,
                 lifecycle_state='AVAILABLE'
             ).data
-            volume_findings = []
-            for volume in blockVolume_response:
+            bv_attachments = oci.pagination.list_call_get_all_results(
+                compute_client.list_volume_attachments,
+                compartment_id=compartment.id
+            ).data 
+            bv_findings = []           
+            for bv in bv_list:
                 resources[compartment.name].setdefault("Block Volumes", []).append({
-                    "name": volume.display_name,
-                    "id": volume.id,
-                    "defined_tags" : volume.defined_tags,
-                    "freeform_tags" : volume.freeform_tags
+                    "name": bv.display_name,
+                    "id": bv.id,
+                    "defined_tags" : bv.defined_tags,
+                    "freeform_tags" : bv.freeform_tags
                 })
-            findings[compartment.name].extend(volume_findings)
+                for bva in bv_attachments:
+                    if bv.id == bva.volume_id:
+                        resources[compartment.name].setdefault("Block Volumes", []).append({
+                            "name": bv.display_name,
+                            "id": bv.id,
+                            "defined_tags" : bv.defined_tags,
+                            "freeform_tags" : bv.freeform_tags,
+                            "attached_to_instance" : bva.instance_id
+                        })
+                        bv_findings.append(f"Block Volume '{bv.display_name}={bv.id}' is ' {bva.lifecycle_state}' to instance' {bva.instance_id}")                         
+            findings[compartment.name].extend(bv_findings)
 
             # Block Volumes Bkp
-            blockVolumeBkp_response = oci.pagination.list_call_get_all_results(
+            bvBkp_list = oci.pagination.list_call_get_all_results(
                 block_storage_client.list_volume_backups,
                 compartment_id=compartment.id
             ).data
-            volume_findings = []
-            for volume in blockVolumeBkp_response:
+            bv_findings = []
+            for bv in bvBkp_list:
                 resources[compartment.name].setdefault("Block Volumes Bkp", []).append({
-                    "name": volume.display_name,
-                    "id": volume.id,
-                    "defined_tags" : volume.defined_tags,
-                    "freeform_tags" : volume.freeform_tags
+                    "name": bv.display_name,
+                    "id": bv.id,
+                    "defined_tags" : bv.defined_tags,
+                    "freeform_tags" : bv.freeform_tags
                 })
-            findings[compartment.name].extend(volume_findings)
+            findings[compartment.name].extend(bv_findings)
 
-            # Boot Volumes
-            bootVolume_response = oci.pagination.list_call_get_all_results(
+        # Boot Volumes
+            for ad in availability_domains:
+             bv_list = oci.pagination.list_call_get_all_results(
                 block_storage_client.list_boot_volumes,
-                compartment_id=compartment.id
-            ).data
-            volume_findings = []
-            for volume in bootVolume_response:
-                resources[compartment.name].setdefault("Boot Volumes", []).append({
-                    "name": volume.display_name,
-                    "id": volume.id,
-                    "defined_tags" : volume.defined_tags,
-                    "freeform_tags" : volume.freeform_tags
-                })
-                # # Check if the volume is attached to any instance
-                # for ad in availability_domains:  
-                #     attachments = oci.pagination.list_call_get_all_results(
-                #         compute_client.list_boot_volume_attachments, #list_volume_attachments,
-                #         compartment_id=compartment.id,
-                #         boot_volume_id=volume.id,
-                #         # volume_id=volume.id,
-                #         availability_domain=ad.name
-                # ).data
-                # if not attachments:  # No attachments found
-                #     volume_findings.append(f"Boot Volume '{volume.display_name}' is NOT attached to any instance.")
-                # # Best practice: Ensure backup policy is set
-                # # if not volume.is_auto_tune_enabled:
-                # #     volume_findings.append(f"Boot Volume '{volume.display_name}' does not have auto-tune enabled.")
-            findings[compartment.name].extend(volume_findings)
+                compartment_id=compartment.id,
+                availability_domain=ad.name
+             ).data
+             bv_attachments = oci.pagination.list_call_get_all_results(
+                compute_client.list_boot_volume_attachments,
+                compartment_id=compartment.id,
+                availability_domain=ad.name
+             ).data   
+             bv_findings = []        
+             for bv in bv_list:
+                resources[compartment.name].setdefault("Block Volumes", []).append({
+                    "name": bv.display_name,
+                    "id": bv.id,
+                    "defined_tags" : bv.defined_tags,
+                    "freeform_tags" : bv.freeform_tags
+                })           
+                for bva in bv_attachments:
+                    if bv.id == bva.boot_volume_id:
+                        resources[compartment.name].setdefault("Boot Volumes", []).append({
+                            "name": bv.display_name,
+                            "id": bv.id,
+                            "defined_tags" : bv.defined_tags,
+                            "freeform_tags" : bv.freeform_tags,
+                            "attached_to_instance" : bva.instance_id
+                        })
+                        bv_findings.append(f"Boot Volume '{bv.display_name}={bv.id}' is ' {bva.lifecycle_state}' to instance' {bva.instance_id}")                         
+            findings[compartment.name].extend(bv_findings)
 
             # Boot Volumes Bkp
-            bootVolumeBkp_response = oci.pagination.list_call_get_all_results(
+            bvBkp_list = oci.pagination.list_call_get_all_results(
                 block_storage_client.list_boot_volume_backups,
                 compartment_id=compartment.id
             ).data
-            volume_findings = []
-            for volume in bootVolumeBkp_response:
+            bv_findings = []
+            for bv in bvBkp_list:
                 resources[compartment.name].setdefault("Boot Volumes Bkp", []).append({
-                    "name": volume.display_name,
-                    "id": volume.id,
-                    "defined_tags" : volume.defined_tags,
-                    "freeform_tags" : volume.freeform_tags
+                    "name": bv.display_name,
+                    "id": bv.id,
+                    "defined_tags" : bv.defined_tags,
+                    "freeform_tags" : bv.freeform_tags
                 })
-            findings[compartment.name].extend(volume_findings)
+            findings[compartment.name].extend(bv_findings)
 
             # File Systems 
             for ad in availability_domains:  
-                fss_response = oci.pagination.list_call_get_all_results(
+                fss_list = oci.pagination.list_call_get_all_results(
                     file_storage_client.list_file_systems,
                     compartment_id=compartment.id,
                     availability_domain=ad.name
                 ).data
                 fss_findings = []
-                for fss in fss_response:
+                for fss in fss_list:
                     resources[compartment.name].setdefault("File Systems", []).append({
                         "name": fss.display_name,
                         "id": fss.id,
@@ -163,19 +181,18 @@ try:
                 findings[compartment.name].extend(fss_findings)
 
             # Autonomous Databases
-            adb_response = oci.pagination.list_call_get_all_results(
+            adb_list = oci.pagination.list_call_get_all_results(
                 database_client.list_autonomous_databases,
                 compartment_id=compartment.id
             ).data
             adb_findings = []
-            for adb in adb_response:
+            for adb in adb_list:
                 resources[compartment.name].setdefault("Autonomous Databases", []).append({
                     "name": adb.display_name,
                     "id": adb.id,
                     "defined_tags" : adb.defined_tags,
                     "freeform_tags" : adb.freeform_tags
                 })
-                # Best practice: Check for appropriate workload type
                 if adb.db_workload != "OLTP":
                     adb_findings.append(f"ADB '{adb.display_name}' is not optimized for OLTP workloads.")
             findings[compartment.name].extend(adb_findings)
@@ -243,10 +260,10 @@ try:
                         "Autonomous Databases"
                         ]:
         sheet = workbook.create_sheet(title=resource_type)
-        sheet.append(["Compartment", "Name", "ID", "Defined_tags", "Freeform_tags" ])
+        sheet.append(["Compartment", "Name", "ID", "Defined_tags", "Freeform_tags", "Attached_to" ])
         for compartment, resource_data in resources.items():
             for item in resource_data.get(resource_type, []):
-                sheet.append([compartment, item.get("name"), item.get("id", "N/A"),str(item.get("defined_tags")),str(item.get(f"freeform_tags"))])
+                sheet.append([compartment, item.get("name"), item.get("id", "N/A"),str(item.get("defined_tags")),str(item.get(f"freeform_tags")),str(item.get(f"attached_to_instance"))])
 
     # Add visualization sheet
     visualization_sheet = workbook.create_sheet(title="Visualizations")
