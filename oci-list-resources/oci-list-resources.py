@@ -18,6 +18,7 @@ file_storage_client = oci.file_storage.FileStorageClient(configAPI)
 object_storage_client = oci.object_storage.ObjectStorageClient(configAPI)
 database_client = oci.database.DatabaseClient(configAPI)
 load_balancer_client = oci.load_balancer.LoadBalancerClient(configAPI)
+region_client = oci.tenant_manager_control_plane.SubscriptionClient(configAPI)
 
 # Get Object Storage namespace
 namespace = object_storage_client.get_namespace().data
@@ -27,6 +28,9 @@ tenancy_ocid = configAPI["tenancy"]
 # tenancy_name = tenancy_ocid.split(".")[1] if tenancy_ocid else "unknown"
 tenancy_name = identity_client.get_tenancy(tenancy_id=tenancy_ocid).data.name
 print(f"Using Tenancy Name: {tenancy_name}")
+
+# Get Home Region
+tenancy_ocid = configAPI["region"]
 
 # Fetch availability domains
 availability_domains = identity_client.list_availability_domains(tenancy_ocid).data
@@ -48,10 +52,22 @@ try:
 
     # Discover resources in each compartment
     for compartment in compartments:
-        if compartment.lifecycle_state == "ACTIVE":
+        if compartment.lifecycle_state == "ACTIVE" and compartment.id == "ocid1.compartment.oc1..aaaaaaaa64v3nqu4jauy726w3sui4r54pnbf6lphsez4e747pbbwwn3ccogq":
             print(f"Discovering resources in compartment: {compartment.name}")
             resources[compartment.name] = {}
             findings[compartment.name] = []
+
+            # Subscribed regions
+            reg_list = oci.pagination.list_call_get_all_results(
+                region_client.list_subscriptions,
+                sort_order="ASC"
+            ).data
+            regions_findings = []
+            for r in reg_list:
+                resources[compartment.name].setdefault("Subscribed Regions", []).append({
+                    "name": r.display_name
+                })
+            findings[compartment.name].extend(regions_findings)
 
             # Compute Instances
             vm_list = oci.pagination.list_call_get_all_results(
@@ -143,7 +159,9 @@ try:
                             "id": bv.id,
                             "defined_tags" : bv.defined_tags,
                             "freeform_tags" : bv.freeform_tags,
-                            "attached_to_instance" : bva.instance_id
+                            "attached_to_instance" : bva.instance_id,
+                            "availability_domain" : ad.name
+
                         })
                         bv_findings.append(f"Boot Volume '{bv.display_name}={bv.id}' is ' {bva.lifecycle_state}' to instance' {bva.instance_id}")                         
             findings[compartment.name].extend(bv_findings)
@@ -251,7 +269,9 @@ try:
     summary_sheet.add_chart(bar_chart, f"E{summary_start_row}")
 
     # Add data sheets for each resource type
-    for resource_type in ["Compute Instances", 
+    for resource_type in [
+                        "Subscribed Regions",
+                        "Compute Instances", 
                         "Block Volumes", 
                         "Block Volumes Bkp", 
                         "Boot Volumes",
@@ -263,7 +283,7 @@ try:
         sheet.append(["Compartment", "Name", "ID", "Defined_tags", "Freeform_tags", "Attached_to" ])
         for compartment, resource_data in resources.items():
             for item in resource_data.get(resource_type, []):
-                sheet.append([compartment, item.get("name"), item.get("id", "N/A"),str(item.get("defined_tags")),str(item.get(f"freeform_tags")),str(item.get(f"attached_to_instance"))])
+                sheet.append([compartment, item.get("name"), item.get("id", "N/A"),str(item.get("defined_tags")),str(item.get(f"freeform_tags")),str(item.get(f"attached_to_instance")),str(item.get(f"availability_domain"))]])
 
     # Add visualization sheet
     visualization_sheet = workbook.create_sheet(title="Visualizations")

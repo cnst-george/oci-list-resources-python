@@ -14,7 +14,7 @@ from openpyxl.chart import PieChart, BarChart, Reference
 # Step.3 (optional) Refresh Token:
 #        oci session refresh --profile 'DEFAULT'
 
-configAPI = oci.config.from_file(profile_name='DEFAULT3')
+configAPI = oci.config.from_file(profile_name='DEFAULT')
 token_file = configAPI['security_token_file']
 token = None
 with open(token_file, 'r') as f:
