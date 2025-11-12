@@ -1,4 +1,5 @@
 ﻿import oci
+import sys
 import json
 import pandas as pd
 from datetime import datetime
@@ -13,6 +14,12 @@ from openpyxl.chart import PieChart, BarChart, Reference
 #        profile_name='DEFAULT'
 # Step.3 (optional) Refresh Token:
 #        oci session refresh --profile 'DEFAULT'
+# Step.4 (optional) Run in multiple regions:
+# python oci-list-all-with-token.py <region>
+# Example:
+# python oci-list-all-with-token.py eu-amsterdam-1
+# python oci-list-all-with-token.py eu-zurich-1
+# python oci-list-all-with-token.py eu-frankfurt-1
 
 configAPI = oci.config.from_file(profile_name='DEFAULT')
 token_file = configAPI['security_token_file']
@@ -21,17 +28,17 @@ with open(token_file, 'r') as f:
      token = f.read()
 private_key = oci.signer.load_private_key_from_file(configAPI['key_file'])
 signer = oci.auth.signers.SecurityTokenSigner(token, private_key)
+
 region = configAPI['region']
+region_param = sys.argv[1] 
 
 # Initialize OCI clients
-identity_client = oci.identity.IdentityClient({'region': region}, signer=signer)
-# virtual_network_client = oci.core.VirtualNetworkClient({'region': region}, signer=signer)
-compute_client = oci.core.ComputeClient({'region': region}, signer=signer)
-block_storage_client = oci.core.BlockstorageClient({'region': region}, signer=signer)
-file_storage_client = oci.file_storage.FileStorageClient({'region': region}, signer=signer)
+identity_client = oci.identity.IdentityClient({'region': region_param}, signer=signer)
+compute_client = oci.core.ComputeClient({'region': region_param}, signer=signer)
+block_storage_client = oci.core.BlockstorageClient({'region': region_param}, signer=signer)
+file_storage_client = oci.file_storage.FileStorageClient({'region': region_param}, signer=signer)
 object_storage_client = oci.object_storage.ObjectStorageClient({'region': region}, signer=signer)
-database_client = oci.database.DatabaseClient({'region': region}, signer=signer)
-# load_balancer_client = oci.load_balancer.LoadBalancerClient({'region': region}, signer=signer)
+database_client = oci.database.DatabaseClient({'region': region_param}, signer=signer)
 
 # Get Object Storage namespace
 namespace = object_storage_client.get_namespace().data
@@ -229,7 +236,7 @@ try:
     current_date = datetime.now().strftime("%Y-%m-%d")
    
     # Generate file name with dynamic titles
-    file_name = f"oci_resources_{region}_{namespace}_{current_date}..json"
+    file_name = f"oci_resources_{region_param}_{namespace}_{current_date}..json"
     
     # Export data to JSON
     with open(file_name, "w") as file:
@@ -334,7 +341,7 @@ try:
     visualization_sheet.add_chart(bar_chart, "D20")
 
     # Generate file name with dynamic titles
-    file_name = f"oci_resources_{region}_{namespace}_{current_date}.xlsx"
+    file_name = f"oci_resources_{region_param}_{namespace}_{current_date}.xlsx"
     
     # Save the Excel workbook
     workbook.save(file_name)

@@ -1,4 +1,5 @@
 ﻿import oci
+import sys
 import json
 import pandas as pd
 from datetime import datetime
@@ -11,6 +12,7 @@ configAPI = oci.config.from_file("~/.oci/config")
 
 # Get Home Region
 region = configAPI["region"]
+region_param = sys.argv[1] 
 
 # Initialize OCI clients
 identity_client = oci.identity.IdentityClient(configAPI)
@@ -51,7 +53,7 @@ try:
 
     # Discover resources in each compartment
     for compartment in compartments:
-        if compartment.lifecycle_state == "ACTIVE":
+        if compartment.lifecycle_state == "ACTIVE" and compartment.id == "ocid1.compartment.oc1..aaaaaaaa64v3nqu4jauy726w3sui4r54pnbf6lphsez4e747pbbwwn3ccogq":
             print(f"Discovering resources in compartment: {compartment.name}")
             resources[compartment.name] = {}
             findings[compartment.name] = []
