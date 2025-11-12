@@ -88,22 +88,23 @@ try:
             findings[compartment.name].extend(regions_findings)
 
             # Compute Instances
-            vm_list = oci.pagination.list_call_get_all_results(
-                compute_client.list_instances,
-                compartment_id=compartment.id,
-            ).data
-            instance_findings = []
-            for vm in vm_list:
-                resources[compartment.name].setdefault("Compute Instances", []).append({
-                    "name": vm.display_name,
-                    "id": vm.id,
-                    "defined_tags" : vm.defined_tags,
-                    "freeform_tags" : vm.freeform_tags
-                })
-                # Best practice: Check if instance metadata is restricted
+            if region_param.upper() != "AP-TOKYO-1":
+                vm_list = oci.pagination.list_call_get_all_results(
+                    compute_client.list_instances,
+                    compartment_id=compartment.id,
+                ).data
+                instance_findings = []
+                for vm in vm_list:
+                    resources[compartment.name].setdefault("Compute Instances", []).append({
+                        "name": vm.display_name,
+                        "id": vm.id,
+                        "defined_tags" : vm.defined_tags,
+                        "freeform_tags" : vm.freeform_tags
+                    })
+                    # Best practice: Check if instance metadata is restricted
                 if vm.shape.startswith("VM.Standard"):
-                    instance_findings.append(f"Instance '{vm.display_name}' is using '{vm.shape}' shape")
-            findings[compartment.name].extend(instance_findings)
+                        instance_findings.append(f"Instance '{vm.display_name}' is using '{vm.shape}' shape")
+                findings[compartment.name].extend(instance_findings)
 
             # Block Volumes
             bv_list = oci.pagination.list_call_get_all_results(
