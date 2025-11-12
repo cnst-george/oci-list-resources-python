@@ -5,7 +5,7 @@ from datetime import datetime
 from openpyxl import Workbook
 from openpyxl.styles import PatternFill, Font
 from openpyxl.chart import PieChart, BarChart, Reference
-
+x
 # Pre-requisites 
 # Step.1 (required) Run:
 #        oci session authenticate
@@ -172,7 +172,6 @@ try:
                             "freeform_tags" : bv.freeform_tags,
                             "attached_to_instance" : bva.instance_id,
                             "availability_domain" : ad.name
-
                         })
                         bv_findings.append(f"Boot Volume '{bv.display_name}={bv.id}' is ' {bva.lifecycle_state}' to instance' {bva.instance_id}")                         
             findings[compartment.name].extend(bv_findings)
@@ -230,7 +229,7 @@ try:
     current_date = datetime.now().strftime("%Y-%m-%d")
    
     # Generate file name with dynamic titles
-    file_name = f"oci_resources_{namespace}_{current_date}.json"
+    file_name = f"oci_resources_{region}_{namespace}_{current_date}..json"
     
     # Export data to JSON
     with open(file_name, "w") as file:
@@ -335,7 +334,7 @@ try:
     visualization_sheet.add_chart(bar_chart, "D20")
 
     # Generate file name with dynamic titles
-    file_name = f"oci_resources_{namespace}_{current_date}.xlsx"
+    file_name = f"oci_resources_{region}_{namespace}_{current_date}.xlsx"
     
     # Save the Excel workbook
     workbook.save(file_name)
