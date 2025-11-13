@@ -21,7 +21,7 @@ from openpyxl.chart import PieChart, BarChart, Reference
 # python oci-list-all-with-token.py eu-zurich-1
 # python oci-list-all-with-token.py eu-frankfurt-1
 
-configAPI = oci.config.from_file(profile_name='DEFAULT6')
+configAPI = oci.config.from_file(profile_name='DEFAULT')
 token_file = configAPI['security_token_file']
 token = None
 with open(token_file, 'r') as f:
