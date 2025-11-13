@@ -57,6 +57,7 @@ git clone <repository_link>
 cd <repo_directory>
 python3.12 -m venv --system-site-package ocipythonenv
 source ocipythonenv/bin/activate
+🔧   For Windows: (En windows .\Scripts\activate.bat)
 pip3 install -r requirements.txt
 pip install --upgrade pip
 ```

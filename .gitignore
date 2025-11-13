@@ -9,6 +9,7 @@ oci_*.json
 oci_*.csv
 
 example*.py
+example*.sh
 
 #*.xlsx
 #*.csv
