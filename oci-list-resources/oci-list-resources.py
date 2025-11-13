@@ -59,17 +59,17 @@ try:
             findings[compartment.name] = []
 
             # Subscribed regions
-            reg_list = oci.pagination.list_call_get_all_results(
-                identity_client.list_region_subscriptions,
-                tenancy_ocid
-            ).data
-            regions_findings = []
-            for r in reg_list:
-                resources[compartment.name].setdefault("Subscribed Regions", []).append({
-                    "name": r.region_name,
-                    "id": r.region_key
-                })
-            findings[compartment.name].extend(regions_findings)
+            # reg_list = oci.pagination.list_call_get_all_results(
+            #     identity_client.list_region_subscriptions,
+            #     tenancy_ocid
+            # ).data
+            # regions_findings = []
+            # for r in reg_list:
+            #     resources[compartment.name].setdefault("Subscribed Regions", []).append({
+            #         "name": r.region_name,
+            #         "id": r.region_key
+            #     })
+            # findings[compartment.name].extend(regions_findings)
 
             # Compute Instances
             vm_list = oci.pagination.list_call_get_all_results(
@@ -81,19 +81,17 @@ try:
                 resources[compartment.name].setdefault("Compute Instances", []).append({
                     "name": vm.display_name,
                     "id": vm.id,
+                    "state": vm.lifecycle_state,
                     "defined_tags" : vm.defined_tags,
                     "freeform_tags" : vm.freeform_tags
                 })
-                # Best practice: Check if instance metadata is restricted
-                if vm.shape.startswith("VM.Standard"):
-                    instance_findings.append(f"Instance '{vm.display_name}' is using '{vm.shape}' shape")
+                instance_findings.append(f"Instance '{vm.display_name}' is using '{vm.shape}' shape  with config ' {vm.shape_config}")
             findings[compartment.name].extend(instance_findings)
 
             # Block Volumes
             bv_list = oci.pagination.list_call_get_all_results(
                 block_storage_client.list_volumes,
-                compartment_id=compartment.id,
-                lifecycle_state='AVAILABLE'
+                compartment_id=compartment.id
             ).data
             bv_attachments = oci.pagination.list_call_get_all_results(
                 compute_client.list_volume_attachments,
@@ -104,19 +102,23 @@ try:
                 resources[compartment.name].setdefault("Block Volumes", []).append({
                     "name": bv.display_name,
                     "id": bv.id,
+                    "state": bv.lifecycle_state,
                     "defined_tags" : bv.defined_tags,
-                    "freeform_tags" : bv.freeform_tags
+                    "freeform_tags" : bv.freeform_tags,
+                    "lifecycle_state": bv.lifecycle_state
                 })
+                bv_findings.append(f"Block Volume '{bv.display_name}={bv.id}' is in state' {bv.lifecycle_state}")  
                 for bva in bv_attachments:
-                    if bv.id == bva.volume_id:
+                    if bv.id == bva.volume_id and bv.id:
                         resources[compartment.name].setdefault("Block Volumes", []).append({
                             "name": bv.display_name,
                             "id": bv.id,
+                            "state": bva.lifecycle_state,
                             "defined_tags" : bv.defined_tags,
                             "freeform_tags" : bv.freeform_tags,
                             "attached_to_instance" : bva.instance_id
                         })
-                        bv_findings.append(f"Block Volume '{bv.display_name}={bv.id}' is ' {bva.lifecycle_state}' to instance' {bva.instance_id}")                         
+                        bv_findings.append(f"Block Volume '{bv.display_name}={bv.id}' is in state' {bva.lifecycle_state}' to instance' {bva.instance_id}")                         
             findings[compartment.name].extend(bv_findings)
 
             # Block Volumes Bkp
@@ -129,6 +131,7 @@ try:
                 resources[compartment.name].setdefault("Block Volumes Bkp", []).append({
                     "name": bv.display_name,
                     "id": bv.id,
+                    "state": bv.lifecycle_state,
                     "defined_tags" : bv.defined_tags,
                     "freeform_tags" : bv.freeform_tags
                 })
@@ -151,14 +154,17 @@ try:
                 resources[compartment.name].setdefault("Block Volumes", []).append({
                     "name": bv.display_name,
                     "id": bv.id,
+                    "state": bv.lifecycle_state,
                     "defined_tags" : bv.defined_tags,
                     "freeform_tags" : bv.freeform_tags
-                })           
+                })  
+                bv_findings.append(f"Block Volume '{bv.display_name}={bv.id}' is in state' {bv.lifecycle_state}")           
                 for bva in bv_attachments:
                     if bv.id == bva.boot_volume_id:
                         resources[compartment.name].setdefault("Boot Volumes", []).append({
                             "name": bv.display_name,
                             "id": bv.id,
+                            "state": bva.lifecycle_state,
                             "defined_tags" : bv.defined_tags,
                             "freeform_tags" : bv.freeform_tags,
                             "attached_to_instance" : bva.instance_id,
@@ -177,6 +183,7 @@ try:
                 resources[compartment.name].setdefault("Boot Volumes Bkp", []).append({
                     "name": bv.display_name,
                     "id": bv.id,
+                    "state": bv.lifecycle_state,
                     "defined_tags" : bv.defined_tags,
                     "freeform_tags" : bv.freeform_tags
                 })
@@ -194,6 +201,7 @@ try:
                     resources[compartment.name].setdefault("File Systems", []).append({
                         "name": fss.display_name,
                         "id": fss.id,
+                        "state": fss.lifecycle_state,
                         "defined_tags" : fss.defined_tags,
                         "freeform_tags" : fss.freeform_tags
                     })
@@ -209,18 +217,17 @@ try:
                 resources[compartment.name].setdefault("Autonomous Databases", []).append({
                     "name": adb.display_name,
                     "id": adb.id,
+                    "state": adb.lifecycle_state,
                     "defined_tags" : adb.defined_tags,
                     "freeform_tags" : adb.freeform_tags
                 })
-                if adb.db_workload != "OLTP":
-                    adb_findings.append(f"ADB '{adb.display_name}' is not optimized for OLTP workloads.")
             findings[compartment.name].extend(adb_findings)
 
     # Get current date for the file name
     current_date = datetime.now().strftime("%Y-%m-%d")
    
     # Generate file name with dynamic titles
-    file_name = f"oci_resources_{region}_{namespace}_{current_date}..json"
+    file_name = f"oci_resources_{region_param}_{namespace}_{current_date}..json"
     
     # Export data to JSON
     with open(file_name, "w") as file:
@@ -270,9 +277,7 @@ try:
     summary_sheet.add_chart(bar_chart, f"E{summary_start_row}")
 
     # Add data sheets for each resource type
-    for resource_type in [
-                        "Subscribed Regions",
-                        "Compute Instances", 
+    for resource_type in ["Compute Instances", 
                         "Block Volumes", 
                         "Block Volumes Bkp", 
                         "Boot Volumes",
@@ -281,12 +286,13 @@ try:
                         "Autonomous Databases"
                         ]:
         sheet = workbook.create_sheet(title=resource_type)
-        sheet.append(["Compartment", "Name", "ID", "Defined_tags", "Freeform_tags", "Attached_to", "Availability_domain" ])
+        sheet.append(["Compartment", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags", "Attached_to", "Availability_domain" ])
         for compartment, resource_data in resources.items():
             for item in resource_data.get(resource_type, []):
                 sheet.append([compartment, 
                              item.get("name"), 
                              item.get("id", "N/A"),
+                             item.get("state", "N/A"),
                              str(item.get(f"defined_tags", "N/A")),
                              str(item.get(f"freeform_tags", "N/A")),
                              str(item.get(f"attached_to_instance", "N/A")),
@@ -325,7 +331,7 @@ try:
     visualization_sheet.add_chart(bar_chart, "D20")
 
     # Generate file name with dynamic titles
-    file_name = f"oci_resources_{region}_{namespace}_{current_date}.xlsx"
+    file_name = f"oci_resources_{region_param}_{namespace}_{current_date}.xlsx"
     
     # Save the Excel workbook
     workbook.save(file_name)
