@@ -59,17 +59,17 @@ try:
             findings[compartment.name] = []
 
             # Subscribed regions
-            # reg_list = oci.pagination.list_call_get_all_results(
-            #     identity_client.list_region_subscriptions,
-            #     tenancy_ocid
-            # ).data
-            # regions_findings = []
-            # for r in reg_list:
-            #     resources[compartment.name].setdefault("Subscribed Regions", []).append({
-            #         "name": r.region_name,
-            #         "id": r.region_key
-            #     })
-            # findings[compartment.name].extend(regions_findings)
+            reg_list = oci.pagination.list_call_get_all_results(
+                identity_client.list_region_subscriptions,
+                tenancy_ocid
+            ).data
+            regions_findings = []
+            for r in reg_list:
+                resources[compartment.name].setdefault("Subscribed Regions", []).append({
+                    "name": r.region_name,
+                    "id": r.region_key
+                })
+            findings[compartment.name].extend(regions_findings)
 
             # Compute Instances
             vm_list = oci.pagination.list_call_get_all_results(
@@ -83,9 +83,13 @@ try:
                     "id": vm.id,
                     "state": vm.lifecycle_state,
                     "defined_tags" : vm.defined_tags,
-                    "freeform_tags" : vm.freeform_tags
+                    "freeform_tags" : vm.freeform_tags,
+                    "shape" : vm.shape,
+                    "ocpus" : vm.shape_config.ocpus,
+                    "memory_in_gbs" : vm.shape_config.memory_in_gbs,
+                    "processor_description" : vm.shape_config.processor_description
                 })
-                instance_findings.append(f"Instance '{vm.display_name}' is using '{vm.shape}' shape  with config ' {vm.shape_config}")
+                instance_findings.append(f"Instance '{vm.display_name}' is using '{vm.shape}' with: ' {vm.shape_config.ocpus} OCPU and: ' {vm.shape_config.memory_in_gbs} GB")
             findings[compartment.name].extend(instance_findings)
 
             # Block Volumes
@@ -105,7 +109,7 @@ try:
                     "state": bv.lifecycle_state,
                     "defined_tags" : bv.defined_tags,
                     "freeform_tags" : bv.freeform_tags,
-                    "lifecycle_state": bv.lifecycle_state
+                    "size_in_gbs" : bv.size_in_gbs
                 })
                 bv_findings.append(f"Block Volume '{bv.display_name}={bv.id}' is in state' {bv.lifecycle_state}")  
                 for bva in bv_attachments:
@@ -116,7 +120,8 @@ try:
                             "state": bva.lifecycle_state,
                             "defined_tags" : bv.defined_tags,
                             "freeform_tags" : bv.freeform_tags,
-                            "attached_to_instance" : bva.instance_id
+                            "attached_to_instance" : bva.instance_id,
+                            "size_in_gbs" : bv.size_in_gbs
                         })
                         bv_findings.append(f"Block Volume '{bv.display_name}={bv.id}' is in state' {bva.lifecycle_state}' to instance' {bva.instance_id}")                         
             findings[compartment.name].extend(bv_findings)
@@ -133,7 +138,8 @@ try:
                     "id": bv.id,
                     "state": bv.lifecycle_state,
                     "defined_tags" : bv.defined_tags,
-                    "freeform_tags" : bv.freeform_tags
+                    "freeform_tags" : bv.freeform_tags,
+                    "size_in_gbs" : bv.size_in_gbs
                 })
             findings[compartment.name].extend(bv_findings)
 
@@ -156,7 +162,8 @@ try:
                     "id": bv.id,
                     "state": bv.lifecycle_state,
                     "defined_tags" : bv.defined_tags,
-                    "freeform_tags" : bv.freeform_tags
+                    "freeform_tags" : bv.freeform_tags,
+                    "size_in_gbs" : bv.size_in_gbs
                 })  
                 bv_findings.append(f"Block Volume '{bv.display_name}={bv.id}' is in state' {bv.lifecycle_state}")           
                 for bva in bv_attachments:
@@ -168,7 +175,8 @@ try:
                             "defined_tags" : bv.defined_tags,
                             "freeform_tags" : bv.freeform_tags,
                             "attached_to_instance" : bva.instance_id,
-                            "availability_domain" : ad.name
+                            "availability_domain" : ad.name,
+                            "size_in_gbs" : bv.size_in_gbs
                         })
                         bv_findings.append(f"Boot Volume '{bv.display_name}={bv.id}' is ' {bva.lifecycle_state}' to instance' {bva.instance_id}")                         
             findings[compartment.name].extend(bv_findings)
@@ -185,7 +193,8 @@ try:
                     "id": bv.id,
                     "state": bv.lifecycle_state,
                     "defined_tags" : bv.defined_tags,
-                    "freeform_tags" : bv.freeform_tags
+                    "freeform_tags" : bv.freeform_tags,
+                    "size_in_gbs" : bv.size_in_gbs
                 })
             findings[compartment.name].extend(bv_findings)
 
@@ -203,7 +212,8 @@ try:
                         "id": fss.id,
                         "state": fss.lifecycle_state,
                         "defined_tags" : fss.defined_tags,
-                        "freeform_tags" : fss.freeform_tags
+                        "freeform_tags" : fss.freeform_tags,
+                        "metered_bytes" : fss.metered_bytes # (1024 * 1024 * 1024)
                     })
                 findings[compartment.name].extend(fss_findings)
 
@@ -219,7 +229,8 @@ try:
                     "id": adb.id,
                     "state": adb.lifecycle_state,
                     "defined_tags" : adb.defined_tags,
-                    "freeform_tags" : adb.freeform_tags
+                    "freeform_tags" : adb.freeform_tags,
+                    "size_in_gbs" : adb.data_storage_size_in_gbs
                 })
             findings[compartment.name].extend(adb_findings)
 
@@ -277,7 +288,9 @@ try:
     summary_sheet.add_chart(bar_chart, f"E{summary_start_row}")
 
     # Add data sheets for each resource type
-    for resource_type in ["Compute Instances", 
+    for resource_type in [
+                        "Subscribed Regions",
+                        "Compute Instances", 
                         "Block Volumes", 
                         "Block Volumes Bkp", 
                         "Boot Volumes",
@@ -286,18 +299,98 @@ try:
                         "Autonomous Databases"
                         ]:
         sheet = workbook.create_sheet(title=resource_type)
-        sheet.append(["Compartment", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags", "Attached_to", "Availability_domain" ])
+        if resource_type == "Subscribed Regions":
+            sheet.append(["RegionName", "RegionCod" ])
+        if resource_type == "Compute Instances":
+            sheet.append(["Compartment", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags", "Shape", "Ocpus", "Memory", "Processor_description" ])
+        if resource_type == "Block Volumes":
+            sheet.append(["Compartment", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags", "Attached_to", "Size_in_gbs"])
+        if resource_type == "Block Volumes Bkp":
+            sheet.append(["Compartment", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags" , "Size_in_gbs"])
+        if resource_type == "Boot Volumes":
+            sheet.append(["Compartment", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags", "Attached_to", "Availability_domain" , "Size_in_gbs"])
+        if resource_type == "Boot Volumes Bkp":
+            sheet.append(["Compartment", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags", "Size_in_gbs" ])
+        if resource_type == "File Systems":
+            sheet.append(["Compartment", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags" , "metered_bytes"])
+        if resource_type == "Autonomous Databases":
+            sheet.append(["Compartment", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags" , "Size_in_gbs"])      
         for compartment, resource_data in resources.items():
             for item in resource_data.get(resource_type, []):
-                sheet.append([compartment, 
+                if resource_type == "Subscribed Regions":
+                    sheet.append([item.get("name"), 
+                                 item.get("id")
+                                 ])
+                if resource_type == "Compute Instances":
+                    sheet.append([compartment, 
                              item.get("name"), 
-                             item.get("id", "N/A"),
-                             item.get("state", "N/A"),
-                             str(item.get(f"defined_tags", "N/A")),
-                             str(item.get(f"freeform_tags", "N/A")),
-                             str(item.get(f"attached_to_instance", "N/A")),
-                             str(item.get(f"availability_domain", "N/A"))
+                             item.get("id"),
+                             item.get("state"),
+                             str(item.get(f"defined_tags")),
+                             str(item.get(f"freeform_tags")),
+                             str(item.get(f"shape")),
+                             item.get(f"ocpus"),
+                             item.get(f"memory_in_gbs"),
+                             str(item.get(f"processor_description"))
                              ])
+                if resource_type == "Block Volumes":
+                    sheet.append([compartment, 
+                                item.get("name"), 
+                                item.get("id"),
+                                item.get("state"),
+                                str(item.get(f"defined_tags")),
+                                str(item.get(f"freeform_tags")),
+                                str(item.get(f"attached_to_instance")),
+                                item.get(f"size_in_gbs")
+                                ])
+                if resource_type == "Block Volumes Bkp":
+                    sheet.append([compartment, 
+                                item.get("name"), 
+                                item.get("id"),
+                                item.get("state"),
+                                str(item.get(f"defined_tags")),
+                                str(item.get(f"freeform_tags")),
+                                item.get(f"size_in_gbs")
+                                ])
+                if resource_type == "Boot Volumes":
+                    sheet.append([compartment, 
+                                item.get("name"), 
+                                item.get("id"),
+                                item.get("state"),
+                                str(item.get(f"defined_tags")),
+                                str(item.get(f"freeform_tags")),
+                                str(item.get(f"attached_to_instance")),
+                                str(item.get(f"availability_domain")),
+                                item.get(f"size_in_gbs")
+                                ])
+                if resource_type == "Boot Volumes Bkp":
+                    sheet.append([compartment, 
+                                item.get("name"), 
+                                item.get("id"),
+                                item.get("state"),
+                                str(item.get(f"defined_tags")),
+                                str(item.get(f"freeform_tags")),
+                                item.get(f"size_in_gbs")
+                                ])
+                if resource_type == "File Systems":
+                    sheet.append([compartment, 
+                                item.get("name"), 
+                                item.get("id"),
+                                item.get("state"),
+                                str(item.get(f"defined_tags")),
+                                str(item.get(f"freeform_tags")),
+                                item.get(f"metered_bytes")
+                                ])
+                if resource_type == "Autonomous Databases":
+                    sheet.append([compartment, 
+                                item.get("name"), 
+                                item.get("id"),
+                                item.get("state"),
+                                str(item.get(f"defined_tags")),
+                                str(item.get(f"freeform_tags")),
+                                item.get(f"size_in_gbs")
+                                ])
+
 
     # Add visualization sheet
     visualization_sheet = workbook.create_sheet(title="Visualizations")
