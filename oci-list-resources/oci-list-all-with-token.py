@@ -17,8 +17,6 @@ from openpyxl.chart import PieChart, BarChart, Reference
 # Step.4 (optional) Run in multiple regions:
 # python oci-list-all-with-token.py <region>
 # Example:
-# python oci-list-all-with-token.py eu-amsterdam-1
-# python oci-list-all-with-token.py eu-zurich-1
 # python oci-list-all-with-token.py eu-frankfurt-1
 
 configAPI = oci.config.from_file(profile_name='DEFAULT')
@@ -45,7 +43,6 @@ namespace = object_storage_client.get_namespace().data
 
 # Get tenancy ID
 tenancy_ocid = configAPI["tenancy"]
-# tenancy_name = tenancy_ocid.split(".")[1] if tenancy_ocid else "unknown"
 tenancy_name = identity_client.get_tenancy(tenancy_id=tenancy_ocid).data.name
 print(f"Using Tenancy Name: {tenancy_name}")
 

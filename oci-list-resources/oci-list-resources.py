@@ -29,7 +29,6 @@ namespace = object_storage_client.get_namespace().data
 
 # Get tenancy ID
 tenancy_ocid = configAPI["tenancy"]
-# tenancy_name = tenancy_ocid.split(".")[1] if tenancy_ocid else "unknown"
 tenancy_name = identity_client.get_tenancy(tenancy_id=tenancy_ocid).data.name
 print(f"Using Tenancy Name: {tenancy_name}")
 
