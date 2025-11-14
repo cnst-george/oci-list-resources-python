@@ -53,36 +53,24 @@ print(f"Discovering resources in Availability Domain: {availability_domains}")
 # Initialize result storage
 resources = {}
 findings = {}
+globalresources = {}
 
 try:
     # Fetch all compartments
-    compartments = oci.pagination.list_call_get_all_results(
+    cmp_list = oci.pagination.list_call_get_all_results(
         identity_client.list_compartments,
         tenancy_ocid,
         compartment_id_in_subtree=True,
         access_level="ANY"
     ).data
-    compartments.append(oci.identity.models.Compartment(id=tenancy_ocid, name="Tenancy Root"))
-
+    cmp_list.append(oci.identity.models.Compartment(id=tenancy_ocid, name="Tenancy Root"))
+    
     # Discover resources in each compartment
-    for compartment in compartments:
+    for compartment in cmp_list:
         if compartment.lifecycle_state == "ACTIVE":
-            print(f"Discovering resources in compartment: {compartment.name}")
-            resources[compartment.name] = {}
-            findings[compartment.name] = []
-
-            # Subscribed regions
-            reg_list = oci.pagination.list_call_get_all_results(
-                identity_client.list_region_subscriptions,
-                tenancy_ocid
-            ).data
-            regions_findings = []
-            for r in reg_list:
-                resources[compartment.name].setdefault("Subscribed Regions", []).append({
-                    "name": r.region_name,
-                    "id": r.region_key
-                })
-            findings[compartment.name].extend(regions_findings)
+            print(f"Discovering resources in compartment: {compartment.name}-{compartment.id}")
+            resources[compartment.id] = {}
+            findings[compartment.id] = []
 
             # Compute Instances
             vm_list = oci.pagination.list_call_get_all_results(
@@ -91,7 +79,8 @@ try:
             ).data
             instance_findings = []
             for vm in vm_list:
-                resources[compartment.name].setdefault("Compute Instances", []).append({
+                resources[compartment.id].setdefault("Compute Instances", []).append({
+                    "compartment_name": compartment.name,
                     "name": vm.display_name,
                     "id": vm.id,
                     "state": vm.lifecycle_state,
@@ -103,7 +92,7 @@ try:
                     "processor_description" : vm.shape_config.processor_description
                 })
                 instance_findings.append(f"Instance '{vm.display_name}' is using '{vm.shape}' with: ' {vm.shape_config.ocpus} OCPU and: ' {vm.shape_config.memory_in_gbs} GB")
-            findings[compartment.name].extend(instance_findings)
+            findings[compartment.id].extend(instance_findings)
 
             # Block Volumes
             bv_list = oci.pagination.list_call_get_all_results(
@@ -116,7 +105,8 @@ try:
             ).data 
             bv_findings = []           
             for bv in bv_list:
-                resources[compartment.name].setdefault("Block Volumes", []).append({
+                resources[compartment.id].setdefault("Block Volumes", []).append({
+                    "compartment_name": compartment.name,
                     "name": bv.display_name,
                     "id": bv.id,
                     "state": bv.lifecycle_state,
@@ -127,7 +117,8 @@ try:
                 bv_findings.append(f"Block Volume '{bv.display_name}={bv.id}' is in state' {bv.lifecycle_state}")  
                 for bva in bv_attachments:
                     if bv.id == bva.volume_id and bv.id:
-                        resources[compartment.name].setdefault("Block Volumes", []).append({
+                        resources[compartment.id].setdefault("Block Volumes", []).append({
+                            "compartment_name": compartment.name,
                             "name": bv.display_name,
                             "id": bv.id,
                             "state": bva.lifecycle_state,
@@ -137,7 +128,7 @@ try:
                             "size_in_gbs" : bv.size_in_gbs
                         })
                         bv_findings.append(f"Block Volume '{bv.display_name}={bv.id}' is in state' {bva.lifecycle_state}' to instance' {bva.instance_id}")                         
-            findings[compartment.name].extend(bv_findings)
+            findings[compartment.id].extend(bv_findings)
 
             # Block Volumes Bkp
             bvBkp_list = oci.pagination.list_call_get_all_results(
@@ -146,7 +137,8 @@ try:
             ).data
             bv_findings = []
             for bv in bvBkp_list:
-                resources[compartment.name].setdefault("Block Volumes Bkp", []).append({
+                resources[compartment.id].setdefault("Block Volumes Bkp", []).append({
+                    "compartment_name": compartment.name,
                     "name": bv.display_name,
                     "id": bv.id,
                     "state": bv.lifecycle_state,
@@ -154,7 +146,7 @@ try:
                     "freeform_tags" : bv.freeform_tags,
                     "size_in_gbs" : bv.size_in_gbs
                 })
-            findings[compartment.name].extend(bv_findings)
+            findings[compartment.id].extend(bv_findings)
 
         # Boot Volumes
             for ad in availability_domains:
@@ -170,7 +162,8 @@ try:
              ).data   
              bv_findings = []        
              for bv in bv_list:
-                resources[compartment.name].setdefault("Block Volumes", []).append({
+                resources[compartment.id].setdefault("Block Volumes", []).append({
+                    "compartment_name": compartment.name,
                     "name": bv.display_name,
                     "id": bv.id,
                     "state": bv.lifecycle_state,
@@ -181,7 +174,8 @@ try:
                 bv_findings.append(f"Block Volume '{bv.display_name}={bv.id}' is in state' {bv.lifecycle_state}")           
                 for bva in bv_attachments:
                     if bv.id == bva.boot_volume_id:
-                        resources[compartment.name].setdefault("Boot Volumes", []).append({
+                        resources[compartment.id].setdefault("Boot Volumes", []).append({
+                            "compartment_name": compartment.name,
                             "name": bv.display_name,
                             "id": bv.id,
                             "state": bva.lifecycle_state,
@@ -192,7 +186,7 @@ try:
                             "size_in_gbs" : bv.size_in_gbs
                         })
                         bv_findings.append(f"Boot Volume '{bv.display_name}={bv.id}' is ' {bva.lifecycle_state}' to instance' {bva.instance_id}")                         
-            findings[compartment.name].extend(bv_findings)
+            findings[compartment.id].extend(bv_findings)
 
             # Boot Volumes Bkp
             bvBkp_list = oci.pagination.list_call_get_all_results(
@@ -201,7 +195,8 @@ try:
             ).data
             bv_findings = []
             for bv in bvBkp_list:
-                resources[compartment.name].setdefault("Boot Volumes Bkp", []).append({
+                resources[compartment.id].setdefault("Boot Volumes Bkp", []).append({
+                    "compartment_name": compartment.name,
                     "name": bv.display_name,
                     "id": bv.id,
                     "state": bv.lifecycle_state,
@@ -209,7 +204,7 @@ try:
                     "freeform_tags" : bv.freeform_tags,
                     "size_in_gbs" : bv.size_in_gbs
                 })
-            findings[compartment.name].extend(bv_findings)
+            findings[compartment.id].extend(bv_findings)
 
             # File Systems 
             for ad in availability_domains:  
@@ -220,7 +215,8 @@ try:
                 ).data
                 fss_findings = []
                 for fss in fss_list:
-                    resources[compartment.name].setdefault("File Systems", []).append({
+                    resources[compartment.id].setdefault("File Systems", []).append({
+                        "compartment_name": compartment.name,
                         "name": fss.display_name,
                         "id": fss.id,
                         "state": fss.lifecycle_state,
@@ -228,7 +224,7 @@ try:
                         "freeform_tags" : fss.freeform_tags,
                         "metered_bytes" : fss.metered_bytes # (1024 * 1024 * 1024)
                     })
-                findings[compartment.name].extend(fss_findings)
+                findings[compartment.id].extend(fss_findings)
 
             # Autonomous Databases
             adb_list = oci.pagination.list_call_get_all_results(
@@ -237,15 +233,17 @@ try:
             ).data
             adb_findings = []
             for adb in adb_list:
-                resources[compartment.name].setdefault("Autonomous Databases", []).append({
+                resources[compartment.id].setdefault("Autonomous Databases", []).append({
+                    "compartment_name": compartment.name,
                     "name": adb.display_name,
                     "id": adb.id,
                     "state": adb.lifecycle_state,
                     "defined_tags" : adb.defined_tags,
                     "freeform_tags" : adb.freeform_tags,
+                    "ocups": adb.compute_count,
                     "size_in_gbs" : adb.data_storage_size_in_gbs
                 })
-            findings[compartment.name].extend(adb_findings)
+            findings[compartment.id].extend(adb_findings)
 
     # Get current date for the file name
     current_date = datetime.now().strftime("%Y-%m-%d")
@@ -302,7 +300,6 @@ try:
 
     # Add data sheets for each resource type
     for resource_type in [
-                        "Subscribed Regions",
                         "Compute Instances", 
                         "Block Volumes", 
                         "Block Volumes Bkp", 
@@ -311,31 +308,27 @@ try:
                         "File Systems",
                         "Autonomous Databases"
                         ]:
-        sheet = workbook.create_sheet(title=resource_type)
-        if resource_type == "Subscribed Regions":
-            sheet.append(["RegionName", "RegionCod" ])
+        sheet = workbook.create_sheet(title=resource_type)   
         if resource_type == "Compute Instances":
-            sheet.append(["Compartment", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags", "Shape", "Ocpus", "Memory", "Processor_description" ])
+            sheet.append(["CompartmentID","Compartment" "Name", "ID", "STATE", "Defined_tags", "Freeform_tags", "Shape", "Ocpus", "Memory", "Processor_description" ])
         if resource_type == "Block Volumes":
-            sheet.append(["Compartment", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags", "Attached_to", "Size_in_gbs"])
+            sheet.append(["CompartmentID","Compartment", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags", "Attached_to", "Size_in_gbs"])
         if resource_type == "Block Volumes Bkp":
-            sheet.append(["Compartment", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags" , "Size_in_gbs"])
+            sheet.append(["CompartmentID","Compartment", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags" , "Size_in_gbs"])
         if resource_type == "Boot Volumes":
-            sheet.append(["Compartment", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags", "Attached_to", "Availability_domain" , "Size_in_gbs"])
+            sheet.append(["CompartmentID","Compartment", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags", "Attached_to", "Availability_domain" , "Size_in_gbs"])
         if resource_type == "Boot Volumes Bkp":
-            sheet.append(["Compartment", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags", "Size_in_gbs" ])
+            sheet.append(["CompartmentID","Compartment", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags", "Size_in_gbs" ])
         if resource_type == "File Systems":
-            sheet.append(["Compartment", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags" , "metered_bytes"])
+            sheet.append(["CompartmentID","Compartment", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags" , "metered_bytes"])
         if resource_type == "Autonomous Databases":
-            sheet.append(["Compartment", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags" , "Size_in_gbs"])      
+            sheet.append(["CompartmentID","Compartment", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags" , "Ocpus", "Size_in_gbs"])      
+        
         for compartment, resource_data in resources.items():
-            for item in resource_data.get(resource_type, []):
-                if resource_type == "Subscribed Regions":
-                    sheet.append([item.get("name"), 
-                                 item.get("id")
-                                 ])
+            for item in resource_data.get(resource_type, []):  
                 if resource_type == "Compute Instances":
                     sheet.append([compartment, 
+                             item.get("compartment_name"), 
                              item.get("name"), 
                              item.get("id"),
                              item.get("state"),
@@ -348,6 +341,7 @@ try:
                              ])
                 if resource_type == "Block Volumes":
                     sheet.append([compartment, 
+                                item.get("compartment_name"), 
                                 item.get("name"), 
                                 item.get("id"),
                                 item.get("state"),
@@ -358,6 +352,7 @@ try:
                                 ])
                 if resource_type == "Block Volumes Bkp":
                     sheet.append([compartment, 
+                                item.get("compartment_name"), 
                                 item.get("name"), 
                                 item.get("id"),
                                 item.get("state"),
@@ -366,7 +361,8 @@ try:
                                 item.get(f"size_in_gbs")
                                 ])
                 if resource_type == "Boot Volumes":
-                    sheet.append([compartment, 
+                    sheet.append([compartment,
+                                item.get("compartment_name"), 
                                 item.get("name"), 
                                 item.get("id"),
                                 item.get("state"),
@@ -377,7 +373,8 @@ try:
                                 item.get(f"size_in_gbs")
                                 ])
                 if resource_type == "Boot Volumes Bkp":
-                    sheet.append([compartment, 
+                    sheet.append([compartment,
+                                item.get("compartment_name"), 
                                 item.get("name"), 
                                 item.get("id"),
                                 item.get("state"),
@@ -386,7 +383,8 @@ try:
                                 item.get(f"size_in_gbs")
                                 ])
                 if resource_type == "File Systems":
-                    sheet.append([compartment, 
+                    sheet.append([compartment,
+                                item.get("compartment_name"), 
                                 item.get("name"), 
                                 item.get("id"),
                                 item.get("state"),
@@ -396,11 +394,13 @@ try:
                                 ])
                 if resource_type == "Autonomous Databases":
                     sheet.append([compartment, 
+                                item.get("compartment_name"), 
                                 item.get("name"), 
                                 item.get("id"),
                                 item.get("state"),
                                 str(item.get(f"defined_tags")),
                                 str(item.get(f"freeform_tags")),
+                                item.get(f"compute_count"),
                                 item.get(f"size_in_gbs")
                                 ])
 
