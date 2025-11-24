@@ -2,7 +2,9 @@
 import sys
 import json
 import pandas as pd
-from datetime import datetime
+import datetime
+# from datetime import timedelta
+# from datetime import datetime, timedelta
 from openpyxl import Workbook
 from openpyxl.styles import PatternFill, Font
 from openpyxl.chart import PieChart, BarChart, Reference
@@ -11,11 +13,15 @@ from openpyxl.chart import PieChart, BarChart, Reference
 configAPI = oci.config.from_file("~/.oci/config")
 
 # Get Home Region
-region = configAPI["region"]
-region_param = sys.argv[1] 
+region = configAPI["region"] 
+region_param = sys.argv[1] if len(sys.argv) > 1 else region
+date_from_param = sys.argv[2] if len(sys.argv) > 2 else datetime.date.today().replace(day=1) # Get the first day of the current month
+date_to_param = sys.argv[3] if len(sys.argv) > 3 else datetime.date.today() # Get the current day of the current month
 
 # Initialize OCI clients
 identity_client = oci.identity.IdentityClient(configAPI)
+# Get the list of regions
+# region_response = identity_client.list_region_subscriptions(configAPI)
 virtual_network_client = oci.core.VirtualNetworkClient(configAPI)
 compute_client = oci.core.ComputeClient(configAPI)
 block_storage_client = oci.core.BlockstorageClient(configAPI)
@@ -23,6 +29,7 @@ file_storage_client = oci.file_storage.FileStorageClient(configAPI)
 object_storage_client = oci.object_storage.ObjectStorageClient(configAPI)
 database_client = oci.database.DatabaseClient(configAPI)
 load_balancer_client = oci.load_balancer.LoadBalancerClient(configAPI)
+usage_client = oci.usage_api.UsageapiClient(configAPI)
 
 # Get Object Storage namespace
 namespace = object_storage_client.get_namespace().data
@@ -41,6 +48,11 @@ resources = {}
 findings = {}
 globalresources = {}
 
+# Create the from and to dates for the usage query - using the previous calendar month
+dateto = datetime.date.today().replace(day=1) # Get the first day of the current month
+month, year = (dateto.month-1, dateto.year) if dateto.month != 1 else (12, dateto.year-1)
+datefrom = dateto.replace(day=1, month=month, year=year) # Get the first day of the previous month
+
 try:
     # Fetch all compartments
     cmp_list = oci.pagination.list_call_get_all_results(
@@ -50,13 +62,19 @@ try:
         access_level="ANY"
     ).data
     cmp_list.append(oci.identity.models.Compartment(id=tenancy_ocid, name="Tenancy Root"))
+    cmp_list.append(identity_client.get_compartment(tenancy_ocid).data)  # Add root compartment
     
     # Discover resources in each compartment
     for compartment in cmp_list:
-        if compartment.lifecycle_state == "ACTIVE":
+        if compartment.lifecycle_state == "ACTIVE" and compartment.id.startswith("ocid1.compartment.oc1.."):
             print(f"Discovering resources in compartment: {compartment.name}-{compartment.id}")
             resources[compartment.id] = {}
             findings[compartment.id] = []
+
+ # Iterate over each region and retrieve the volume details
+# for region in region_response.data:
+#    region_name = region.region_name
+#     print(f"Switching to region: {region_name}")
 
             # Compute Instances
             vm_list = oci.pagination.list_call_get_all_results(
@@ -231,8 +249,67 @@ try:
                 })
             findings[compartment.id].extend(adb_findings)
 
+            # Usage Costs - Compute
+
+            # filter_details = oci.usage_api.models.Filter(
+            # operator="AND",
+            # dimensions=[
+            #     oci.usage_api.models.Dimension(
+            #         key="compartmentId",
+            #         value=compartment.id
+            #     ),
+            #     oci.usage_api.models.Dimension(
+            #         key="service",
+            #         value="COMPUTE"
+            #     )
+            # ]
+            # )
+
+        if compartment.id.startswith("ocid1.tenancy.oc1.."): 
+            print(f"Discovering Costs in Root Compartment: {compartment.name}-{compartment.id}")
+            print(f"Date from: {date_from_param} to Date to: {date_to_param}")
+            # print(f"Date from: {datefrom} to Date to: {dateto }")
+            resources[compartment.id] = {}
+            findings[compartment.id] = []
+
+            # usage_list = oci.pagination.list_call_get_all_results(
+            costs_list = usage_client.request_summarized_usages(
+                request_summarized_usages_details=oci.usage_api.models.RequestSummarizedUsagesDetails(
+                # compartment_id=compartment.id,
+                tenant_id=tenancy_ocid,
+                time_usage_started=date_from_param,
+                time_usage_ended=date_to_param,
+                # time_usage_started=(datefrom.strftime('%Y-%m-%dT%H:%M:%SZ')),
+                # time_usage_ended=(dateto.strftime('%Y-%m-%dT%H:%M:%SZ')),
+                granularity="DAILY",
+                # filter=filter_details,
+                is_aggregate_by_time=False,
+                query_type="COST",
+                group_by=["resourceId"],
+                # group_by_tag=[
+                #     oci.usage_api.models.Tag( # Return results by the CreatedBy tag, which will indicate the user who created the resource (who the usage cost will be attributed to)
+                #         namespace="Oracle-Tags",
+                #         key="CreatedBy")],
+                # compartment_depth=1
+                compartment_depth=6              
+                )
+            )
+
+            cost_findings = []
+
+            for cost in costs_list.data.items:
+                start_time = cost.time_usage_started.strftime("%Y-%m-%d")
+                resources[compartment.id].setdefault("Daily Costs", []).append({
+                    "compartment_name": compartment.name,
+                    "id": cost.resource_id,
+                    "currency": cost.currency,
+                    "cost": cost.computed_amount,
+                    "starttime": start_time
+                })
+            findings[compartment.id].extend(cost_findings)
+        
     # Get current date for the file name
-    current_date = datetime.now().strftime("%Y-%m-%d")
+    current_date = datetime.datetime.now().strftime("%Y-%m-%d")
    
     # Generate file name with dynamic titles
     file_name = f"oci_resources_{region_param}_{namespace}_{current_date}..json"
@@ -286,6 +363,7 @@ try:
 
     # Add data sheets for each resource type
     for resource_type in [
+                        "Daily Costs",
                         "Compute Instances", 
                         "Block Volumes", 
                         "Block Volumes Bkp", 
@@ -296,7 +374,7 @@ try:
                         ]:
         sheet = workbook.create_sheet(title=resource_type)   
         if resource_type == "Compute Instances":
-            sheet.append(["CompartmentID","Compartment" "Name", "ID", "STATE", "Defined_tags", "Freeform_tags", "Shape", "Ocpus", "Memory", "Processor_description" ])
+            sheet.append(["CompartmentID","Compartment", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags", "Shape", "Ocpus", "Memory", "Processor_description" ])
         if resource_type == "Block Volumes":
             sheet.append(["CompartmentID","Compartment", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags", "Attached_to", "Size_in_gbs"])
         if resource_type == "Block Volumes Bkp":
@@ -308,10 +386,12 @@ try:
         if resource_type == "File Systems":
             sheet.append(["CompartmentID","Compartment", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags" , "metered_bytes"])
         if resource_type == "Autonomous Databases":
-            sheet.append(["CompartmentID","Compartment", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags" , "Ocpus", "Size_in_gbs"])      
+            sheet.append(["CompartmentID","Compartment", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags" , "Ocpus", "Size_in_gbs"])    
+        if resource_type == "Daily Costs":
+            sheet.append(["CompartmentID","Compartment", "ID", "Currency","Cost", "Starttime"])              
         
         for compartment, resource_data in resources.items():
-            for item in resource_data.get(resource_type, []):  
+            for item in resource_data.get(resource_type, []):           
                 if resource_type == "Compute Instances":
                     sheet.append([compartment, 
                              item.get("compartment_name"), 
@@ -389,7 +469,14 @@ try:
                                 item.get(f"compute_count"),
                                 item.get(f"size_in_gbs")
                                 ])
-
+                if resource_type == "Daily Costs":
+                    sheet.append([compartment, 
+                                item.get("compartment_name"), 
+                                item.get("id"),
+                                item.get("currency"),
+                                item.get("cost"),
+                                item.get("starttime")
+                                ])                        
 
     # Add visualization sheet
     visualization_sheet = workbook.create_sheet(title="Visualizations")
@@ -428,6 +515,7 @@ try:
     # Save the Excel workbook
     workbook.save(file_name)
     print(f"Detailed findings and visualizations saved to: {file_name}")
+
 
 except oci.exceptions.ServiceError as e:
     print(f"Service Error: {e}")
