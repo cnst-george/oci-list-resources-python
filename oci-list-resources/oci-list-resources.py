@@ -3,6 +3,7 @@ import sys
 import json
 import pandas as pd
 import datetime
+import logging
 # from datetime import timedelta
 # from datetime import datetime, timedelta
 from openpyxl import Workbook
@@ -271,6 +272,9 @@ try:
             # print(f"Date from: {datefrom} to Date to: {dateto }")
             resources[compartment.id] = {}
             findings[compartment.id] = []
+
+            # Enable debug logging
+            oci.base_client.is_http_log_enabled(True)
 
             # usage_list = oci.pagination.list_call_get_all_results(
             costs_list = usage_client.request_summarized_usages(
