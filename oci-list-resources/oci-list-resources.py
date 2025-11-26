@@ -276,7 +276,7 @@ try:
             # ]
             # )
 
-        if compartment.id.startswith("ocid1.tenancy.oc1..") and region_param.upper.__eq__("EU-FRANKFURT-1"): 
+        if compartment.id.startswith("ocid1.tenancy.oc1..") and region_param.upper() == "EU-FRANKFURT-1": 
             print(f"Discovering Costs in Root Compartment: {compartment.name}-{compartment.id}")
             print(f"Date from: {date_from_param} to Date to: {date_to_param}")
             print(f"Home region: {region_param}")
@@ -389,26 +389,26 @@ try:
                         ]:
         sheet = workbook.create_sheet(title=resource_type)   
         if resource_type == "Compute Instances":
-            sheet.append(["CompartmentID","Compartment", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags", "Time_created"])
+            sheet.append(["Compartment", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags", "Time_created"])
         if resource_type == "Block Volumes":
-            sheet.append(["CompartmentID","Compartment", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags", "Attached_to", "Size_in_gbs", "Time_created"])
+            sheet.append(["Compartment", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags", "Attached_to", "Size_in_gbs", "Time_created"])
         if resource_type == "Block Volumes Bkp":
-            sheet.append(["CompartmentID","Compartment", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags" , "Size_in_gbs", "Time_created"])
+            sheet.append(["Compartment", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags" , "Size_in_gbs", "Time_created"])
         if resource_type == "Boot Volumes":
-            sheet.append(["CompartmentID","Compartment", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags", "Attached_to", "Availability_domain" , "Size_in_gbs", "Time_created"])
+            sheet.append(["Compartment", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags", "Attached_to", "Availability_domain" , "Size_in_gbs", "Time_created"])
         if resource_type == "Boot Volumes Bkp":
-            sheet.append(["CompartmentID","Compartment", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags", "Size_in_gbs", "Time_created" ])
+            sheet.append(["Compartment", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags", "Size_in_gbs", "Time_created" ])
         if resource_type == "File Systems":
-            sheet.append(["CompartmentID","Compartment", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags" , "Metered_bytes", "Time_created"])
+            sheet.append(["Compartment", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags" , "Metered_bytes", "Time_created"])
         if resource_type == "Autonomous Databases":
-            sheet.append(["CompartmentID","Compartment", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags" , "Ocpus", "Size_in_gbs", "Time_created"])    
+            sheet.append(["Compartment", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags" , "Ocpus", "Size_in_gbs", "Time_created"])    
         if resource_type == "Daily Costs":
-            sheet.append(["CompartmentID","Compartment", "ID", "Currency","Cost", "Starttime"])              
+            sheet.append(["Compartment", "ID", "Currency","Cost", "Starttime"])              
         
         for compartment, resource_data in resources.items():
             for item in resource_data.get(resource_type, []):           
                 if resource_type == "Compute Instances":
-                    sheet.append([compartment, 
+                    sheet.append([#compartment, 
                              item.get("compartment_name"), 
                              item.get("name"), 
                              item.get("id"),
@@ -422,7 +422,7 @@ try:
                             #  str(item.get(f"processor_description"))
                              ])
                 if resource_type == "Block Volumes":
-                    sheet.append([compartment, 
+                    sheet.append([#compartment, 
                                 item.get("compartment_name"), 
                                 item.get("name"), 
                                 item.get("id"),
@@ -434,7 +434,7 @@ try:
                                 str(item.get(f"time_created"))
                                 ])
                 if resource_type == "Block Volumes Bkp":
-                    sheet.append([compartment, 
+                    sheet.append([#compartment, 
                                 item.get("compartment_name"), 
                                 item.get("name"), 
                                 item.get("id"),
@@ -445,7 +445,7 @@ try:
                                 str(item.get(f"time_created"))
                                 ])
                 if resource_type == "Boot Volumes":
-                    sheet.append([compartment,
+                    sheet.append([#compartment,
                                 item.get("compartment_name"), 
                                 item.get("name"), 
                                 item.get("id"),
@@ -458,7 +458,7 @@ try:
                                 str(item.get(f"time_created"))
                                 ])
                 if resource_type == "Boot Volumes Bkp":
-                    sheet.append([compartment,
+                    sheet.append([#compartment,
                                 item.get("compartment_name"), 
                                 item.get("name"), 
                                 item.get("id"),
@@ -469,7 +469,7 @@ try:
                                 str(item.get(f"time_created"))
                                 ])
                 if resource_type == "File Systems":
-                    sheet.append([compartment,
+                    sheet.append([#compartment,
                                 item.get("compartment_name"), 
                                 item.get("name"), 
                                 item.get("id"),
@@ -480,7 +480,7 @@ try:
                                 str(item.get(f"time_created"))
                                 ])
                 if resource_type == "Autonomous Databases":
-                    sheet.append([compartment, 
+                    sheet.append([#compartment, 
                                 item.get("compartment_name"), 
                                 item.get("name"), 
                                 item.get("id"),
@@ -492,7 +492,7 @@ try:
                                 str(item.get(f"time_created"))
                                 ])
                 if resource_type == "Daily Costs":
-                    sheet.append([compartment, 
+                    sheet.append([#compartment, 
                                 item.get("compartment_name"), 
                                 item.get("id"),
                                 item.get("currency"),
