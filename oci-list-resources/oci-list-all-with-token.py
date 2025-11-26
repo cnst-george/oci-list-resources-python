@@ -46,6 +46,7 @@ object_storage_client = oci.object_storage.ObjectStorageClient({'region': region
 database_client = oci.database.DatabaseClient({'region': region_param}, signer=signer)
 usage_client = oci.usage_api.UsageapiClient({'region': region_param}, signer=signer)
 
+
 # Get Object Storage namespace
 namespace = object_storage_client.get_namespace().data
 
@@ -98,7 +99,7 @@ try:
             ).data
             instance_findings = []
             for vm in vm_list:
-             if region_param.upper != "AP-TOKYO-1": 
+             if region_param.upper() != "AP-TOKYO-1": 
                 resources[compartment.id].setdefault("Compute Instances", []).append({
                     "compartment_name": compartment.name,
                     "name": vm.display_name,
@@ -290,7 +291,7 @@ try:
             # ]
             # )
 
-        if compartment.id.startswith("ocid1.tenancy.oc1..") and region_param.upper == "EU-FRANKFURT-1": 
+        if compartment.id.startswith("ocid1.tenancy.oc1..") and region_param.upper.__eq__("EU-FRANKFURT-1"): 
             print(f"Discovering Costs in Root Compartment: {compartment.name}-{compartment.id}")
             print(f"Date from: {date_from_param} to Date to: {date_to_param}")
             print(f"Home region: {region_param}")
