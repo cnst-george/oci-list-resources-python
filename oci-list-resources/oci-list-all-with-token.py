@@ -82,7 +82,7 @@ try:
     # Discover resources in each compartment
     for compartment in cmp_list:
         if  compartment.id.startswith("ocid1.compartment.oc1.."):
-            print(f"Discovering resources in compartment: {compartment.name}-{compartment.id}")
+            print(f"Discovering resources in compartment: {compartment.name}")
             resources[compartment.id] = {}
             findings[compartment.id] = []
 
@@ -297,7 +297,7 @@ try:
             # )
 
         if compartment.id.startswith("ocid1.tenancy.oc1..") and region_param.upper() == "EU-FRANKFURT-1": 
-            print(f"Discovering Costs in Root Compartment: {compartment.name}-{compartment.id}")
+            print(f"Discovering Costs in Root Compartment: {compartment.name}")
             print(f"Date from: {date_from_param} to Date to: {date_to_param}")
             print(f"Home region: {region_param}")
             # print(f"Date from: {datefrom} to Date to: {dateto }")
