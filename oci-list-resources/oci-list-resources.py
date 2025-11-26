@@ -84,6 +84,7 @@ try:
             ).data
             instance_findings = []
             for vm in vm_list:
+             if region_param.upper != "AP-TOKYO-1": 
                 resources[compartment.id].setdefault("Compute Instances", []).append({
                     "compartment_name": compartment.name,
                     "name": vm.display_name,
@@ -119,7 +120,7 @@ try:
                     "defined_tags" : bv.defined_tags,
                     "freeform_tags" : bv.freeform_tags,
                     "size_in_gbs" : bv.size_in_gbs,
-                     "time_created" : str((f"{bv.time_created}"))
+                    "time_created" : str((f"{bv.time_created}"))
                 })
                 bv_findings.append(f"Block Volume '{bv.display_name}={bv.id}' is in state' {bv.lifecycle_state}")  
                 for bva in bv_attachments:
@@ -133,7 +134,7 @@ try:
                             "freeform_tags" : bv.freeform_tags,
                             "attached_to_instance" : bva.instance_id,
                             "size_in_gbs" : bv.size_in_gbs,
-                             "time_created" : str((f"{bv.time_created}"))
+                            "time_created" : str((f"{bv.time_created}"))
                         })
                         bv_findings.append(f"Block Volume '{bv.display_name}={bv.id}' is in state' {bva.lifecycle_state}' to instance' {bva.instance_id}")                         
             findings[compartment.id].extend(bv_findings)
@@ -153,7 +154,7 @@ try:
                     "defined_tags" : bv.defined_tags,
                     "freeform_tags" : bv.freeform_tags,
                     "size_in_gbs" : bv.size_in_gbs,
-                     "time_created" : str((f"{bv.time_created}"))
+                    "time_created" : str((f"{bv.time_created}"))
                 })
             findings[compartment.id].extend(bv_findings)
 
@@ -255,7 +256,7 @@ try:
                     "freeform_tags" : adb.freeform_tags,
                     "ocups": adb.compute_count,
                     "size_in_gbs" : adb.data_storage_size_in_gbs,
-                 "time_created" : str((f"{adb.time_created}"))
+                    "time_created" : str((f"{adb.time_created}"))
                 })
             findings[compartment.id].extend(adb_findings)
 
@@ -275,9 +276,10 @@ try:
             # ]
             # )
 
-        if compartment.id.startswith("ocid1.tenancy.oc1.."): 
+        if compartment.id.startswith("ocid1.tenancy.oc1..") and region_param.upper == "EU-FRANKFURT-1": 
             print(f"Discovering Costs in Root Compartment: {compartment.name}-{compartment.id}")
             print(f"Date from: {date_from_param} to Date to: {date_to_param}")
+            print(f"Home region: {region_param}")
             # print(f"Date from: {datefrom} to Date to: {dateto }")
             resources[compartment.id] = {}
             findings[compartment.id] = []
@@ -506,9 +508,11 @@ try:
     summary_data = {}
     for compartment, resource_types in resources.items():
         for resource_type, resource_list in resource_types.items():
+          if resource_types != "Daily Costs":  
             summary_data[resource_type] = summary_data.get(resource_type, 0) + len(resource_list)
 
     for resource_type, count in summary_data.items():
+      if resource_types != "Daily Costs": 
         visualization_sheet.append([resource_type, count])
 
     # Create Pie Chart
