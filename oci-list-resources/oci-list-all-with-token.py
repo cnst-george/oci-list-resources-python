@@ -82,7 +82,7 @@ try:
     
     # Discover resources in each compartment
     for compartment in cmp_list:
-        if compartment.lifecycle_state == "ACTIVE" and compartment.id.startswith("ocid1.compartment.oc1.."):
+        if compartment.id.startswith("ocid1.compartment.oc1.."):
             print(f"Discovering resources in compartment: {compartment.name}-{compartment.id}")
             resources[compartment.id] = {}
             findings[compartment.id] = []
