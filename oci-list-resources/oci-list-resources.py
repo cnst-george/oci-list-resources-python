@@ -91,10 +91,11 @@ try:
                     "state": vm.lifecycle_state,
                     "defined_tags" : vm.defined_tags,
                     "freeform_tags" : vm.freeform_tags,
-                    "shape" : vm.shape,
-                    "ocpus" : vm.shape_config.ocpus,
-                    "memory_in_gbs" : vm.shape_config.memory_in_gbs,
-                    "processor_description" : vm.shape_config.processor_description
+                    "time_created" : str((f"{vm.time_created}"))
+                    # "shape" : vm.shape,
+                    # "ocpus" : vm.shape_config.ocpus,
+                    # "memory_in_gbs" : vm.shape_config.memory_in_gbs,
+                    # "processor_description" : vm.shape_config.processor_description
                 })
                 instance_findings.append(f"Instance '{vm.display_name}' is using '{vm.shape}' with: ' {vm.shape_config.ocpus} OCPU and: ' {vm.shape_config.memory_in_gbs} GB")
             findings[compartment.id].extend(instance_findings)
@@ -117,7 +118,8 @@ try:
                     "state": bv.lifecycle_state,
                     "defined_tags" : bv.defined_tags,
                     "freeform_tags" : bv.freeform_tags,
-                    "size_in_gbs" : bv.size_in_gbs
+                    "size_in_gbs" : bv.size_in_gbs,
+                     "time_created" : str((f"{bv.time_created}"))
                 })
                 bv_findings.append(f"Block Volume '{bv.display_name}={bv.id}' is in state' {bv.lifecycle_state}")  
                 for bva in bv_attachments:
@@ -130,7 +132,8 @@ try:
                             "defined_tags" : bv.defined_tags,
                             "freeform_tags" : bv.freeform_tags,
                             "attached_to_instance" : bva.instance_id,
-                            "size_in_gbs" : bv.size_in_gbs
+                            "size_in_gbs" : bv.size_in_gbs,
+                             "time_created" : str((f"{bv.time_created}"))
                         })
                         bv_findings.append(f"Block Volume '{bv.display_name}={bv.id}' is in state' {bva.lifecycle_state}' to instance' {bva.instance_id}")                         
             findings[compartment.id].extend(bv_findings)
@@ -149,7 +152,8 @@ try:
                     "state": bv.lifecycle_state,
                     "defined_tags" : bv.defined_tags,
                     "freeform_tags" : bv.freeform_tags,
-                    "size_in_gbs" : bv.size_in_gbs
+                    "size_in_gbs" : bv.size_in_gbs,
+                     "time_created" : str((f"{bv.time_created}"))
                 })
             findings[compartment.id].extend(bv_findings)
 
@@ -174,7 +178,8 @@ try:
                     "state": bv.lifecycle_state,
                     "defined_tags" : bv.defined_tags,
                     "freeform_tags" : bv.freeform_tags,
-                    "size_in_gbs" : bv.size_in_gbs
+                    "size_in_gbs" : bv.size_in_gbs,
+                    "time_created" : str((f"{bv.time_created}"))
                 })  
                 bv_findings.append(f"Block Volume '{bv.display_name}={bv.id}' is in state' {bv.lifecycle_state}")           
                 for bva in bv_attachments:
@@ -188,7 +193,8 @@ try:
                             "freeform_tags" : bv.freeform_tags,
                             "attached_to_instance" : bva.instance_id,
                             "availability_domain" : ad.name,
-                            "size_in_gbs" : bv.size_in_gbs
+                            "size_in_gbs" : bv.size_in_gbs,
+                            "time_created" : str((f"{bv.time_created}"))
                         })
                         bv_findings.append(f"Boot Volume '{bv.display_name}={bv.id}' is ' {bva.lifecycle_state}' to instance' {bva.instance_id}")                         
             findings[compartment.id].extend(bv_findings)
@@ -207,7 +213,8 @@ try:
                     "state": bv.lifecycle_state,
                     "defined_tags" : bv.defined_tags,
                     "freeform_tags" : bv.freeform_tags,
-                    "size_in_gbs" : bv.size_in_gbs
+                    "size_in_gbs" : bv.size_in_gbs,
+                    "time_created" : str((f"{bv.time_created}"))
                 })
             findings[compartment.id].extend(bv_findings)
 
@@ -227,7 +234,8 @@ try:
                         "state": fss.lifecycle_state,
                         "defined_tags" : fss.defined_tags,
                         "freeform_tags" : fss.freeform_tags,
-                        "metered_bytes" : fss.metered_bytes # (1024 * 1024 * 1024)
+                        "metered_bytes" : fss.metered_bytes, # (1024 * 1024 * 1024)
+                        "time_created" : str((f"{fss.time_created}"))
                     })
                 findings[compartment.id].extend(fss_findings)
 
@@ -246,7 +254,8 @@ try:
                     "defined_tags" : adb.defined_tags,
                     "freeform_tags" : adb.freeform_tags,
                     "ocups": adb.compute_count,
-                    "size_in_gbs" : adb.data_storage_size_in_gbs
+                    "size_in_gbs" : adb.data_storage_size_in_gbs,
+                 "time_created" : str((f"{adb.time_created}"))
                 })
             findings[compartment.id].extend(adb_findings)
 
@@ -274,7 +283,7 @@ try:
             findings[compartment.id] = []
 
             # Enable debug logging
-            oci.base_client.is_http_log_enabled(True)
+            #oci.base_client.is_http_log_enabled(True)
 
             # usage_list = oci.pagination.list_call_get_all_results(
             costs_list = usage_client.request_summarized_usages(
@@ -378,19 +387,19 @@ try:
                         ]:
         sheet = workbook.create_sheet(title=resource_type)   
         if resource_type == "Compute Instances":
-            sheet.append(["CompartmentID","Compartment", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags", "Shape", "Ocpus", "Memory", "Processor_description" ])
+            sheet.append(["CompartmentID","Compartment", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags", "Time_created"])
         if resource_type == "Block Volumes":
-            sheet.append(["CompartmentID","Compartment", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags", "Attached_to", "Size_in_gbs"])
+            sheet.append(["CompartmentID","Compartment", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags", "Attached_to", "Size_in_gbs", "Time_created"])
         if resource_type == "Block Volumes Bkp":
-            sheet.append(["CompartmentID","Compartment", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags" , "Size_in_gbs"])
+            sheet.append(["CompartmentID","Compartment", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags" , "Size_in_gbs", "Time_created"])
         if resource_type == "Boot Volumes":
-            sheet.append(["CompartmentID","Compartment", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags", "Attached_to", "Availability_domain" , "Size_in_gbs"])
+            sheet.append(["CompartmentID","Compartment", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags", "Attached_to", "Availability_domain" , "Size_in_gbs", "Time_created"])
         if resource_type == "Boot Volumes Bkp":
-            sheet.append(["CompartmentID","Compartment", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags", "Size_in_gbs" ])
+            sheet.append(["CompartmentID","Compartment", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags", "Size_in_gbs", "Time_created" ])
         if resource_type == "File Systems":
-            sheet.append(["CompartmentID","Compartment", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags" , "metered_bytes"])
+            sheet.append(["CompartmentID","Compartment", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags" , "Metered_bytes", "Time_created"])
         if resource_type == "Autonomous Databases":
-            sheet.append(["CompartmentID","Compartment", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags" , "Ocpus", "Size_in_gbs"])    
+            sheet.append(["CompartmentID","Compartment", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags" , "Ocpus", "Size_in_gbs", "Time_created"])    
         if resource_type == "Daily Costs":
             sheet.append(["CompartmentID","Compartment", "ID", "Currency","Cost", "Starttime"])              
         
@@ -404,10 +413,11 @@ try:
                              item.get("state"),
                              str(item.get(f"defined_tags")),
                              str(item.get(f"freeform_tags")),
-                             str(item.get(f"shape")),
-                             item.get(f"ocpus"),
-                             item.get(f"memory_in_gbs"),
-                             str(item.get(f"processor_description"))
+                             str(item.get(f"time_created"))
+                            #  str(item.get(f"shape")),
+                            #  item.get(f"ocpus"),
+                            #  item.get(f"memory_in_gbs"),
+                            #  str(item.get(f"processor_description"))
                              ])
                 if resource_type == "Block Volumes":
                     sheet.append([compartment, 
@@ -418,7 +428,8 @@ try:
                                 str(item.get(f"defined_tags")),
                                 str(item.get(f"freeform_tags")),
                                 str(item.get(f"attached_to_instance")),
-                                item.get(f"size_in_gbs")
+                                item.get(f"size_in_gbs"),
+                                str(item.get(f"time_created"))
                                 ])
                 if resource_type == "Block Volumes Bkp":
                     sheet.append([compartment, 
@@ -428,7 +439,8 @@ try:
                                 item.get("state"),
                                 str(item.get(f"defined_tags")),
                                 str(item.get(f"freeform_tags")),
-                                item.get(f"size_in_gbs")
+                                item.get(f"size_in_gbs"),
+                                str(item.get(f"time_created"))
                                 ])
                 if resource_type == "Boot Volumes":
                     sheet.append([compartment,
@@ -440,7 +452,8 @@ try:
                                 str(item.get(f"freeform_tags")),
                                 str(item.get(f"attached_to_instance")),
                                 str(item.get(f"availability_domain")),
-                                item.get(f"size_in_gbs")
+                                item.get(f"size_in_gbs"),
+                                str(item.get(f"time_created"))
                                 ])
                 if resource_type == "Boot Volumes Bkp":
                     sheet.append([compartment,
@@ -450,7 +463,8 @@ try:
                                 item.get("state"),
                                 str(item.get(f"defined_tags")),
                                 str(item.get(f"freeform_tags")),
-                                item.get(f"size_in_gbs")
+                                item.get(f"size_in_gbs"),
+                                str(item.get(f"time_created"))
                                 ])
                 if resource_type == "File Systems":
                     sheet.append([compartment,
@@ -460,7 +474,8 @@ try:
                                 item.get("state"),
                                 str(item.get(f"defined_tags")),
                                 str(item.get(f"freeform_tags")),
-                                item.get(f"metered_bytes")
+                                item.get(f"metered_bytes"),
+                                str(item.get(f"time_created"))
                                 ])
                 if resource_type == "Autonomous Databases":
                     sheet.append([compartment, 
@@ -471,7 +486,8 @@ try:
                                 str(item.get(f"defined_tags")),
                                 str(item.get(f"freeform_tags")),
                                 item.get(f"compute_count"),
-                                item.get(f"size_in_gbs")
+                                item.get(f"size_in_gbs"),
+                                str(item.get(f"time_created"))
                                 ])
                 if resource_type == "Daily Costs":
                     sheet.append([compartment, 
