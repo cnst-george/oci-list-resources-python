@@ -78,28 +78,38 @@ try:
 #     print(f"Switching to region: {region_name}")
 
             # Compute Instances
-            vm_list = oci.pagination.list_call_get_all_results(
+            for ad in availability_domains:
+             vm_list = oci.pagination.list_call_get_all_results(
                 compute_client.list_instances,
                 compartment_id=compartment.id,
-            ).data
-            instance_findings = []
-            for vm in vm_list:
-             if region_param.upper() != "AP-TOKYO-1": 
-                resources[compartment.id].setdefault("Compute Instances", []).append({
-                    "compartment_name": compartment.name,
-                    "name": vm.display_name,
-                    "id": vm.id,
-                    "state": vm.lifecycle_state,
-                    "defined_tags" : vm.defined_tags,
-                    "freeform_tags" : vm.freeform_tags,
-                    "time_created" : str((f"{vm.time_created}"))
-                    # "shape" : vm.shape,
-                    # "ocpus" : vm.shape_config.ocpus,
-                    # "memory_in_gbs" : vm.shape_config.memory_in_gbs,
-                    # "processor_description" : vm.shape_config.processor_description
-                })
-                instance_findings.append(f"Instance '{vm.display_name}' is using '{vm.shape}' with: ' {vm.shape_config.ocpus} OCPU and: ' {vm.shape_config.memory_in_gbs} GB")
-            findings[compartment.id].extend(instance_findings)
+                availability_domain=ad.name
+             ).data
+             bv_attachments = oci.pagination.list_call_get_all_results(
+                compute_client.list_boot_volume_attachments,
+                compartment_id=compartment.id,
+                availability_domain=ad.name
+             ).data   
+             vm_findings = []        
+             for vm in vm_list:        
+                for bva in bv_attachments:
+                    if vm.id == bva.instance_id and region_param.upper() != "AP-TOKYO-1":
+                        resources[compartment.id].setdefault("Compute Instances", []).append({
+                            "compartment_name": compartment.name,
+                            "name": vm.display_name,
+                            "id": vm.id,
+                            "state": vm.lifecycle_state,
+                            "attached_to" : bva.boot_volume_id,
+                            "volume_state": bva.lifecycle_state,
+                            "availability_domain" : vm.availability_domain,
+                            "defined_tags" : vm.defined_tags,
+                            "freeform_tags" : vm.freeform_tags,
+                            "time_created" : str((f"{vm.time_created}"))
+                            # "shape" : vm.shape,
+                            # "ocpus" : vm.shape_config.ocpus,
+                            # "memory_in_gbs" : vm.shape_config.memory_in_gbs,
+                            # "processor_description" : vm.shape_config.processor_description
+                        })                   
+            findings[compartment.id].extend(vm_findings)
 
             # Block Volumes
             bv_list = oci.pagination.list_call_get_all_results(
@@ -122,7 +132,6 @@ try:
                     "size_in_gbs" : bv.size_in_gbs,
                     "time_created" : str((f"{bv.time_created}"))
                 })
-                bv_findings.append(f"Block Volume '{bv.display_name}={bv.id}' is in state' {bv.lifecycle_state}")  
                 for bva in bv_attachments:
                     if bv.id == bva.volume_id and bv.id:
                         resources[compartment.id].setdefault("Block Volumes", []).append({
@@ -135,8 +144,7 @@ try:
                             "attached_to_instance" : bva.instance_id,
                             "size_in_gbs" : bv.size_in_gbs,
                             "time_created" : str((f"{bv.time_created}"))
-                        })
-                        bv_findings.append(f"Block Volume '{bv.display_name}={bv.id}' is in state' {bva.lifecycle_state}' to instance' {bva.instance_id}")                         
+                        })                       
             findings[compartment.id].extend(bv_findings)
 
             # Block Volumes Bkp
@@ -181,8 +189,7 @@ try:
                     "freeform_tags" : bv.freeform_tags,
                     "size_in_gbs" : bv.size_in_gbs,
                     "time_created" : str((f"{bv.time_created}"))
-                })  
-                bv_findings.append(f"Block Volume '{bv.display_name}={bv.id}' is in state' {bv.lifecycle_state}")           
+                })          
                 for bva in bv_attachments:
                     if bv.id == bva.boot_volume_id:
                         resources[compartment.id].setdefault("Boot Volumes", []).append({
@@ -196,8 +203,7 @@ try:
                             "availability_domain" : ad.name,
                             "size_in_gbs" : bv.size_in_gbs,
                             "time_created" : str((f"{bv.time_created}"))
-                        })
-                        bv_findings.append(f"Boot Volume '{bv.display_name}={bv.id}' is ' {bva.lifecycle_state}' to instance' {bva.instance_id}")                         
+                        })                       
             findings[compartment.id].extend(bv_findings)
 
             # Boot Volumes Bkp
@@ -327,69 +333,67 @@ try:
     current_date = datetime.datetime.now().strftime("%Y-%m-%d")
    
     # Generate file name with dynamic titles
-    file_name = f"oci_resources_{region_param}_{namespace}_{current_date}..json"
+    file_name = f"oci_resources_{region_param}_{namespace}_{current_date}.json"
     
-    # Export data to JSON
-    with open(file_name, "w") as file:
-        json.dump({"resources": resources, "findings": findings}, file, indent=4)
+    # # Export data to JSON
+    # with open(file_name, "w") as file:
+    #     json.dump({"resources": resources, "findings": findings}, file, indent=4)
 
-    print(f"Resource discovery and validation completed. Results saved to: {file_name}")
+    # print(f"Resource discovery and validation completed. Results saved to: {file_name}")
     
-    # Export data to Excel
+    # # Export data to Excel
     workbook = Workbook()
-    summary_sheet = workbook.active
-    summary_sheet.title = "Findings Summary"
+    # summary_sheet = workbook.active
+    # summary_sheet.title = "Findings Summary"
 
-    # Add findings summary
-    summary_sheet.append(["Compartment", "Remarks"])
-    for compartment, issues in findings.items():
-        for issue in issues:
-            summary_sheet.append([compartment, issue])
+    # # Add findings summary
+    # summary_sheet.append(["Compartment", "Remarks"])
+    # for compartment, issues in findings.items():
+    #     for issue in issues:
+    #         summary_sheet.append([compartment, issue])
 
     # Style misconfigurations
-    for row in summary_sheet.iter_rows(min_row=2, max_row=summary_sheet.max_row, min_col=2, max_col=2):
-        for cell in row:
-            cell.fill = PatternFill(start_color="FFCCCC", end_color="FFCCCC", fill_type="solid")
-            cell.font = Font(bold=True)
+    # for row in summary_sheet.iter_rows(min_row=2, max_row=summary_sheet.max_row, min_col=2, max_col=2):
+    #     for cell in row:
+    #         cell.fill = PatternFill(start_color="FFCCCC", end_color="FFCCCC", fill_type="solid")
+    #         cell.font = Font(bold=True)
 
-    # Count findings by resource type for visualization
-    resource_issues_summary = {}
-    for compartment, issues in findings.items():
-        for issue in issues:
-            resource_type = issue.split(" ")[0]  # Extract resource type from the issue string
-            resource_issues_summary[resource_type] = resource_issues_summary.get(resource_type, 0) + 1
+    # # Count findings by resource type for visualization
+    # resource_issues_summary = {}
+    # for compartment, issues in findings.items():
+    #     for issue in issues:
+    #         resource_type = issue.split(" ")[0]  # Extract resource type from the issue string
+    #         resource_issues_summary[resource_type] = resource_issues_summary.get(resource_type, 0) + 1
 
-    # Add a summary table for findings by resource type
-    summary_start_row = summary_sheet.max_row + 2
-    summary_sheet.append(["Resource Type", "Number of Issues"])
-    for resource_type, count in resource_issues_summary.items():
-        summary_sheet.append([resource_type, count])
+    # # Add a summary table for findings by resource type
+    # summary_start_row = summary_sheet.max_row + 2
+    # summary_sheet.append(["Resource Type", "Number of Issues"])
+    # for resource_type, count in resource_issues_summary.items():
+    #     summary_sheet.append([resource_type, count])
 
     # Create a bar chart for findings summary
-    bar_chart = BarChart()
-    data = Reference(summary_sheet, min_col=2, min_row=summary_start_row + 1, max_row=summary_sheet.max_row)
-    categories = Reference(summary_sheet, min_col=1, min_row=summary_start_row + 1, max_row=summary_sheet.max_row)
-    bar_chart.add_data(data, titles_from_data=False)
-    bar_chart.set_categories(categories)
-    bar_chart.title = "Findings by Resource Type"
-    bar_chart.x_axis.title = "Resource Type"
-    bar_chart.y_axis.title = "Number of Issues"
-    summary_sheet.add_chart(bar_chart, f"E{summary_start_row}")
+    # bar_chart = BarChart()
+    # data = Reference(summary_sheet, min_col=2, min_row=summary_start_row + 1, max_row=summary_sheet.max_row)
+    # categories = Reference(summary_sheet, min_col=1, min_row=summary_start_row + 1, max_row=summary_sheet.max_row)
+    # bar_chart.add_data(data, titles_from_data=False)
+    # bar_chart.set_categories(categories)
+    # bar_chart.title = "Findings by Resource Type"
+    # bar_chart.x_axis.title = "Resource Type"
+    # bar_chart.y_axis.title = "Number of Issues"
+    # summary_sheet.add_chart(bar_chart, f"E{summary_start_row}")
 
     # Add data sheets for each resource type
-    for resource_type in [
-                        "Daily Costs",
+    for resource_type in ["Daily Costs",
                         "Compute Instances", 
                         "Block Volumes", 
                         "Block Volumes Bkp", 
                         "Boot Volumes",
                         "Boot Volumes Bkp",
                         "File Systems",
-                        "Autonomous Databases"
-                        ]:
+                        "Autonomous Databases"]:
         sheet = workbook.create_sheet(title=resource_type)   
         if resource_type == "Compute Instances":
-            sheet.append(["Compartment", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags", "Time_created"])
+            sheet.append(["Compartment", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags", "Attached_to", "BootVolume_state", "Availability_domain", "Time_created"])
         if resource_type == "Block Volumes":
             sheet.append(["Compartment", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags", "Attached_to", "Size_in_gbs", "Time_created"])
         if resource_type == "Block Volumes Bkp":
@@ -415,6 +419,9 @@ try:
                              item.get("state"),
                              str(item.get(f"defined_tags")),
                              str(item.get(f"freeform_tags")),
+                             str(item.get(f"attached_to")),
+                             str(item.get(f"volume_state")),
+                             str(item.get(f"availability_domain")),
                              str(item.get(f"time_created"))
                             #  str(item.get(f"shape")),
                             #  item.get(f"ocpus"),
@@ -508,11 +515,11 @@ try:
     summary_data = {}
     for compartment, resource_types in resources.items():
         for resource_type, resource_list in resource_types.items():
-          if resource_types != "Daily Costs":  
+          if resource_type != "Daily Costs":  
             summary_data[resource_type] = summary_data.get(resource_type, 0) + len(resource_list)
 
     for resource_type, count in summary_data.items():
-      if resource_types != "Daily Costs": 
+      if resource_type != "Daily Costs": 
         visualization_sheet.append([resource_type, count])
 
     # Create Pie Chart
