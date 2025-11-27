@@ -378,109 +378,109 @@ try:
                 })
             findings[compartment.id].extend(cost_findings)
     
-    # Build a set of all existing resource IDs from all Resource sheets
-    existing_resource_ids = set()
-    for resource_key, resource_data in resources.items():
-        for resource_type, resource_list in resource_data.items():
-            if resource_type != "Daily Costs":
-                for item in resource_list:
-                    if item.get("id"):
-                        existing_resource_ids.add(item.get("id"))
-    
-    print(f"\nTotal existing resources found: {len(existing_resource_ids)}")
-    
-    # Collect all unique cost-incurring resource IDs and aggregate their total cost
-    cost_resource_ids = {}
-    for resource_key, resource_data in resources.items():
-        for cost_item in resource_data.get("Daily Costs", []):
-            resource_id = cost_item.get("id")
-            if resource_id:
-                if resource_id not in cost_resource_ids:
-                    cost_resource_ids[resource_id] = {
-                        "total_cost": 0,
-                        "currency": cost_item.get("currency")
-                    }
-                cost_resource_ids[resource_id]["total_cost"] += cost_item.get("cost", 0) or 0
-    
-    print(f"Total cost-incurring resources: {len(cost_resource_ids)}")
-    
-    # Find resources that incurred costs but no longer exist
-    deleted_resource_ids = set(cost_resource_ids.keys()) - existing_resource_ids
-    # Filter out None and empty strings
-    deleted_resource_ids = {rid for rid in deleted_resource_ids if rid}
-    
-    print(f"Deleted/Not found resources with costs: {len(deleted_resource_ids)}")
-    
-    # Map OCID prefixes to resource types
-    ocid_to_resource_type = {
-        "ocid1.instance.": "Compute Instances",
-        "ocid1.volume.": "Block Volumes",
-        "ocid1.volumebackup.": "Block Volumes Bkp",
-        "ocid1.bootvolume.": "Boot Volumes",
-        "ocid1.bootvolumebackup.": "Boot Volumes Bkp",
-        "ocid1.filesystem.": "File Systems",
-        "ocid1.autonomousdatabase.": "Autonomous Databases",
-    }
-    
-    # Add deleted resources to appropriate Resource sheets
-    deleted_resources_key = "DELETED_RESOURCES"
-    resources[deleted_resources_key] = {}
-    
-    for resource_id in deleted_resource_ids:
-        # Determine resource type from OCID
-        resource_type = "Unknown"
-        for ocid_prefix, rtype in ocid_to_resource_type.items():
-            if resource_id and resource_id.startswith(ocid_prefix):
-                resource_type = rtype
-                break
+        # Build a set of all existing resource IDs from all Resource sheets
+        existing_resource_ids = set()
+        for resource_key, resource_data in resources.items():
+            for resource_type, resource_list in resource_data.items():
+                if resource_type != "Daily Costs":
+                    for item in resource_list:
+                        if item.get("id"):
+                            existing_resource_ids.add(item.get("id"))
         
-        # Extract region from OCID if possible (OCIDs contain region info)
-        region_from_ocid = "unknown"
-        if resource_id:
-            # OCID format: ocid1.<resource_type>.<realm>.<region>.<unique_id>
-            parts = resource_id.split(".")
-            if len(parts) >= 4:
-                region_from_ocid = parts[3] if parts[3] else "unknown"
+        print(f"\nTotal existing resources found: {len(existing_resource_ids)}")
         
-        total_cost = cost_resource_ids.get(resource_id, {}).get("total_cost", 0)
-        currency = cost_resource_ids.get(resource_id, {}).get("currency", "")
+        # Collect all unique cost-incurring resource IDs and aggregate their total cost
+        cost_resource_ids = {}
+        for resource_key, resource_data in resources.items():
+            for cost_item in resource_data.get("Daily Costs", []):
+                resource_id = cost_item.get("id")
+                if resource_id:
+                    if resource_id not in cost_resource_ids:
+                        cost_resource_ids[resource_id] = {
+                            "total_cost": 0,
+                            "currency": cost_item.get("currency")
+                        }
+                    cost_resource_ids[resource_id]["total_cost"] += cost_item.get("cost", 0) or 0
         
-        # Create entry for deleted resource
-        deleted_entry = {
-            "compartment_name": "DELETED/NOT_FOUND",
-            "region": region_from_ocid,
-            "name": f"[DELETED] {resource_id}",
-            "id": resource_id,
-            "state": "DELETED",
-            "defined_tags": {},
-            "freeform_tags": {},
-            "time_created": "N/A",
-            "total_cost_in_period": f"{total_cost:.4f}"
+        print(f"Total cost-incurring resources: {len(cost_resource_ids)}")
+        
+        # Find resources that incurred costs but no longer exist
+        deleted_resource_ids = set(cost_resource_ids.keys()) - existing_resource_ids
+        # Filter out None and empty strings
+        deleted_resource_ids = {rid for rid in deleted_resource_ids if rid}
+        
+        print(f"Deleted/Not found resources with costs: {len(deleted_resource_ids)}")
+        
+        # Map OCID prefixes to resource types
+        ocid_to_resource_type = {
+            "ocid1.instance.": "Compute Instances",
+            "ocid1.volume.": "Block Volumes",
+            "ocid1.volumebackup.": "Block Volumes Bkp",
+            "ocid1.bootvolume.": "Boot Volumes",
+            "ocid1.bootvolumebackup.": "Boot Volumes Bkp",
+            "ocid1.filesystem.": "File Systems",
+            "ocid1.autonomousdatabase.": "Autonomous Databases",
         }
         
-        # Add type-specific fields
-        if resource_type in ["Block Volumes", "Block Volumes Bkp", "Boot Volumes", "Boot Volumes Bkp"]:
-            deleted_entry["size_in_gbs"] = "N/A"
-        if resource_type in ["Block Volumes Bkp"]:
-            deleted_entry["attached_to"] = "N/A"
-        if resource_type in ["Boot Volumes"]:
-            deleted_entry["attached_to_instance"] = "N/A"
-            deleted_entry["availability_domain"] = "N/A"
-        if resource_type == "Compute Instances":
-            deleted_entry["attached_to"] = "N/A"
-            deleted_entry["volume_state"] = "N/A"
-            deleted_entry["availability_domain"] = "N/A"
-        if resource_type == "File Systems":
-            deleted_entry["metered_bytes"] = "N/A"
-        if resource_type == "Autonomous Databases":
-            deleted_entry["ocups"] = "N/A"
-            deleted_entry["size_in_gbs"] = "N/A"
+        # Add deleted resources to appropriate Resource sheets
+        deleted_resources_key = "DELETED_RESOURCES"
+        resources[deleted_resources_key] = {}
         
-        resources[deleted_resources_key].setdefault(resource_type, []).append(deleted_entry)
-    
-    # Count deleted resources by type
-    for rtype, rlist in resources.get(deleted_resources_key, {}).items():
-        print(f"  - {rtype}: {len(rlist)} deleted resources with costs")
+        for resource_id in deleted_resource_ids:
+            # Determine resource type from OCID
+            resource_type = "Unknown"
+            for ocid_prefix, rtype in ocid_to_resource_type.items():
+                if resource_id and resource_id.startswith(ocid_prefix):
+                    resource_type = rtype
+                    break
+            
+            # Extract region from OCID if possible (OCIDs contain region info)
+            region_from_ocid = "unknown"
+            if resource_id:
+                # OCID format: ocid1.<resource_type>.<realm>.<region>.<unique_id>
+                parts = resource_id.split(".")
+                if len(parts) >= 4:
+                    region_from_ocid = parts[3] if parts[3] else "unknown"
+            
+            total_cost = cost_resource_ids.get(resource_id, {}).get("total_cost", 0)
+            currency = cost_resource_ids.get(resource_id, {}).get("currency", "")
+            
+            # Create entry for deleted resource
+            deleted_entry = {
+                "compartment_name": "DELETED/NOT_FOUND",
+                "region": region_from_ocid,
+                "name": f"[DELETED] {resource_id}",
+                "id": resource_id,
+                "state": "DELETED",
+                "defined_tags": {},
+                "freeform_tags": {},
+                "time_created": "N/A",
+                "total_cost_in_period": f"{total_cost:.4f}"
+            }
+            
+            # Add type-specific fields
+            if resource_type in ["Block Volumes", "Block Volumes Bkp", "Boot Volumes", "Boot Volumes Bkp"]:
+                deleted_entry["size_in_gbs"] = "N/A"
+            if resource_type in ["Block Volumes Bkp"]:
+                deleted_entry["attached_to"] = "N/A"
+            if resource_type in ["Boot Volumes"]:
+                deleted_entry["attached_to_instance"] = "N/A"
+                deleted_entry["availability_domain"] = "N/A"
+            if resource_type == "Compute Instances":
+                deleted_entry["attached_to"] = "N/A"
+                deleted_entry["volume_state"] = "N/A"
+                deleted_entry["availability_domain"] = "N/A"
+            if resource_type == "File Systems":
+                deleted_entry["metered_bytes"] = "N/A"
+            if resource_type == "Autonomous Databases":
+                deleted_entry["ocups"] = "N/A"
+                deleted_entry["size_in_gbs"] = "N/A"
+            
+            resources[deleted_resources_key].setdefault(resource_type, []).append(deleted_entry)
+        
+        # Count deleted resources by type
+        for rtype, rlist in resources.get(deleted_resources_key, {}).items():
+            print(f"  - {rtype}: {len(rlist)} deleted resources with costs")
         
     # Get current date for the file name
     current_date = datetime.datetime.now().strftime("%Y-%m-%d")
