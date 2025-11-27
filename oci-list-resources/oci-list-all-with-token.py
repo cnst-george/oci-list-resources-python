@@ -718,7 +718,9 @@ try:
     visualization_sheet.add_chart(bar_chart, "D20")
 
     # Generate file name with dynamic titles
-    file_name = f"oci_resources_all_regions_{namespace}_{current_date}_token.xlsx"
+    # file_name = f"oci_resources_all_regions_{namespace}_{current_date}.xlsx"
+    file_name = f"oci_resources__{region_param}_{namespace}_{current_date}.xlsx"
+    
     
     # Save the Excel workbook
     workbook.save(file_name)
