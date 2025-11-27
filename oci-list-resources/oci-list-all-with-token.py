@@ -30,8 +30,9 @@ signer = oci.auth.signers.SecurityTokenSigner(token, private_key)
 
 # Get Home Region
 homeRegion = configAPI["region"] 
-date_from_param = sys.argv[1] if len(sys.argv) > 2 else datetime.date.today().replace(day=1) # Get the first day of the current month
-date_to_param = sys.argv[2] if len(sys.argv) > 3 else datetime.date.today() # Get the current day of the current month
+region_param = sys.argv[1] if len(sys.argv) > 1 else homeRegion
+date_from_param = sys.argv[2] if len(sys.argv) > 2 else datetime.date.today().replace(day=1) # Get the first day of the current month
+date_to_param = sys.argv[3] if len(sys.argv) > 3 else datetime.date.today() # Get the current day of the current month
 
 # Initialize OCI client for Identity in home region
 identity_client = oci.identity.IdentityClient({'region': homeRegion}, signer=signer)
@@ -46,6 +47,7 @@ namespace = object_storage_client.get_namespace().data
 
 # Initialize Usage API client for home region only (costs are only available from home region)
 usage_client = oci.usage_api.UsageapiClient({'region': homeRegion}, signer=signer)
+# usage_client = oci.usage_api.UsageapiClient({'region': region_param}, signer=signer)
 
 # Get tenancy ID
 tenancy_ocid = configAPI["tenancy"]
@@ -77,6 +79,7 @@ try:
     # Iterate over each subscribed region
     for region_subscription in region_subscriptions:
     #  if region_subscription.region_name.upper() != "AP-TOKYO-1":
+     if region_subscription.region_name.upper() == region_param.upper():
         current_region = region_subscription.region_name
         print(f"\n{'='*60}")
         print(f"Switching to region: {current_region}")
