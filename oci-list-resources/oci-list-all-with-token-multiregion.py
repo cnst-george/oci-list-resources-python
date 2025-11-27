@@ -16,11 +16,11 @@ from openpyxl.chart import PieChart, BarChart, Reference
 # Step.3 (optional) Refresh Token:
 #        oci session refresh --profile 'DEFAULT'
 # Step.4 Run in multiple regions:
-#        python oci-list-all-with-token.py <date_from> <date_to>
+#        python oci-list-all-with-token-multiregion.py <date_from> <date_to>
 # Example:
-#        python oci-list-all-with-token.py 2025-10-01T00:00:00Z 2025-11-25T00:00:00Z
+#        python oci-list-all-with-token-multiregion.py 2025-10-01T00:00:00Z 2025-11-25T00:00:00Z
 
-configAPI = oci.config.from_file(profile_name='DEFAULT8')
+configAPI = oci.config.from_file(profile_name='DEFAULT')
 token_file = configAPI['security_token_file']
 token = None
 with open(token_file, 'r') as f:
@@ -715,7 +715,7 @@ try:
     visualization_sheet.add_chart(bar_chart, "D20")
 
     # Generate file name with dynamic titles
-    file_name = f"oci_resources_all_regions_{namespace}_{current_date}_token.xlsx"
+    file_name = f"oci_resources_all_regions_{namespace}_{current_date}.xlsx"
     
     # Save the Excel workbook
     workbook.save(file_name)
