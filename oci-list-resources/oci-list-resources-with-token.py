@@ -4,6 +4,7 @@ import json
 import pandas as pd
 import datetime
 import logging
+import os
 from openpyxl import Workbook
 from openpyxl.styles import PatternFill, Font
 from openpyxl.chart import PieChart, BarChart, Reference
@@ -58,12 +59,114 @@ print(f"Using Tenancy Name: {tenancy_name}")
 resources = {}
 findings = {}
 globalresources = {}
+cost_usage_reports = []  # Store cost and usage report metadata
 
 # Create the from and to dates for the usage query - using the previous calendar month
 dateto = datetime.date.today().replace(day=1) # Get the first day of the current month
 month, year = (dateto.month-1, dateto.year) if dateto.month != 1 else (12, dateto.year-1)
 datefrom = dateto.replace(day=1, month=month, year=year) # Get the first day of the previous month
 scipt_start_time = datetime.datetime.now()
+
+# Cost and Usage Reports bucket name (standard OCI bucket for cost reports)
+cost_reports_bucket = f"bling_{tenancy_ocid}"
+usage_reports_prefix = "reports/usage-csv"
+cost_reports_prefix = "reports/cost-csv"
+
+# Create directory for downloaded reports
+reports_download_dir = f"oci_reports_{datetime.datetime.now().strftime('%Y-%m-%d')}"
+os.makedirs(reports_download_dir, exist_ok=True)
+
+print(f"\n{'='*60}")
+print(f"Downloading Cost and Usage Reports")
+print(f"{'='*60}")
+
+try:
+    # List and download usage reports
+    print(f"Listing usage reports from bucket: {cost_reports_bucket}")
+    try:
+        usage_objects = oci.pagination.list_call_get_all_results(
+            object_storage_client.list_objects,
+            namespace_name=namespace,
+            bucket_name=cost_reports_bucket,
+            prefix=usage_reports_prefix
+        ).data.objects
+        
+        print(f"  Found {len(usage_objects)} usage report files")
+        for obj in usage_objects:
+            cost_usage_reports.append({
+                "report_type": "Usage",
+                "name": obj.name,
+                "size_bytes": obj.size,
+                "time_created": str(obj.time_created) if obj.time_created else "N/A",
+                "time_modified": str(obj.time_modified) if obj.time_modified else "N/A",
+                "etag": obj.etag
+            })
+            
+            # Download the report file
+            # try:
+            #     report_response = object_storage_client.get_object(
+            #         namespace_name=namespace,
+            #         bucket_name=cost_reports_bucket,
+            #         object_name=obj.name
+            #     )
+            #     # Save to local file
+            #     local_filename = os.path.join(reports_download_dir, obj.name.replace("/", "_"))
+            #     with open(local_filename, 'wb') as f:
+            #         for chunk in report_response.data.raw.stream(1024 * 1024, decode_content=False):
+            #             f.write(chunk)
+            #     print(f"    Downloaded: {obj.name}")
+            # except oci.exceptions.ServiceError as download_error:
+            #     print(f"    Warning: Could not download {obj.name}: {download_error.message}")
+                
+    except oci.exceptions.ServiceError as e:
+        print(f"  Warning: Could not list usage reports: {e.message}")
+
+    # List and download cost reports
+    print(f"Listing cost reports from bucket: {cost_reports_bucket}")
+    try:
+        cost_objects = oci.pagination.list_call_get_all_results(
+            object_storage_client.list_objects,
+            namespace_name=namespace,
+            bucket_name=cost_reports_bucket,
+            prefix=cost_reports_prefix
+        ).data.objects
+        
+        print(f"  Found {len(cost_objects)} cost report files")
+        for obj in cost_objects:
+            cost_usage_reports.append({
+                "report_type": "Cost",
+                "name": obj.name,
+                "size_bytes": obj.size,
+                "time_created": str(obj.time_created) if obj.time_created else "N/A",
+                "time_modified": str(obj.time_modified) if obj.time_modified else "N/A",
+                "etag": obj.etag
+            })
+            
+            # Download the report file
+            # try:
+            #     report_response = object_storage_client.get_object(
+            #         namespace_name=namespace,
+            #         bucket_name=cost_reports_bucket,
+            #         object_name=obj.name
+            #     )
+            #     # Save to local file
+            #     local_filename = os.path.join(reports_download_dir, obj.name.replace("/", "_"))
+            #     with open(local_filename, 'wb') as f:
+            #         for chunk in report_response.data.raw.stream(1024 * 1024, decode_content=False):
+            #             f.write(chunk)
+            #     print(f"    Downloaded: {obj.name}")
+            # except oci.exceptions.ServiceError as download_error:
+            #     print(f"    Warning: Could not download {obj.name}: {download_error.message}")
+                
+    except oci.exceptions.ServiceError as e:
+        print(f"  Warning: Could not list cost reports: {e.message}")
+
+    print(f"Total reports found: {len(cost_usage_reports)}")
+
+except oci.exceptions.ServiceError as e:
+    print(f"Warning: Could not access cost/usage reports bucket: {e.message}")
+except Exception as e:
+    print(f"Warning: Error accessing cost/usage reports: {e}")
 
 try:
     # Fetch all compartments
@@ -799,6 +902,25 @@ try:
     
     print(f"Total resources in 'All Resources' sheet: {len(all_search_resources)}")
 
+    # Add "Cost Usage Reports" sheet
+    reports_sheet = workbook.create_sheet(title="Cost Usage Reports")
+    reports_sheet.append(["Report_Type", "Report_Name", "Size_Bytes", "Time_Created", "Time_Modified", "ETag"])
+    
+    # Sort reports by type and then by time_created
+    cost_usage_reports.sort(key=lambda x: (x.get("report_type", ""), x.get("time_created", "")))
+    
+    for report in cost_usage_reports:
+        reports_sheet.append([
+            report.get("report_type"),
+            report.get("name"),
+            report.get("size_bytes"),
+            report.get("time_created"),
+            report.get("time_modified"),
+            report.get("etag")
+        ])
+    
+    print(f"Total reports in 'Cost Usage Reports' sheet: {len(cost_usage_reports)}")
+
     # Add visualization sheet
     visualization_sheet = workbook.create_sheet(title="Visualizations")
     visualization_sheet.append(["Resource Type", "Count"])
@@ -807,11 +929,11 @@ try:
     summary_data = {}
     for compartment, resource_types in resources.items():
         for resource_type, resource_list in resource_types.items():
-          if resource_type != "Daily Costs" and resource_type != "All Resources":  
+          if resource_type != "Daily Costs" and resource_type != "All Resources" and resource_type != "Cost Usage Reports":  
             summary_data[resource_type] = summary_data.get(resource_type, 0) + len(resource_list)
 
     for resource_type, count in summary_data.items():
-      if resource_type != "Daily Costs" and resource_type != "All Resources": 
+      if resource_type != "Daily Costs" and resource_type != "All Resources" and resource_type != "Cost Usage Reports": 
         visualization_sheet.append([resource_type, count])
 
     # Create Pie Chart
