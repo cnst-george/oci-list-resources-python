@@ -16,9 +16,9 @@ from openpyxl.chart import PieChart, BarChart, Reference
 # Step.3 (optional) Refresh Token:
 #        oci session refresh --profile 'DEFAULT'
 # Step.4 Run in multiple regions:
-#        python oci-list-all-with-token-multiregion.py <date_from> <date_to>
+#        python oci-list-all-with-token.py <date_from> <date_to>
 # Example:
-#        python oci-list-all-with-token-multiregion.py 2025-10-01T00:00:00Z 2025-11-25T00:00:00Z
+#        python oci-list-all-with-token.py 2025-10-01T00:00:00Z 2025-11-25T00:00:00Z
 
 configAPI = oci.config.from_file(profile_name='DEFAULT')
 token_file = configAPI['security_token_file']
@@ -30,8 +30,9 @@ signer = oci.auth.signers.SecurityTokenSigner(token, private_key)
 
 # Get Home Region
 homeRegion = configAPI["region"] 
-date_from_param = sys.argv[1] if len(sys.argv) > 2 else datetime.date.today().replace(day=1) # Get the first day of the current month
-date_to_param = sys.argv[2] if len(sys.argv) > 3 else datetime.date.today() # Get the current day of the current month
+region_param = sys.argv[1] if len(sys.argv) > 1 else homeRegion
+date_from_param = sys.argv[2] if len(sys.argv) > 2 else datetime.date.today().replace(day=1) # Get the first day of the current month
+date_to_param = sys.argv[3] if len(sys.argv) > 3 else datetime.date.today() # Get the current day of the current month
 
 # Initialize OCI client for Identity in home region
 identity_client = oci.identity.IdentityClient({'region': homeRegion}, signer=signer)
@@ -46,6 +47,7 @@ namespace = object_storage_client.get_namespace().data
 
 # Initialize Usage API client for home region only (costs are only available from home region)
 usage_client = oci.usage_api.UsageapiClient({'region': homeRegion}, signer=signer)
+# usage_client = oci.usage_api.UsageapiClient({'region': region_param}, signer=signer)
 
 # Get tenancy ID
 tenancy_ocid = configAPI["tenancy"]
@@ -77,6 +79,7 @@ try:
     # Iterate over each subscribed region
     for region_subscription in region_subscriptions:
     #  if region_subscription.region_name.upper() != "AP-TOKYO-1":
+     if region_subscription.region_name.upper() == region_param.upper():
         current_region = region_subscription.region_name
         print(f"\n{'='*60}")
         print(f"Switching to region: {current_region}")
@@ -86,7 +89,7 @@ try:
         # Using the base config's signer but overriding the region
         region_identity_client = oci.identity.IdentityClient({'region': current_region}, signer=signer)
         region_identity_client.base_client.set_region(current_region)
-        
+
         virtual_network_client = oci.core.VirtualNetworkClient({'region': current_region}, signer=signer)
         virtual_network_client.base_client.set_region(current_region)
         
@@ -104,6 +107,10 @@ try:
         
         load_balancer_client = oci.load_balancer.LoadBalancerClient({'region': current_region}, signer=signer)
         load_balancer_client.base_client.set_region(current_region)
+        
+        # Initialize ResourceSearchClient for this region
+        resource_search_client = oci.resource_search.ResourceSearchClient({'region': current_region}, signer=signer)
+        resource_search_client.base_client.set_region(current_region)
         # Note: usage_client is NOT region-specific - it uses home region client defined above
         
         # Fetch availability domains for this specific region using region-specific identity client
@@ -149,43 +156,46 @@ try:
                                     "time_created" : str((f"{vm.time_created}"))
                                 })                   
                 findings[resource_key].extend(vm_findings)
-
+                
                 # Block Volumes
-                bv_list = oci.pagination.list_call_get_all_results(
-                    block_storage_client.list_volumes,
-                    compartment_id=compartment.id
-                ).data
-                bv_attachments = oci.pagination.list_call_get_all_results(
-                    compute_client.list_volume_attachments,
-                    compartment_id=compartment.id
-                ).data 
-                bv_findings = []           
-                for bv in bv_list:
-                    resources[resource_key].setdefault("Block Volumes", []).append({
-                        "compartment_name": compartment.name,
-                        "region": current_region,
-                        "name": bv.display_name,
-                        "id": bv.id,
-                        "state": bv.lifecycle_state,
-                        "defined_tags" : bv.defined_tags,
-                        "freeform_tags" : bv.freeform_tags,
-                        "size_in_gbs" : bv.size_in_gbs,
-                        "time_created" : str((f"{bv.time_created}"))
-                    })
-                    for bva in bv_attachments:
-                        if bv.id == bva.volume_id:
-                            resources[resource_key].setdefault("Block Volumes", []).append({
-                                "compartment_name": compartment.name,
-                                "region": current_region,
-                                "name": bv.display_name,
-                                "id": bv.id,
-                                "state": bva.lifecycle_state,
-                                "defined_tags" : bv.defined_tags,
-                                "freeform_tags" : bv.freeform_tags,
-                                "attached_to_instance" : bva.instance_id,
-                                "size_in_gbs" : bv.size_in_gbs,
-                                "time_created" : str((f"{bv.time_created}"))
-                            })                       
+                for ad in region_ads:
+                    bv_list = oci.pagination.list_call_get_all_results(
+                        block_storage_client.list_volumes,
+                        compartment_id=compartment.id,
+                        availability_domain=ad.name
+                    ).data
+                    bv_attachments = oci.pagination.list_call_get_all_results(
+                        compute_client.list_volume_attachments,
+                        compartment_id=compartment.id,
+                        availability_domain=ad.name
+                    ).data 
+                    bv_findings = []           
+                    for bv in bv_list:
+                        resources[resource_key].setdefault("Block Volumes", []).append({
+                            "compartment_name": compartment.name,
+                            "region": current_region,
+                            "name": bv.display_name,
+                            "id": bv.id,
+                            "state": bv.lifecycle_state,
+                            "defined_tags" : bv.defined_tags,
+                            "freeform_tags" : bv.freeform_tags,
+                            "size_in_gbs" : bv.size_in_gbs,
+                            "time_created" : str((f"{bv.time_created}"))
+                        })
+                        for bva in bv_attachments:
+                            if bv.id == bva.volume_id:
+                                resources[resource_key].setdefault("Block Volumes", []).append({
+                                    "compartment_name": compartment.name,
+                                    "region": current_region,
+                                    "name": bv.display_name,
+                                    "id": bv.id,
+                                    "state": bva.lifecycle_state,
+                                    "defined_tags" : bv.defined_tags,
+                                    "freeform_tags" : bv.freeform_tags,
+                                    "attached_to_instance" : bva.instance_id,
+                                    "size_in_gbs" : bv.size_in_gbs,
+                                    "time_created" : str((f"{bv.time_created}"))
+                                })                       
                 findings[resource_key].extend(bv_findings)
 
                 # Block Volumes Bkp
@@ -314,6 +324,37 @@ try:
                     })
                 findings[resource_key].extend(adb_findings)
 
+                # All Resources using ResourceSearchClient
+                print(f"  Discovering all resources using Resource Search API in compartment: {compartment.name}")
+                try:
+                    # Query all resources in the compartment using a single query
+                    structured_search = oci.resource_search.models.StructuredSearchDetails(
+                        query=f"query all resources where compartmentId = '{compartment.id}'",
+                        type='Structured',
+                        matching_context_type=oci.resource_search.models.SearchDetails.MATCHING_CONTEXT_TYPE_NONE
+                    )
+                    search_results = oci.pagination.list_call_get_all_results(
+                        resource_search_client.search_resources,
+                        search_details=structured_search
+                    ).data
+                    
+                    if len(search_results) > 0:
+                        for item in search_results:
+                            resources[resource_key].setdefault("All Resources", []).append({
+                                "compartment_name": compartment.name,
+                                "region": current_region,
+                                "resource_type": item.resource_type,
+                                "name": item.display_name,
+                                "id": item.identifier,
+                                "state": item.lifecycle_state,
+                                "defined_tags": item.defined_tags,
+                                "freeform_tags": item.freeform_tags,
+                                "time_created": str(item.time_created) if item.time_created else "N/A"
+                            })
+                        print(f"    Found {len(search_results)} resources")
+                except oci.exceptions.ServiceError as e:
+                    print(f"  Warning: Resource Search API error: {e.message}")
+
             # Usage Costs - Compute
 
             # filter_details = oci.usage_api.models.Filter(
@@ -366,8 +407,15 @@ try:
             cost_findings = []
             for cost in costs_list.data.items:
                 start_time = cost.time_usage_started.strftime("%Y-%m-%d")
+                # Extract region from resource OCID
+                region_from_ocid = "unknown"
+                if cost.resource_id:
+                    parts = cost.resource_id.split(".")
+                    if len(parts) >= 4:
+                        region_from_ocid = parts[3] if parts[3] else "unknown"
                 resources[compartment.id].setdefault("Daily Costs", []).append({
                     "compartment_name": compartment.name,
+                    "region": region_from_ocid,
                     "id": cost.resource_id,
                     "currency": cost.currency,
                     "cost": cost.computed_amount,
@@ -375,109 +423,125 @@ try:
                 })
             findings[compartment.id].extend(cost_findings)
     
-    # Build a set of all existing resource IDs from all Resource sheets
-    existing_resource_ids = set()
-    for resource_key, resource_data in resources.items():
-        for resource_type, resource_list in resource_data.items():
-            if resource_type != "Daily Costs":
-                for item in resource_list:
-                    if item.get("id"):
-                        existing_resource_ids.add(item.get("id"))
-    
-    print(f"\nTotal existing resources found: {len(existing_resource_ids)}")
-    
-    # Collect all unique cost-incurring resource IDs and aggregate their total cost
-    cost_resource_ids = {}
-    for resource_key, resource_data in resources.items():
-        for cost_item in resource_data.get("Daily Costs", []):
-            resource_id = cost_item.get("id")
-            if resource_id:
-                if resource_id not in cost_resource_ids:
-                    cost_resource_ids[resource_id] = {
-                        "total_cost": 0,
-                        "currency": cost_item.get("currency")
-                    }
-                cost_resource_ids[resource_id]["total_cost"] += cost_item.get("cost", 0) or 0
-    
-    print(f"Total cost-incurring resources: {len(cost_resource_ids)}")
-    
-    # Find resources that incurred costs but no longer exist
-    deleted_resource_ids = set(cost_resource_ids.keys()) - existing_resource_ids
-    # Filter out None and empty strings
-    deleted_resource_ids = {rid for rid in deleted_resource_ids if rid}
-    
-    print(f"Deleted/Not found resources with costs: {len(deleted_resource_ids)}")
-    
-    # Map OCID prefixes to resource types
-    ocid_to_resource_type = {
-        "ocid1.instance.": "Compute Instances",
-        "ocid1.volume.": "Block Volumes",
-        "ocid1.volumebackup.": "Block Volumes Bkp",
-        "ocid1.bootvolume.": "Boot Volumes",
-        "ocid1.bootvolumebackup.": "Boot Volumes Bkp",
-        "ocid1.filesystem.": "File Systems",
-        "ocid1.autonomousdatabase.": "Autonomous Databases",
-    }
-    
-    # Add deleted resources to appropriate Resource sheets
-    deleted_resources_key = "DELETED_RESOURCES"
-    resources[deleted_resources_key] = {}
-    
-    for resource_id in deleted_resource_ids:
-        # Determine resource type from OCID
-        resource_type = "Unknown"
-        for ocid_prefix, rtype in ocid_to_resource_type.items():
-            if resource_id and resource_id.startswith(ocid_prefix):
-                resource_type = rtype
-                break
+        # Build a set of all existing resource IDs from all Resource sheets
+        existing_resource_ids = set()
+        for resource_key, resource_data in resources.items():
+            for resource_type, resource_list in resource_data.items():
+                if resource_type != "Daily Costs":
+                    for item in resource_list:
+                        if item.get("id"):
+                            existing_resource_ids.add(item.get("id"))
         
-        # Extract region from OCID if possible (OCIDs contain region info)
-        region_from_ocid = "unknown"
-        if resource_id:
-            # OCID format: ocid1.<resource_type>.<realm>.<region>.<unique_id>
-            parts = resource_id.split(".")
-            if len(parts) >= 4:
-                region_from_ocid = parts[3] if parts[3] else "unknown"
+        print(f"\nTotal existing resources found: {len(existing_resource_ids)}")
         
-        total_cost = cost_resource_ids.get(resource_id, {}).get("total_cost", 0)
-        currency = cost_resource_ids.get(resource_id, {}).get("currency", "")
+        # Collect all unique cost-incurring resource IDs and aggregate their total cost
+        # Extract region from OCID (format: ocid1.<resource_type>.<realm>.<region>.<unique_id>)
+        cost_resource_ids = {}
+        for resource_key, resource_data in resources.items():
+            for cost_item in resource_data.get("Daily Costs", []):
+                resource_id = cost_item.get("id")
+                if resource_id:
+                    # Extract region from OCID
+                    region_from_ocid = "unknown"
+                    parts = resource_id.split(".")
+                    if len(parts) >= 4:
+                        region_from_ocid = parts[3] if parts[3] else "unknown"
+                    
+                    if resource_id not in cost_resource_ids:
+                        cost_resource_ids[resource_id] = {
+                            "total_cost": 0,
+                            "currency": cost_item.get("currency"),
+                            "region": region_from_ocid
+                        }
+                    cost_resource_ids[resource_id]["total_cost"] += cost_item.get("cost", 0) or 0
         
-        # Create entry for deleted resource
-        deleted_entry = {
-            "compartment_name": "DELETED/NOT_FOUND",
-            "region": region_from_ocid,
-            "name": f"[DELETED] {resource_id}",
-            "id": resource_id,
-            "state": "DELETED",
-            "defined_tags": {},
-            "freeform_tags": {},
-            "time_created": "N/A",
-            "total_cost_in_period": f"{total_cost:.4f}"
+        print(f"Total cost-incurring resources: {len(cost_resource_ids)}")
+        
+        # Aggregate costs by region
+        # costs_by_region = {}
+        # for resource_id, cost_info in cost_resource_ids.items():
+        #     region = cost_info.get("region", "unknown")
+        #     if region not in costs_by_region:
+        #         costs_by_region[region] = {"total_cost": 0, "resource_count": 0}
+        #     costs_by_region[region]["total_cost"] += cost_info.get("total_cost", 0)
+        #     costs_by_region[region]["resource_count"] += 1
+        
+        # print(f"\nCosts aggregated by region:")
+        # for region, data in sorted(costs_by_region.items()):
+        #     print(f"  {region}: {data['total_cost']:.12f} ({data['resource_count']} resources)")
+        
+        # Find resources that incurred costs but no longer exist
+        deleted_resource_ids = set(cost_resource_ids.keys()) - existing_resource_ids
+        # Filter out None and empty strings
+        deleted_resource_ids = {rid for rid in deleted_resource_ids if rid}
+        
+        print(f"Deleted/Not found resources with costs: {len(deleted_resource_ids)}")
+        
+        # Map OCID prefixes to resource types
+        ocid_to_resource_type = {
+            "ocid1.instance.": "Compute Instances",
+            "ocid1.volume.": "Block Volumes",
+            "ocid1.volumebackup.": "Block Volumes Bkp",
+            "ocid1.bootvolume.": "Boot Volumes",
+            "ocid1.bootvolumebackup.": "Boot Volumes Bkp",
+            "ocid1.filesystem.": "File Systems",
+            "ocid1.autonomousdatabase.": "Autonomous Databases",
         }
         
-        # Add type-specific fields
-        if resource_type in ["Block Volumes", "Block Volumes Bkp", "Boot Volumes", "Boot Volumes Bkp"]:
-            deleted_entry["size_in_gbs"] = "N/A"
-        if resource_type in ["Block Volumes Bkp"]:
-            deleted_entry["attached_to"] = "N/A"
-        if resource_type in ["Boot Volumes"]:
-            deleted_entry["attached_to_instance"] = "N/A"
-            deleted_entry["availability_domain"] = "N/A"
-        if resource_type == "Compute Instances":
-            deleted_entry["attached_to"] = "N/A"
-            deleted_entry["volume_state"] = "N/A"
-            deleted_entry["availability_domain"] = "N/A"
-        if resource_type == "File Systems":
-            deleted_entry["metered_bytes"] = "N/A"
-        if resource_type == "Autonomous Databases":
-            deleted_entry["ocups"] = "N/A"
-            deleted_entry["size_in_gbs"] = "N/A"
+        # Add deleted resources to appropriate Resource sheets
+        deleted_resources_key = "DELETED_RESOURCES"
+        resources[deleted_resources_key] = {}
         
-        resources[deleted_resources_key].setdefault(resource_type, []).append(deleted_entry)
-    
-    # Count deleted resources by type
-    for rtype, rlist in resources.get(deleted_resources_key, {}).items():
-        print(f"  - {rtype}: {len(rlist)} deleted resources with costs")
+        for resource_id in deleted_resource_ids:
+            # Determine resource type from OCID
+            resource_type = "Unknown"
+            for ocid_prefix, rtype in ocid_to_resource_type.items():
+                if resource_id and resource_id.startswith(ocid_prefix):
+                    resource_type = rtype
+                    break
+            
+            # Get region from cost_resource_ids (already extracted from OCID)
+            cost_info = cost_resource_ids.get(resource_id, {})
+            region_from_ocid = cost_info.get("region", "unknown")
+            total_cost = cost_info.get("total_cost", 0)
+            currency = cost_info.get("currency", "")
+            
+            # Create entry for deleted resource
+            deleted_entry = {
+                "compartment_name": "DELETED/NOT_FOUND",
+                "region": region_from_ocid,
+                "name": f"[DELETED] {resource_id}",
+                "id": resource_id,
+                "state": "DELETED",
+                "defined_tags": {},
+                "freeform_tags": {},
+                "time_created": "N/A",
+                "total_cost_in_period": f"{total_cost:.12f}"
+            }
+            
+            # Add type-specific fields
+            if resource_type in ["Block Volumes", "Block Volumes Bkp", "Boot Volumes", "Boot Volumes Bkp"]:
+                deleted_entry["size_in_gbs"] = "N/A"
+            if resource_type in ["Block Volumes Bkp"]:
+                deleted_entry["attached_to"] = "N/A"
+            if resource_type in ["Boot Volumes"]:
+                deleted_entry["attached_to_instance"] = "N/A"
+                deleted_entry["availability_domain"] = "N/A"
+            if resource_type == "Compute Instances":
+                deleted_entry["attached_to"] = "N/A"
+                deleted_entry["volume_state"] = "N/A"
+                deleted_entry["availability_domain"] = "N/A"
+            if resource_type == "File Systems":
+                deleted_entry["metered_bytes"] = "N/A"
+            if resource_type == "Autonomous Databases":
+                deleted_entry["ocups"] = "N/A"
+                deleted_entry["size_in_gbs"] = "N/A"
+            
+            resources[deleted_resources_key].setdefault(resource_type, []).append(deleted_entry)
+        
+        # Count deleted resources by type
+        for rtype, rlist in resources.get(deleted_resources_key, {}).items():
+            print(f"  - {rtype}: {len(rlist)} deleted resources with costs")
         
     # Get current date for the file name
     current_date = datetime.datetime.now().strftime("%Y-%m-%d")
@@ -563,7 +627,7 @@ try:
         if resource_type == "Autonomous Databases":
             sheet.append(["Compartment", "Region", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags" , "Ocpus", "Size_in_gbs", "Time_created", "Total_cost_in_period"])    
         if resource_type == "Daily Costs":
-            sheet.append(["Compartment", "ID", "Currency","Cost", "Starttime"])              
+            sheet.append(["Compartment", "Region", "ID", "Currency", "Cost", "Starttime"])              
         
         for compartment, resource_data in resources.items():
             for item in resource_data.get(resource_type, []):
@@ -572,7 +636,7 @@ try:
                 total_cost_str = item.get("total_cost_in_period", "")  # For deleted resources
                 if not total_cost_str and resource_id and resource_id in cost_resource_ids:
                     cost_info = cost_resource_ids[resource_id]
-                    total_cost_str = f"{cost_info['total_cost']:.4f} {cost_info['currency']}"
+                    total_cost_str = f"{cost_info['total_cost']:.12f}"
                            
                 if resource_type == "Compute Instances":
                     sheet.append([
@@ -673,13 +737,67 @@ try:
                                 total_cost_str
                                 ])
                 if resource_type == "Daily Costs":
-                    sheet.append([
-                                item.get("compartment_name"), 
-                                item.get("id"),
-                                item.get("currency"),
-                                item.get("cost"),
-                                item.get("starttime")
-                                ])                        
+                    # Daily Costs are handled separately with sorting
+                    pass
+
+        # For Daily Costs, collect all items, sort by region and starttime, then write
+        if resource_type == "Daily Costs":
+            all_daily_costs = []
+            for compartment, resource_data in resources.items():
+                for item in resource_data.get("Daily Costs", []):
+                    all_daily_costs.append(item)
+            
+            # Sort by region first, then by starttime
+            all_daily_costs.sort(key=lambda x: (x.get("region", ""), x.get("starttime", "")))
+            
+            for item in all_daily_costs:
+                sheet.append([
+                    item.get("compartment_name"),
+                    item.get("region"),
+                    item.get("id"),
+                    item.get("currency"),
+                    item.get("cost"),
+                    item.get("starttime")
+                ])                        
+
+    # Add "All Resources" sheet using ResourceSearchClient data
+    all_resources_sheet = workbook.create_sheet(title="All Resources")
+    all_resources_sheet.append(["Compartment", "Region", "Resource_Type", "Name", "ID", "STATE", "Defined_tags", "Freeform_tags", "Time_created"])
+    
+    # Collect all resources from Resource Search API
+    all_search_resources = []
+    for compartment_key, resource_data in resources.items():
+        for item in resource_data.get("All Resources", []):
+            all_search_resources.append({
+                "compartment_name": item.get("compartment_name"),
+                "region": item.get("region"),
+                "resource_type": item.get("resource_type"),
+                "name": item.get("name"),
+                "id": item.get("id"),
+                "state": item.get("state"),
+                "defined_tags": str(item.get("defined_tags")),
+                "freeform_tags": str(item.get("freeform_tags")),
+                "time_created": item.get("time_created")
+            })
+    
+    # Sort by compartment, then by resource type, then by name
+    all_search_resources.sort(key=lambda x: (x.get("compartment_name", ""), x.get("resource_type", ""), x.get("name", "")))
+    
+    # Write to sheet
+    for item in all_search_resources:
+        all_resources_sheet.append([
+            item.get("compartment_name"),
+            item.get("region"),
+            item.get("resource_type"),
+            item.get("name"),
+            item.get("id"),
+            item.get("state"),
+            item.get("defined_tags"),
+            item.get("freeform_tags"),
+            item.get("time_created")
+        ])
+    
+    print(f"Total resources in 'All Resources' sheet: {len(all_search_resources)}")
 
     # Add visualization sheet
     visualization_sheet = workbook.create_sheet(title="Visualizations")
@@ -689,11 +807,11 @@ try:
     summary_data = {}
     for compartment, resource_types in resources.items():
         for resource_type, resource_list in resource_types.items():
-          if resource_type != "Daily Costs":  
+          if resource_type != "Daily Costs" and resource_type != "All Resources":  
             summary_data[resource_type] = summary_data.get(resource_type, 0) + len(resource_list)
 
     for resource_type, count in summary_data.items():
-      if resource_type != "Daily Costs": 
+      if resource_type != "Daily Costs" and resource_type != "All Resources": 
         visualization_sheet.append([resource_type, count])
 
     # Create Pie Chart
@@ -715,7 +833,8 @@ try:
     visualization_sheet.add_chart(bar_chart, "D20")
 
     # Generate file name with dynamic titles
-    file_name = f"oci_resources_all_regions_{namespace}_{current_date}.xlsx"
+    # file_name = f"oci_resources_all_regions_{namespace}_{current_date}.xlsx"
+    file_name = f"oci_resources_{region_param}_{namespace}_{current_date}.xlsx"
     
     # Save the Excel workbook
     workbook.save(file_name)

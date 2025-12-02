@@ -154,41 +154,44 @@ try:
                 findings[resource_key].extend(vm_findings)
 
                 # Block Volumes
-                bv_list = oci.pagination.list_call_get_all_results(
-                    block_storage_client.list_volumes,
-                    compartment_id=compartment.id
-                ).data
-                bv_attachments = oci.pagination.list_call_get_all_results(
-                    compute_client.list_volume_attachments,
-                    compartment_id=compartment.id
-                ).data 
-                bv_findings = []           
-                for bv in bv_list:
-                    resources[resource_key].setdefault("Block Volumes", []).append({
-                        "compartment_name": compartment.name,
-                        "region": current_region,
-                        "name": bv.display_name,
-                        "id": bv.id,
-                        "state": bv.lifecycle_state,
-                        "defined_tags" : bv.defined_tags,
-                        "freeform_tags" : bv.freeform_tags,
-                        "size_in_gbs" : bv.size_in_gbs,
-                        "time_created" : str((f"{bv.time_created}"))
-                    })
-                    for bva in bv_attachments:
-                        if bv.id == bva.volume_id:
-                            resources[resource_key].setdefault("Block Volumes", []).append({
-                                "compartment_name": compartment.name,
-                                "region": current_region,
-                                "name": bv.display_name,
-                                "id": bv.id,
-                                "state": bva.lifecycle_state,
-                                "defined_tags" : bv.defined_tags,
-                                "freeform_tags" : bv.freeform_tags,
-                                "attached_to_instance" : bva.instance_id,
-                                "size_in_gbs" : bv.size_in_gbs,
-                                "time_created" : str((f"{bv.time_created}"))
-                            })                       
+                for ad in region_ads:
+                    bv_list = oci.pagination.list_call_get_all_results(
+                        block_storage_client.list_volumes,
+                        compartment_id=compartment.id,
+                        availability_domain=ad.name
+                    ).data
+                    bv_attachments = oci.pagination.list_call_get_all_results(
+                        compute_client.list_volume_attachments,
+                        compartment_id=compartment.id,
+                        availability_domain=ad.name
+                    ).data 
+                    bv_findings = []           
+                    for bv in bv_list:
+                        resources[resource_key].setdefault("Block Volumes", []).append({
+                            "compartment_name": compartment.name,
+                            "region": current_region,
+                            "name": bv.display_name,
+                            "id": bv.id,
+                            "state": bv.lifecycle_state,
+                            "defined_tags" : bv.defined_tags,
+                            "freeform_tags" : bv.freeform_tags,
+                            "size_in_gbs" : bv.size_in_gbs,
+                            "time_created" : str((f"{bv.time_created}"))
+                        })
+                        for bva in bv_attachments:
+                            if bv.id == bva.volume_id:
+                                resources[resource_key].setdefault("Block Volumes", []).append({
+                                    "compartment_name": compartment.name,
+                                    "region": current_region,
+                                    "name": bv.display_name,
+                                    "id": bv.id,
+                                    "state": bva.lifecycle_state,
+                                    "defined_tags" : bv.defined_tags,
+                                    "freeform_tags" : bv.freeform_tags,
+                                    "attached_to_instance" : bva.instance_id,
+                                    "size_in_gbs" : bv.size_in_gbs,
+                                    "time_created" : str((f"{bv.time_created}"))
+                                })                       
                 findings[resource_key].extend(bv_findings)
 
                 # Block Volumes Bkp

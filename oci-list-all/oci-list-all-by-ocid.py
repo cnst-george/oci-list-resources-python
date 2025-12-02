@@ -30,4 +30,4 @@ for x in resources_type:
                 'freeform_tags': i.freeform_tags,
                 'lifecycle_state': i.lifecycle_state
             }
-            pprint.pprint(data)
+            pprint.pprint(data) 

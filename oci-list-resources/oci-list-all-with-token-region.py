@@ -81,7 +81,7 @@ try:
     
     # Discover resources in each compartment
     for compartment in cmp_list:
-        if  compartment.id.startswith("ocid1.compartment.oc1.."):
+        if  compartment.id.startswith("ocid1.compartment.oc1..") and compartment.id == "ocid1.compartment.oc1..aaaaaaaa64v3nqu4jauy726w3sui4r54pnbf6lphsez4e747pbbwwn3ccogq":
             print(f"Discovering resources in compartment: {compartment.name}")
             resources[compartment.id] = {}
             findings[compartment.id] = []

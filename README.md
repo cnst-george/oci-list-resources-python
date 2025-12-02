@@ -84,7 +84,7 @@ python oci-list-resources.py
 ```
 
 ### Listing Unused Resources
-```bas/
+```bash
 cd oci-list-unused 
 python oci-list-unused.py
 ```
